@@ -21,3 +21,10 @@ leesmij.md
 # Live opgehaalde pagina's horen in de kladmap, nooit in een repo-map
 *.tmp
 p.tmp
+
+# Aangevuld 09/09/2026, gelijk met de andere drie repo's. Het regelbestand van de sessie en de
+# uitvoer van metingen horen nergens in git; *.tmp stond er al, deze twee ontbraken nog.
+# Let op: GEEN *.txt hier. De OFL-licenties van de lettertypes zijn .txt en moeten in git.
+.claude/
+*.log
+*.out
