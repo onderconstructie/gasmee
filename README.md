@@ -3,8 +3,8 @@
 Een dashboard over de Mechelse GAS-handhaving: wat de ANPR-camera's aan de autoluwe zones
 vaststellen, wat er naast die camera's beboet wordt, en wat de stad aan GAS plant en int.
 
-Live: **https://onderconstructie.github.io/gasmee/**
-Hoe het werkt (bronnen, controle, voorbehoud): [techniek.html](https://onderconstructie.github.io/gasmee/techniek.html)
+Live: **https://gasmee.asgaupaust.be**
+Hoe het werkt (bronnen, controle, voorbehoud): [techniek.html](https://gasmee.asgaupaust.be/techniek.html)
 
 Onderdeel van [asgaupaust.be](https://asgaupaust.be).
 

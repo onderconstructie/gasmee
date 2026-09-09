@@ -20,6 +20,7 @@ import sys
 
 HIER = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(HIER, "dist")
+CUSTOM_DOMAIN = "gasmee.asgaupaust.be"
 BESTANDEN = {
     "gasam": os.path.join(HIER, "data", "gasam_mechelen.json"),
     "budget": os.path.join(HIER, "data", "budget_mechelen.json"),
@@ -164,6 +165,13 @@ def main():
     for naam in os.listdir(os.path.join(HIER, "fonts")):
         if naam.endswith(".woff2") or naam.endswith(".txt"):
             shutil.copy(os.path.join(HIER, "fonts", naam), os.path.join(DIST, "fonts", naam))
+
+    # CNAME voor het eigen subdomein op GitHub Pages. Door dit bij elke build mee te
+    # schrijven, kan een volgende publicatie het domein niet per ongeluk laten vallen:
+    # de Actions-publicatie vervangt de hele map. Eenmalig ingesteld in Settings -> Pages,
+    # met een DNS-record naar onderconstructie.github.io.
+    with open(os.path.join(DIST, "CNAME"), "w", encoding="utf-8") as bestand:
+        bestand.write(CUSTOM_DOMAIN + "\n")
 
     doel = os.path.join(DIST, "index.html")
     with open(doel, "w", encoding="utf-8") as bestand:
