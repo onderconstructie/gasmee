@@ -28,3 +28,12 @@ p.tmp
 .claude/
 *.log
 *.out
+
+# Ruwe antwoorden van de OSM-server en het verslag van de fotocontrole. Publieke kaartdata
+# (ODbL), geen persoonsgegevens, maar wel 487 KB tussenmateriaal dat geen enkel script nog
+# leest en dat build.py niet aanraakt. De uitkomst ervan staat met bron en citaat in
+# cameras.json; opnieuw ophalen kan altijd bij OSM.
+data/osm_straten_ruw.json
+data/osm_surveillance_ruw.json
+data/osm_kandidaten_per_straat.json
+fotocheck_panoramax.json
