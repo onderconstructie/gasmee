@@ -110,7 +110,12 @@ def bouw_techniek(sjabloon):
     colofon = colofon.replace('href="#camera" aria-label="GAS mee met Mechelen, naar het begin" onclick="event.preventDefault();toonView(\'camera\')"',
                               'href="index.html" aria-label="GAS mee met Mechelen, naar het begin"')
     onderbalk = sjabloon[sjabloon.index('<nav class="onderbalk"'):sjabloon.index("</nav>", sjabloon.index('<nav class="onderbalk"')) + len("</nav>")]
-    onderbalk = re.sub(r'<button role="tab" data-view="(\w+)" aria-selected="\w+">', r'<a role="tab" href="index.html#\1">', onderbalk).replace("</button>", "</a>")
+    onderbalk = re.sub(r'<button role="tab" data-view="(\w+)" aria-selected="\w+">', r'<a href="index.html#\1">', onderbalk).replace("</button>", "</a>")
+    # Op de techniekpagina zijn dit geen tabbladen maar links naar het dashboard.
+    # Een tablist waarvan elke tab naar een andere pagina springt, klopt niet voor
+    # een schermlezer, dus de rollen gaan eruit.
+    onderbalk = onderbalk.replace('<nav class="onderbalk" role="tablist" aria-label="Onderdelen">',
+                                  '<nav class="onderbalk" aria-label="Onderdelen">')
     script = """<button class="terug" id="terug" title="Terug naar boven" aria-label="Terug naar boven">&uarr;</button>
 <script>
 function menu(open) {

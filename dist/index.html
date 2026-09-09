@@ -154,15 +154,15 @@ body.menu-open{overflow:hidden}
   padding:6px 6px calc(6px + env(safe-area-inset-bottom));
   box-shadow:0 -8px 30px -20px rgba(72,56,38,.7);
 }
-.onderbalk button,.onderbalk .portaalknop{
+.onderbalk button,.onderbalk a{
   appearance:none;border:0;background:none;cursor:pointer;flex:1;
   display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;border-radius:12px;
   font-size:11.5px;color:var(--ink-2)   /* --ink-dim haalde hier maar 2,24:1 */
 }
 .onderbalk .portaalknop{color:var(--agp-pink-tekst);text-decoration:none}
 .onderbalk .portaalknop img{width:20px;height:20px}
-.onderbalk button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
-.onderbalk button[aria-selected="true"]{color:var(--pink-text);background:var(--pink-soft)}
+.onderbalk button svg,.onderbalk a svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+.onderbalk button[aria-selected="true"],.onderbalk a[aria-current="page"]{color:var(--pink-text);background:var(--pink-soft)}
 @media(max-width:719px){ .onderbalk{display:flex} body{padding-bottom:86px} }
 
 /* ================================================================
@@ -1039,7 +1039,7 @@ body[data-view="nieuws"] .ver-band{display:none}
     <div class="co-body">
       <p class="co-zin"><strong class="co-naam">GAS mee <em>met Mechelen</em></strong>, een experiment van <strong>As Gau Paust</strong>.
       Zo zie je wat de camera's aan de autoluwe zones vaststellen, en wat de stad aan GAS plant en int.</p>
-      <p class="co-fam">Onderdeel van <a href="https://asgaupaust.be">asgaupaust.be</a> &middot; <a href="https://asgaupaust.be/privacy/">Privacy</a> &middot; <a href="techniek.html">Hoe het werkt</a></p>
+      <p class="co-fam">Onderdeel van <a href="https://asgaupaust.be">asgaupaust.be</a> &middot; <a href="https://asgaupaust.be/privacy/">Privacy</a></p>
     </div>
   </div>
 </footer>
