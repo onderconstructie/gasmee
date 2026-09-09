@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#d2a213">
+<title>Technische pagina &middot; GAS mee met Mechelen</title>
+<meta name="description" content="Hoe GAS mee met Mechelen de cijfers uit de jaarverslagen haalt, de camera&#39;s op de kaart zet en zichzelf controleert.">
+<meta property="og:title" content="Technische pagina: GAS mee met Mechelen">
+<meta property="og:description" content="Hoe GAS mee met Mechelen de cijfers uit de jaarverslagen haalt, de camera&#39;s op de kaart zet en zichzelf controleert.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_BE">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='15.2' fill='none' stroke='%23d2a213' stroke-width='1.2' opacity='.85'/><circle cx='20' cy='20' r='11.4' fill='none' stroke='%23d2a213' stroke-width='.8' opacity='.22'/><path d='M20 2.4v3.4M20 34.2v3.4M2.4 20h3.4M34.2 20h3.4' stroke='%237a5c10' stroke-width='1.2' stroke-linecap='round'/><path d='M14.9 17.6l1.7-2.7a2 2 0 0 1 1.7-.95h3.4a2 2 0 0 1 1.7.95l1.7 2.7z' fill='%23d2a213'/><rect x='12' y='17.2' width='16' height='5.8' rx='2.6' fill='%23d2a213'/><path d='M16.7 16.8l1.05-1.7a1.3 1.3 0 0 1 1.1-.6h2.3a1.3 1.3 0 0 1 1.1.6l1.05 1.7z' fill='%237a5c10'/><circle cx='15.7' cy='23' r='1.9' fill='%237a5c10'/><circle cx='24.3' cy='23' r='1.9' fill='%237a5c10'/><circle cx='15.7' cy='23' r='.7' fill='%23fffdf7'/><circle cx='24.3' cy='23' r='.7' fill='%23fffdf7'/></svg>">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url('fonts/geist-var.woff2') format('woff2');}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url('fonts/jbmono-var.woff2') format('woff2');}
+
+/* ================================================================
+   Palet en materiaal: het familiepapier van As Gau Paust, maar dan
+   als app-huid. Papier blijft de grond, inkt is warm, roze is de
+   enige kleur die iets beweert.
+   ================================================================ */
+:root{
+  --paper:#f5f1e8; --paper-2:#fffdf7; --paper-kaart:#faf6ef; --paper-3:#ece7db;
+  --ink:#1a1712; --ink-2:#514a40; --ink-dim:#6a6153;
+  /* De eigen app-kleur is oker, verlicht en gemeten 26/08/2026: accent
+     #d2a213 op inkt 7,59:1, leestint en vlak #856813 op papier 4,67:1 en
+     onder wit 5,27:1 (beide boven AA). --pink is een alias van de app-kleur,
+     zodat alles meekleurt; het familie-roze zelf (--agp-pink) draagt enkel
+     nog het merkwoord As Gau Paust en de portaaltoets, de weg terug. */
+  --agp-pink:#FF0066; --agp-pink-tekst:#c80054;
+  --app:#d2a213; --app-tekst:#856813; --app-deep:#7a5c10;
+  --pink:var(--app); --pink-text:var(--app-tekst); --pink-deep:var(--app-deep);
+  --pink-soft:rgba(210,162,19,.13); --pink-soft-2:rgba(210,162,19,.22);
+  --groen:#2f7d5f; --oker:#8a6d1f; --steen:#8a8177; --steen-2:#c9c0b2; --leisteen:#4e6d8c; --roest:#b0522f;
+  --line:rgba(26,23,18,.13); --line-2:rgba(26,23,18,.24);
+  --schaduw-zacht:0 1px 2px rgba(72,56,38,.05), 0 10px 30px -14px rgba(72,56,38,.28);
+  --schaduw-til:0 2px 4px rgba(72,56,38,.06), 0 24px 50px -22px rgba(72,56,38,.5);
+  --schaduw-roze:0 8px 26px -12px rgba(170,131,24,.4);
+  --rond:16px; --rond-klein:11px;
+  --balk:60px;          /* hoogte appbalk */
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  --stip:radial-gradient(rgba(26,23,18,.045) 1px, transparent 1px);
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}  /* anders wint display:flex van het hidden-attribuut */
+:focus-visible{outline:2px solid var(--pink-text);outline-offset:2px;border-radius:6px}
+:focus:not(:focus-visible){outline:none}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{
+  /* het familievel: papier met puntjesraster, en de ruislaag via ::before */
+  background-color:var(--paper);
+  background-image:var(--stip);
+  background-size:3px 3px;
+  color:var(--ink);
+  font-family:'Geist',system-ui,-apple-system,sans-serif;
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;background-image:var(--grain);mix-blend-mode:multiply}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"tnum","zero"}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
+
+/* Statusstrook, weg te halen na de lancering. Dezelfde strook en hetzelfde badge-woord als op
+   het portaal, zodat de bezoeker overal hetzelfde signaal krijgt. Bewust geen pop-up: het is
+   een mededeling, geen toestemming die we vragen. Het donker is --ink, precies het diepe vel
+   van het portaal; het badge-woord draagt de app-kleur (gemeten 7,59:1 op inkt), niet het
+   familie-roze, want dat blijft voorbehouden aan het merkwoord en de portaaltoets. */
+.status-strook{background:var(--ink);color:var(--paper);border-bottom:1px solid rgba(245,241,232,.14)}
+.status-strook .ss-in{max-width:1180px;margin:0 auto;padding:.8rem clamp(1.1rem,4vw,3rem);
+  display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap}
+.status-strook b{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.68rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--app);flex:none}
+.status-strook span{font-size:.9rem;line-height:1.5;color:rgba(245,241,232,.82)}
+.status-strook .ss-cta{font:inherit;color:#fff;text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.6)}
+.status-strook .ss-cta:hover{border-bottom-color:#fff}
+
+/* ================================================================
+   Appbalk: krantlijn, geen matglas. Papier met eigen korrel, een
+   haarlijn onderaan, en een inktlijn die aanzet zodra je scrolt.
+   ================================================================ */
+.appbalk{
+  position:sticky; top:0; z-index:100;
+  background-color:var(--paper); background-image:var(--stip); background-size:3px 3px;
+  border-bottom:1px solid var(--line);
+}
+.appbalk::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:var(--grain);mix-blend-mode:multiply}
+.appbalk::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .22s ease}
+.appbalk.gescrold::after{transform:scaleY(1)}
+.balk-in{
+  position:relative; z-index:2;
+  height:var(--balk); display:flex; align-items:center; gap:12px; min-width:0;
+  max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,3rem);
+}
+/* alleen voor schermlezers: de tussenkoppen die het oog al aan de opmaak ziet */
+.stil{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.duo-vakken{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+.duo-vakken .eyebrow{margin:0 0 6px}
+@media(max-width:720px){ .duo-vakken{grid-template-columns:1fr} }
+.noot{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;color:var(--ink-dim);margin:8px 0 0}
+/* De balk volgt de deelsites: linksboven de mug met As Gau Paust als weg terug
+   naar het portaal (het enige roze hier), rechts het hamburgermenu. */
+.brand{display:inline-flex;align-items:center;gap:.65rem;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600;font-size:1rem;letter-spacing:-.01em;white-space:nowrap;color:var(--ink);text-decoration:none}
+.brand-mug{width:34px;height:34px;display:block}
+.brand em{font-style:normal;color:var(--agp-pink-tekst)}
+.brand:hover em{color:var(--agp-pink)}
+.balk-ruimte{flex:1}
+.menuknop{position:relative;display:flex;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;padding:8px;background:transparent;border:1px solid var(--pink);cursor:pointer;flex-shrink:0}
+.menuknop span{display:block;width:100%;height:1.5px;background:var(--ink);transition:transform .25s, opacity .25s}
+.menuknop span:nth-child(2){background:var(--pink)}
+.menuknop:hover{background:var(--pink-soft)}
+.menuknop[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.menuknop[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menuknop[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.menuvlak{position:fixed;inset:0;z-index:200;background:rgba(26,23,18,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;justify-content:flex-end;animation:menuFade .2s ease-out}
+.menuvlak[hidden]{display:none}
+@keyframes menuFade{from{opacity:0}to{opacity:1}}
+.menukaart{background:var(--paper);width:min(560px,100%);height:100%;display:flex;flex-direction:column;border-left:1px solid var(--ink);box-shadow:-32px 0 80px -10px rgba(72,56,38,.3);overflow-y:auto;animation:menuGlijdt .3s cubic-bezier(.16,1,.3,1)}
+@keyframes menuGlijdt{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+.menu-kop{display:flex;justify-content:space-between;align-items:center;height:var(--balk);padding:0 clamp(1.1rem,4vw,3rem);border-bottom:1px solid var(--line);flex-shrink:0}
+.menu-sluit{font-size:1.8rem;width:38px;height:38px;color:var(--ink);cursor:pointer;line-height:1;flex-shrink:0;background:none;border:0}
+.menu-sluit:hover{color:var(--pink-text)}
+.menu-lijst{display:flex;flex-direction:column}
+.menu-lijst a{display:grid;grid-template-columns:40px 1fr auto;gap:.6rem;align-items:center;padding:1.05rem clamp(1.1rem,4vw,3rem);border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);transition:background .15s}
+.menu-lijst a:hover{background:var(--paper-2)}
+.menu-lijst a:hover .menu-ic{color:var(--pink-text)}
+.menu-lijst a:last-child{border-bottom:none}
+.menu-ic{color:var(--ink-dim);transition:color .15s}
+.menu-ic svg{width:22px;height:22px;display:block;stroke:currentColor;fill:none;stroke-width:1.7}
+.menu-naam{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.05rem;font-weight:500;letter-spacing:-.005em}
+.menu-periode{font-weight:400;color:var(--ink-dim);font-size:.88em}
+.menu-tel{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.8rem;color:var(--ink-dim);letter-spacing:-.01em;white-space:nowrap}
+body.menu-open{overflow:hidden}
+
+.chip{
+  font-family:'JetBrains Mono',ui-monospace,monospace; font-size:10.5px;
+  letter-spacing:.14em; text-transform:uppercase;
+  padding:4px 9px; border-radius:999px; border:1px solid var(--line-2); color:var(--ink-2);
+  white-space:nowrap;
+}
+.chip.roze{background:var(--pink-text);border-color:var(--pink-text);color:#fff}
+.balk-rechts{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto;justify-content:flex-end}
+
+/* Tabbalk onder de appbalk (desktop) */
+
+
+/* Onderste tabbalk op smalle schermen: duimbereik, zoals in een app */
+.onderbalk{
+  position:fixed;left:0;right:0;bottom:0;z-index:100;display:none;
+  background:var(--paper-2);border-top:1px solid var(--line);
+  padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+  box-shadow:0 -8px 30px -20px rgba(72,56,38,.7);
+}
+.onderbalk button,.onderbalk .portaalknop{
+  appearance:none;border:0;background:none;cursor:pointer;flex:1;
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;border-radius:12px;
+  font-size:11.5px;color:var(--ink-2)   /* --ink-dim haalde hier maar 2,24:1 */
+}
+.onderbalk .portaalknop{color:var(--agp-pink-tekst);text-decoration:none}
+.onderbalk .portaalknop img{width:20px;height:20px}
+.onderbalk button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+.onderbalk button[aria-selected="true"]{color:var(--pink-text);background:var(--pink-soft)}
+@media(max-width:719px){ .onderbalk{display:flex} body{padding-bottom:86px} }
+
+/* ================================================================
+   Weergaven
+   ================================================================ */
+.weergave{display:none;padding:0 0 40px}
+.weergave.aan{display:block;animation:opkomst .34s ease both}
+@keyframes opkomst{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.titelrij{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin:22px 0 6px}
+/* De held volgt de familietaal van asgaupaust.be: eyebrow met pulserende stip,
+   een monospace-kop met de vangst in het inktkader (roze op warme inkt), en
+   rechts het vizier met de uitdijende roze ringen van het portaal. */
+.held{display:grid;grid-template-columns:minmax(0,1fr);gap:10px 28px;align-items:center;margin:26px 0 8px}
+@media(min-width:860px){ .held{grid-template-columns:minmax(0,1fr) 170px} }
+.held-eyebrow{margin:0 0 12px}
+.eyebrow .puls{width:.55em;height:.55em;background:var(--pink);border-radius:50%;margin-right:.7em;display:inline-block;
+  animation:pulsstip 2s infinite}
+@keyframes pulsstip{0%{box-shadow:0 0 0 0 rgba(210,162,19,.6)}70%{box-shadow:0 0 0 8px rgba(210,162,19,0)}100%{box-shadow:0 0 0 0 rgba(210,162,19,0)}}
+.heldkop{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;letter-spacing:-.04em;
+  font-size:clamp(26px,3.8vw,44px);line-height:1.28;margin:0 0 10px
+}
+.heldkop em{color:var(--pink-text);font-style:normal}
+.kader-in-kop{
+  color:var(--pink);background:var(--ink);padding:0 .14em;white-space:nowrap;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone
+}
+.held-periode{font-size:.52em;color:var(--ink-dim);letter-spacing:-.01em}
+.held-cijfer{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600;letter-spacing:-.02em;font-size:clamp(19px,2.7vw,25px);margin:14px 0 0;color:var(--ink)}
+.held-cijfer b{color:var(--app-tekst);font-weight:600}
+.held-cijfer em{font-style:normal}
+.held-cijfer .held-periode{font-size:.72em;letter-spacing:0}
+.leeslink{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;margin:10px 0 0}
+.leeslink a{color:var(--pink-text);text-decoration:none;border-bottom:1px solid rgba(150,113,22,.45)}
+.leeslink a:hover{border-bottom-color:var(--pink-text)}
+.leeslink span{color:var(--pink-text)}
+.heldkop-klein{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;letter-spacing:-.03em;
+  font-size:clamp(22px,3vw,32px);line-height:1.2;margin:0
+}
+.heldkop-klein em{color:var(--pink-text);font-style:normal}
+.held-merk{position:relative;width:150px;aspect-ratio:1;display:none;place-items:center;justify-self:end;
+  background:none;border:0;padding:0;cursor:pointer;border-radius:50%}
+.held-merk svg{transition:transform .18s ease}
+.held-merk:hover svg{transform:scale(1.05)}
+@media(min-width:860px){ .held-merk{display:grid} }
+.held-merk svg{width:74%;height:74%;filter:drop-shadow(0 10px 26px rgba(210,162,19,.35)) drop-shadow(0 2px 6px rgba(72,56,38,.12))}
+.held-merk .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(210,162,19,.55);animation:agpRing 3.6s ease-out infinite}
+.held-merk .ring.r2{border-color:rgba(210,162,19,.4);animation-delay:1.8s}
+@keyframes agpRing{0%{transform:scale(.72);opacity:0}25%{opacity:1}100%{transform:scale(1.18);opacity:0}}
+@media (prefers-reduced-motion: reduce){ .held-merk .ring{animation:none;opacity:.25} }
+h1{font-size:clamp(24px,3.2vw,34px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--pink-text)}
+.duiding{color:var(--ink-2);font-size:14.5px;margin:0 0 18px;max-width:66ch}
+h2{font-size:15px;margin:0 0 10px;letter-spacing:-.005em}
+.eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+
+.kaartvlak{
+  background:var(--paper-kaart);border:1px solid var(--line);border-radius:var(--rond);
+  padding:16px;box-shadow:var(--schaduw-zacht);
+}
+.rooster{display:grid;gap:14px;align-items:start}
+@media(min-width:900px){
+  .rooster.twee{grid-template-columns:1fr 1fr}
+  .rooster.drie{grid-template-columns:repeat(3,1fr)}
+}
+
+/* KPI-tegels */
+.tegels{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:0 0 16px}
+.tegel{
+  position:relative;overflow:hidden;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--rond-klein);
+  padding:13px 14px 12px;box-shadow:var(--schaduw-zacht);
+  transition:transform .22s ease, box-shadow .22s ease;
+  animation:opkomst .5s both;
+}
+.tegel{animation:none}
+.tegel.intro{animation:opkomst .5s both}
+.tegel:hover{transform:translateY(-3px);box-shadow:var(--schaduw-til)}
+/* zolang de tijdbalk speelt, groeien staven en tegels niet telkens opnieuw aan */
+body.speelt .staafgroei,body.speelt .tegel{animation:none}
+button.tegel{appearance:none;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+button.tegel::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--pink);
+  transform:scaleX(0);transform-origin:left;transition:transform .22s ease
+}
+button.tegel[aria-expanded="true"]{box-shadow:var(--schaduw-til)}
+button.tegel[aria-expanded="true"]::after{transform:scaleX(1)}
+.tegeluitleg{margin:0 0 14px;animation:opkomst .24s ease both;position:relative}
+.tegeluitleg .sluit{position:absolute;top:10px;right:12px;border:0;background:none;font-size:19px;line-height:1;cursor:pointer;color:var(--ink-dim)}
+.tegel .k{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
+.tegel .v{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:clamp(24px,3.4vw,30px);line-height:1.15;margin-top:3px;letter-spacing:-.02em}
+.tegel .v.tekst{font-size:19px;line-height:1.3;letter-spacing:0}
+.tegel .n{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.tegel .vonk{position:absolute;right:10px;bottom:8px;opacity:.6}
+.delta{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;padding:2px 7px;border-radius:999px}
+.delta.op{background:rgba(210,162,19,.16);color:var(--pink-text)}
+.delta.neer{background:rgba(138,129,119,.16);color:var(--ink-2)}
+.delta.vlak,.delta.neutraal{background:rgba(26,23,18,.07);color:var(--ink-2)}
+
+/* ================================================================
+   Kaart
+   ================================================================ */
+.kaarthouder{position:relative;border-radius:var(--rond);overflow:hidden;border:1px solid var(--line);box-shadow:var(--schaduw-zacht);background:#e9e3d7}
+#kaart{position:relative;height:clamp(330px,52vh,540px);cursor:grab;touch-action:none;overflow:hidden}  /* de tegels moeten binnen het kaartvak blijven, anders lopen ze onder het paneel door */
+#kaart.sleept{cursor:grabbing}
+#tegels{position:absolute;inset:0}
+/* De tegels worden naar het familiepapier getrokken: minder kleur, warmer, iets
+   lichter. Zo blijft roze de enige kleur die de aandacht opeist. */
+#tegels img{position:absolute;width:256px;height:256px;user-select:none;-webkit-user-drag:none;filter:grayscale(.86) sepia(.34) saturate(.9) brightness(1.06) contrast(.9)}
+/* een dun waas papier over de tegels: de kaart zakt in de huid van de site,
+   waardoor roze de enige kleur is die nog roept */
+#kaart::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;background:rgba(245,241,232,.16)}
+#kaart::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;box-shadow:inset 0 0 70px rgba(72,56,38,.18)}
+#merken{position:absolute;inset:0;pointer-events:none;z-index:5}
+.merkstip{position:absolute;transform:translate(-50%,-50%);border-radius:50%;pointer-events:auto;cursor:pointer;
+  /* een viziertje zoals het merk: de rand is de vizierring, de gradientring
+     op 71-74% is de fijne binnenring (schaalt mee), en de vier streepjes op de
+     rand zijn de maatstreepjes. De vulling draagt het aantal via de maat. */
+  background:
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) top center/1.5px 15% no-repeat,
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) bottom center/1.5px 15% no-repeat,
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) left center/15% 1.5px no-repeat,
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) right center/15% 1.5px no-repeat,
+    radial-gradient(circle, rgba(236,196,90,.6) 0 32%, rgba(210,162,19,.4) 32% 66%, rgba(210,162,19,.16) 66% 71%, rgba(122,92,16,.38) 71% 74%, rgba(210,162,19,.14) 74%);
+  border:1.5px solid rgba(122,92,16,.85);
+  box-shadow:0 2px 10px -2px rgba(122,92,16,.55);
+  /* de maat verandert vloeiend als de tijdbalk loopt; de plek niet, die volgt
+     het slepen van de kaart zonder vertraging */
+  transition:width .55s cubic-bezier(.32,.72,0,1), height .55s cubic-bezier(.32,.72,0,1),
+    transform .18s ease, box-shadow .18s ease, opacity .25s ease, background .3s ease, border-color .3s ease}
+.merkstip:hover{transform:translate(-50%,-50%) scale(1.08)}
+/* wijst de muis in de lijst een camera aan, dan komt haar stip naar voren */
+.merkstip.wijst{transform:translate(-50%,-50%) scale(1.22);box-shadow:0 0 0 3px var(--paper-2),0 4px 14px -2px rgba(122,92,16,.7);z-index:7}
+.merkstip.leeg{background:rgba(26,23,18,.05);border:1.5px dashed rgba(26,23,18,.42);box-shadow:none}
+.merkstip.actief{box-shadow:0 0 0 3px var(--paper-2), 0 0 0 5px var(--pink-text), 0 6px 18px -4px rgba(122,92,16,.6);z-index:6}
+/* Kies je één camera, dan wijkt de rest naar de achtergrond. Ze blijft wel
+   staan en blijft aanklikbaar: zo zie je waar de gekozen camera ligt. */
+.merkstip.gedimd{opacity:.22;box-shadow:none}
+.merkstip.gedimd:hover{opacity:.55}
+.rang li.onbekend{cursor:default;color:var(--ink-dim)}
+.rang li.onbekend:hover{background:none}
+.rang li.gedimd{opacity:.4}
+.rang li.gedimd:hover{opacity:.85}
+.stipnaam{position:absolute;transform:translate(-50%,0);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;
+  color:var(--ink);background:rgba(255,253,247,.86);padding:1px 5px;border-radius:5px;white-space:nowrap;pointer-events:none}
+
+/* Het kaartje van een gekozen camera: klein, standaard linksonder, en te
+   verslepen aan zijn kop. Zo blijft de stad zichtbaar in plaats van dat het
+   kaartje er middenop komt te liggen. */
+.merkkaart{
+  position:absolute;z-index:12;background:var(--paper-2);border:1px solid var(--line);
+  border-radius:var(--rond-klein);padding:0 0 10px;width:216px;
+  box-shadow:var(--schaduw-til);font-size:13px;pointer-events:auto;
+  animation:opkomst .18s ease both
+}
+.merkkaart .greep{
+  display:flex;align-items:center;gap:8px;padding:8px 10px 7px;cursor:grab;
+  border-bottom:1px solid var(--line);border-radius:var(--rond-klein) var(--rond-klein) 0 0;
+  background:var(--paper-kaart);touch-action:none
+}
+.merkkaart .greep:active{cursor:grabbing}
+.merkkaart .greep .punten{width:12px;height:12px;flex:0 0 12px;opacity:.5;
+  background-image:radial-gradient(currentColor 1px, transparent 1px);background-size:4px 4px}
+.merkkaart .inhoud{padding:9px 12px 0}
+.merkkaart .nu-waarde{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:19px;line-height:1.2}
+.merkkaart .nu-noot{font-size:11.5px;color:var(--ink-dim);margin-bottom:8px}
+.merkkaart h4{margin:0;font-size:13.5px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.merkkaart .reeks{display:grid;grid-template-columns:auto 1fr auto;gap:3px 8px;align-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;color:var(--ink-2)}
+.merkkaart .reeks i{display:block;height:4px;border-radius:2px;background:var(--pink);opacity:.55}
+.merkkaart .reeks .nu{color:var(--pink-text)}
+.merkkaart .reeks .nu i{opacity:1}
+.merkkaart .bronregel{font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.4}
+.merkkaart .naartoe{
+  margin-top:9px;width:100%;border:1px solid var(--line);background:var(--paper);cursor:pointer;
+  border-radius:8px;padding:6px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;color:var(--ink-2)
+}
+.merkkaart .naartoe:hover{border-color:var(--pink);color:var(--pink-text)}
+.merkkaart .sluit{border:0;background:none;font-size:17px;line-height:1;cursor:pointer;color:var(--ink-dim);padding:0 2px}
+
+.kaartknoppen{position:absolute;left:12px;bottom:14px;z-index:8;display:flex;flex-direction:column;gap:7px}
+.kaartknoppen button{
+  width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);
+  font-size:17px;line-height:1;cursor:pointer;color:var(--ink);box-shadow:var(--schaduw-zacht);
+  transition:transform .18s ease,border-color .18s ease,color .18s ease}
+.kaartknoppen button:hover{transform:translateY(-2px);border-color:var(--pink);color:var(--pink-text)}
+.attributie{position:absolute;right:0;bottom:0;z-index:8;background:rgba(245,241,232,.88);font-size:10.5px;padding:3px 8px;border-top-left-radius:8px;color:var(--ink-dim)}
+.attributie a{color:var(--ink-2)}
+.kaartlegende{position:absolute;left:12px;top:12px;z-index:8;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px)}
+.kaartlegende .chip{background:rgba(255,253,247,.9);border-color:var(--line)}
+
+/* Zwevend paneel met de rangschikking, alleen op brede schermen */
+.kaartpaneel{
+  position:absolute;right:12px;top:12px;z-index:9;width:304px;max-height:calc(100% - 84px);
+  display:flex;flex-direction:column;
+  background:rgba(255,253,247,.955);border:1px solid var(--line);border-radius:var(--rond-klein);
+  box-shadow:var(--schaduw-til);overflow:hidden
+}
+.kaartpaneel .kop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 13px 9px;border-bottom:1px solid var(--line)}
+.kaartpaneel .kop b,.kaartpaneel .kop .eyebrow{white-space:nowrap}
+.kaartpaneel::after{content:'';position:absolute;left:0;right:0;bottom:0;height:26px;pointer-events:none;background:linear-gradient(rgba(255,253,247,0),rgba(255,253,247,.95))}
+.kaartpaneel .kop b{font-size:13.5px}
+.kaartpaneel .kop .eyebrow{margin-right:auto}
+.kaartpaneel .kop .klap{
+  margin-left:6px;border:1px solid var(--line);background:var(--paper);cursor:pointer;
+  border-radius:999px;padding:4px 10px;font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:11px;color:var(--ink-2);white-space:nowrap
+}
+.kaartpaneel .kop .klap:hover{border-color:var(--pink);color:var(--pink-text)}
+/* Uitgeklapt gaat de lijst onder de kaart staan, in kolommen: dan zie je alle
+   camera's in één oogopslag in plaats van te scrollen in een smal paneel. */
+.kaartpaneel.uit{position:static;width:auto;max-height:none;margin:14px 0 0;box-shadow:var(--schaduw-zacht)}
+.kaartpaneel.uit::after{display:none}
+.kaartpaneel.uit .rang{max-height:none;display:block;padding:6px 14px 14px}
+/* Ranglijst: alle camera's onder elkaar, elke balk vanaf dezelfde lijn en op
+   dezelfde schaal. Zo lees je de verhouding tussen twee camera's in één blik. */
+.rang.ranglijst li{
+  grid-template-columns:minmax(140px,1.15fr) 80px minmax(150px,3fr) 88px 74px;
+  gap:0 14px;padding:9px 8px;border-bottom:1px solid var(--line);border-radius:0
+}
+.rang.ranglijst li:hover{background:var(--pink-soft)}
+.rang.ranglijst .spoor{display:block;height:14px;border-radius:7px;background:var(--paper-3);overflow:hidden}
+.rang.ranglijst .staaf{display:block;height:100%;width:auto;border-radius:7px;opacity:1;background:var(--pink);transition:width .45s cubic-bezier(.32,.72,0,1)}
+.rang.ranglijst .n{text-align:right}
+.rang.ranglijst .vonkvak{display:block;line-height:0}
+.rang.ranglijst .vonkvak svg{position:static;opacity:.85}
+.rang.ranglijst .delta{justify-self:start;font-size:11px;padding:2px 6px}
+.rang.ranglijst .ranglijstkop{
+  border-bottom:1px solid var(--line-2);padding-bottom:6px;cursor:default;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-dim)
+}
+.rang.ranglijst .ranglijstkop:hover{background:none}
+.rang.ranglijst .schaalkop{display:flex;justify-content:space-between}
+.rang.ranglijst .vonkkop{text-align:center}
+.rang.ranglijst .voet{display:block;grid-column:1/-1;border-bottom:0}
+@media(max-width:820px){
+  .rang.ranglijst li{grid-template-columns:minmax(120px,1fr) minmax(90px,2fr) 76px}
+  .rang.ranglijst .vonkvak,.rang.ranglijst .vonkkop,.rang.ranglijst .delta{display:none}
+}
+.rang{list-style:none;margin:0;padding:6px 6px 10px;overflow:auto}
+.rang li{display:grid;grid-template-columns:1fr auto;gap:3px 10px;align-items:center;padding:7px 8px;border-radius:9px;cursor:pointer;transition:background .16s ease}
+.rang li:hover{background:var(--pink-soft)}
+.rang li.actief{background:var(--pink-soft-2)}
+.rang li.wijst{background:var(--pink-soft)}
+.rang li.uit{opacity:.5}
+.rang .naam{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rang .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px}
+.rang .staaf{grid-column:1/-1;height:4px;border-radius:2px;background:var(--pink);opacity:.7;transition:width .4s cubic-bezier(.32,.72,0,1)}
+.rang .voet{display:block;cursor:default;padding:10px 8px 2px;font-size:11.5px;color:var(--ink-dim);line-height:1.45}
+.rang .voet:hover{background:none}
+@media(max-width:1023px){
+  .kaartpaneel{position:static;width:auto;max-height:none;margin-top:14px;box-shadow:var(--schaduw-zacht)}
+  .rang{max-height:340px}
+}
+
+/* ================================================================
+   In het nieuws: een krantenvoorpagina. Naamplaat gecentreerd tussen
+   krantlijnen, een datumregel, de opening naast een nieuwskolom met een
+   verticale haarlijn, en daaronder de blokjes in kolommen met kolomlijnen.
+   ================================================================ */
+.krantkop{text-align:center;margin-top:18px}
+.naamplaat{
+  font-weight:850;font-size:clamp(34px,5.2vw,56px);letter-spacing:-.035em;line-height:1.04;
+  padding:8px 0 12px
+}
+.dateline{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-top:1px solid var(--line-2);border-bottom:2px solid var(--ink);
+  padding:7px 2px;margin-bottom:0;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-2)
+}
+.krant-boven{display:grid;grid-template-columns:minmax(0,1fr);padding:20px 0 22px;border-bottom:2px solid var(--ink)}
+@media(min-width:880px){ .krant-boven{grid-template-columns:minmax(0,2.05fr) minmax(0,1fr)} }
+.krant-lead{display:block;text-decoration:none;color:inherit}
+@media(min-width:880px){ .krant-lead{padding-right:28px;border-right:1px solid var(--line-2)} }
+.krant-lead h3{
+  font-size:clamp(27px,3.5vw,42px);line-height:1.1;letter-spacing:-.022em;font-weight:800;
+  margin:8px 0 12px;transition:color .16s ease
+}
+.krant-lead:hover h3{color:var(--pink-text)}
+.krant-lead .excerpt{color:var(--ink-2);font-size:16px;line-height:1.62;margin:0 0 14px}
+.krant-lead img,.krant-lead .beeldloos{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;display:block}
+.krant-kicker{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-dim)
+}
+.krant-kicker b{color:var(--pink-text);font-weight:600}
+.krant-rail{margin-top:22px}
+@media(min-width:880px){ .krant-rail{padding-left:28px;margin-top:0} }
+.krant-rail .railkop{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:6px
+}
+.krant-rail a{display:block;text-decoration:none;color:inherit;padding:13px 0;border-bottom:1px solid var(--line)}
+.krant-rail a:last-child{border-bottom:0}
+.krant-rail h3{font-size:16.5px;line-height:1.28;letter-spacing:-.01em;margin:4px 0 0;transition:color .16s ease}
+.krant-rail a:hover h3{color:var(--pink-text)}
+.krant-onder{
+  column-width:300px;column-gap:34px;column-rule:1px solid var(--line-2);
+  padding:20px 0 6px
+}
+.krant-onder a{
+  display:block;text-decoration:none;color:inherit;break-inside:avoid;
+  padding:0 0 16px;margin-bottom:16px;border-bottom:1px solid var(--line)
+}
+.krant-onder img,.krant-onder .beeldloos{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:6px;margin-bottom:8px;display:block}
+.krant-onder h3{font-size:17.5px;line-height:1.25;letter-spacing:-.012em;margin:5px 0 6px;transition:color .16s ease}
+.krant-onder a:hover h3{color:var(--pink-text)}
+.krant-onder .excerpt{
+  color:var(--ink-2);font-size:13.5px;line-height:1.55;margin:0;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden
+}
+.krant-voet{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;border-top:2px solid var(--ink);padding-top:12px}
+.krant-voet .stand{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-dim);margin:0}
+
+/* ================================================================
+   Tijdbalk: de kaart door de tijd
+   ================================================================ */
+.tijdbalk{
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--rond);
+  padding:12px 16px 8px;margin:0 0 12px;box-shadow:var(--schaduw-zacht)
+}
+.tijdkop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+/* De jaartallen zitten ín de tijdbalk, als ankers onder de schuif: één plek waar
+   je de tijd kiest, in plaats van een aparte jaarknoppenrij bovenaan. */
+/* De jaartallen zijn knoppen en moeten er ook zo uitzien. Ze zitten samen in
+   één verzonken rail, net als de keuze "per jaar / per maand" erboven: zo leest
+   het als één bediening. De gekozen knop ligt als een roze pil bovenop de rail. */
+.jaarmerken{
+  display:flex;gap:2px;margin-top:10px;padding:3px;border-radius:999px;
+  background:var(--paper-3);border:1px solid var(--line);
+  box-shadow:inset 0 1px 2px rgba(72,56,38,.08)
+}
+.jaarmerken button{
+  position:relative;flex:1 1 0;min-width:0;appearance:none;cursor:pointer;padding:8px 4px;
+  border:0;border-radius:999px;background:transparent;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;color:var(--ink-2);
+  transition:color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease
+}
+.jaarmerken button:hover{color:var(--pink-text);background:var(--paper-2)}
+.jaarmerken button[aria-pressed="true"]{
+  color:#fff;background:var(--pink-text);font-weight:600;
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset, var(--schaduw-roze);
+  transform:translateY(-.5px)
+}
+.jaarmerken button[aria-pressed="true"]:hover{background:var(--pink-deep)}
+.speel{
+  width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--pink-text);color:#fff;font-size:15px;line-height:1;
+  box-shadow:var(--schaduw-roze);transition:transform .18s ease,background .18s ease
+}
+.speel:hover{transform:scale(1.06);background:var(--pink-deep)}
+.speel.loopt{background:var(--ink)}
+/* Herhalen: dezelfde pilstaal als de moduskiezer, aan = gevuld in de leestint */
+.herhaal{width:34px;height:34px;flex:0 0 34px;border-radius:50%;border:1px solid var(--line-2);background:var(--paper-2);
+  color:var(--ink-2);font-size:17px;line-height:1;cursor:pointer;transition:background .18s ease,color .18s ease,transform .18s ease}
+.herhaal:hover{transform:scale(1.06);border-color:var(--pink)}
+.herhaal[aria-pressed="true"]{background:var(--pink-text);border-color:var(--pink-text);color:#fff}
+.schuif{min-width:200px}
+.schuif input[type=range]{
+  width:100%;appearance:none;background:transparent;margin:0;height:22px;cursor:pointer
+}
+.schuif input[type=range]{--vul:100%}
+.schuif input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:3px;border:1px solid var(--line);
+  background:linear-gradient(90deg,var(--pink-text) var(--vul),var(--paper-3) var(--vul))}
+.schuif input[type=range]::-webkit-slider-thumb{appearance:none;width:17px;height:17px;margin-top:-7px;border-radius:50%;
+  background:var(--pink-text);border:2px solid var(--paper-2);box-shadow:var(--schaduw-zacht)}
+.schuif input[type=range]::-moz-range-track{height:5px;border-radius:3px;border:1px solid var(--line);
+  background:linear-gradient(90deg,var(--pink-text) var(--vul),var(--paper-3) var(--vul))}
+.schuif input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--pink-text);border:2px solid var(--paper-2)}
+.stand{display:flex;gap:10px;align-items:baseline;font-family:'JetBrains Mono',ui-monospace,monospace;margin-right:auto}
+/* de moduskiezer blijft rechts staan, ook als de stand-tekst verborgen is */
+#tijdbalk .moduskiezer{margin-left:auto}
+.stand b{
+  font-size:15px;background:var(--pink-text);color:#fff;padding:3px 11px;border-radius:999px;
+  box-shadow:var(--schaduw-roze)
+}
+.stand span{font-size:11.5px;color:var(--ink-dim)}
+.moduskiezer{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--paper)}
+.moduskiezer button{
+  appearance:none;border:0;background:none;cursor:pointer;border-radius:999px;padding:6px 13px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--ink-2)
+}
+.moduskiezer button[aria-pressed="true"]{background:var(--pink-text);color:#fff}
+.moduskiezer button:disabled{opacity:.4;cursor:not-allowed}
+
+/* ================================================================
+   Heatmap en detail per camera
+   ================================================================ */
+.blokkop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.blokkop h2{margin:0}
+.heat{display:grid;gap:0;overflow-x:auto;border-radius:10px}
+.heat .rij{display:grid;grid-template-columns:52px repeat(12,minmax(26px,1fr)) 66px;gap:0;align-items:center}
+.heat .rij + .rij .cel{border-top:1px solid rgba(255,253,247,.85)}
+.heat .cel + .cel{border-left:1px solid rgba(255,253,247,.85)}
+.heat .rij:nth-child(2) .cel:first-of-type{border-top-left-radius:8px}
+.heat .rij:nth-child(2) .cel:last-of-type{border-top-right-radius:8px}
+.heat .rij:last-child .cel:first-of-type{border-bottom-left-radius:8px}
+.heat .rij:last-child .cel:last-of-type{border-bottom-right-radius:8px}
+.heat .jaar,.heat .som{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--ink-2)}
+/* elk jaartal draagt dezelfde maat als de roze pil, zodat er niets verschuift
+   als de selectie wisselt: enkel de kleur verandert */
+.heat .jaar{justify-self:start;padding:2px 8px;border-radius:999px}
+.heat .klikbaar{cursor:pointer;transition:color .16s ease}
+.heat .klikbaar:hover{color:var(--pink-text)}
+.heat .rij:hover .cel[data-waarde]{filter:brightness(.97)}
+.heat .som{text-align:right;padding-left:10px}
+.heat .maandkop{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:var(--ink-dim);text-align:center;padding-bottom:4px}
+.heatknoppen{display:flex;gap:8px;flex-wrap:wrap}
+.heat .cel{
+  height:34px;background:var(--paper-3);cursor:default;transition:filter .14s ease;
+  display:grid;place-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px
+}
+.heat .cel .cijfer{mix-blend-mode:multiply;color:rgba(26,23,18,.72)}
+@media(max-width:860px){ .heat .cel .cijfer{display:none} }
+.heat .cel[data-waarde]{cursor:pointer}
+.heat .cel[data-waarde]:hover{filter:brightness(.92)}
+/* Waar de tijdbalk staat: geen kader rond de cel (dat verhakkelt het raster),
+   maar een roze jaarlabel en een streepje onder de maandkop. */
+.heat .cel.nu::after{content:'';position:absolute;left:6px;right:6px;bottom:3px;height:2px;border-radius:2px;background:var(--ink)}
+.heat .cel{position:relative}
+.heat .rij.nu .jaar{color:#fff;background:var(--pink-text)}
+.heat .rij.nu .som{color:var(--ink)}
+/* Het gekozen jaar staat vooraan, de andere jaren treden een stap terug. Ze
+   blijven leesbaar en komen bij hover weer helemaal op, want vergelijken is
+   juist waar deze tabel voor dient. */
+.heat .rij.zacht .cel{opacity:.5}
+.heat .rij.zacht .jaar,.heat .rij.zacht .som{opacity:.6}
+.heat .rij.zacht:hover .cel,.heat .rij.zacht:hover .jaar,.heat .rij.zacht:hover .som{opacity:1}
+.heat .cel,.heat .jaar,.heat .som{transition:opacity .22s ease}
+.heat .cel.leeg{background:var(--paper-3);color:var(--ink-dim)}   /* geen cijfers: effen, geen arcering */
+.heatschaal{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--ink-2)}
+.heatschaal .balk{width:140px;height:10px;border-radius:5px;background:linear-gradient(90deg,#f9f1dc,var(--pink))}
+
+.detail{margin-top:14px;animation:opkomst .26s ease both;position:relative}
+.detail .sluit{position:absolute;top:10px;right:12px;border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:var(--ink-dim)}
+.detail:not([hidden]){animation:opkomst .25s ease both}
+.detail .lijnen{position:relative}
+.detail .lijnlegende{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12.5px;color:var(--ink-2)}
+.detail .lijnlegende span{display:inline-flex;align-items:center;gap:6px}
+.detail .lijnlegende i{width:16px;height:3px;border-radius:2px;display:inline-block}
+
+/* ================================================================
+   Grafieken
+   ================================================================ */
+.grafiek{position:relative}
+/* De tekening staat op ware grootte in het vak. Geen width:100%: als het vak
+   breder blijkt dan bij het tekenen, zou de browser de hele tekening oprekken
+   en groeit de tekst mee. Bij een maatverandering wordt hertekend. */
+.grafiek svg,.detail .lijnen svg{display:block;max-width:100%;height:auto;overflow:visible}
+.grafiek .vak{fill:transparent;cursor:pointer}
+.grafiek .staafje{transition:opacity .18s ease}
+.grafiek.hoveren .staafje{opacity:.35}
+.grafiek.hoveren .staafje.aan{opacity:1}
+.grafiek text,.detail .lijnen text{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;fill:var(--ink-dim)}
+.grafiek .waarde,.detail .lijnen .waarde{fill:var(--ink-2)}
+.detail .lijnen .raster{stroke:var(--line);stroke-dasharray:2 4}
+.grafiek .raster{stroke:var(--line);stroke-dasharray:2 4}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translate(-50%,-115%);
+  background:var(--ink);color:var(--paper);border-radius:9px;padding:7px 10px;font-size:12px;
+  white-space:nowrap;box-shadow:var(--schaduw-til);transition:opacity .14s ease
+}
+.tip.aan{opacity:1}
+.tip b{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+.staafgroei{transform-origin:center bottom;animation:groei .55s cubic-bezier(.32,.72,0,1) both}
+@keyframes groei{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+.verdeling{display:flex;height:24px;border-radius:6px;overflow:hidden;background:var(--paper-3)}
+.verdeling span{display:block;box-sizing:border-box;border-right:2px solid var(--paper-2);overflow:hidden;white-space:nowrap;text-align:center;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:500;line-height:24px;transition:width .5s cubic-bezier(.32,.72,0,1)}
+.verdeling span:last-child{border-right:0}
+.legende{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin:10px 0 0}
+.legende span{display:inline-flex;align-items:center;gap:6px}
+.legende i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.legende i.omlijnd{background:var(--paper-2);border:1.5px solid var(--ink);box-sizing:border-box}
+.legende i.streepje{width:2px;height:13px;background:var(--ink-dim);border-radius:1px}
+.halter-jaar{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;fill:var(--ink-2)}
+.halter-deel{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;fill:var(--ink)}
+.halter-noot{font-size:10.5px;fill:var(--ink-dim)}
+.legende b{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500}
+
+/* Lijstjes met balk (feitcodes, geldposten) */
+.balklijst{list-style:none;margin:0;padding:0}
+.balklijst li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.balklijst li:last-child{border-bottom:0}
+.balklijst .om{font-size:14px}
+.balklijst .co{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:var(--ink-dim)}
+.balklijst .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13.5px;align-self:center}
+.balklijst .staaf{grid-column:1/-1;height:5px;border-radius:3px;background:var(--pink);opacity:.75;transition:width .5s cubic-bezier(.32,.72,0,1)}
+
+table{border-collapse:collapse;width:100%;font-size:14px}
+.tabelwikkel{overflow-x:auto}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);font-weight:500}
+td.n,th.n{text-align:right;font-family:'JetBrains Mono',ui-monospace,monospace}
+tbody tr{transition:background .16s ease}
+tbody tr:hover{background:var(--pink-soft)}
+
+/* De verantwoording is een donkere band over de volle breedte van het scherm,
+   zoals de inkt-eilanden van de familiesites; de tekst blijft binnen de
+   leesbreedte. Het vorige papier-op-papier las niet als een band. */
+.ver-band{
+  width:100%;margin-top:30px;padding:22px 0 40px;
+  background:var(--paper-2);color:var(--ink-2);
+  border-top:1px solid var(--line);
+  font-size:12.5px;position:relative;z-index:2
+}
+.ver-band b{color:var(--ink)}
+.ver-band a{color:var(--pink-text)}
+.ver-band p{color:var(--ink-2)}
+.ver-band p{margin:0 0 8px}
+body[data-view="nieuws"] .ver-band{display:none}
+/* Het colofon: hetzelfde systeem als op Denk mee en Lees mee, met het vizier
+   als merkteken en de sitenaam in mono. */
+.colofon{--co-r:1.5rem;--co-teken:calc(var(--co-r)*2);--co-kap:.41rem;
+  background:var(--paper);border-top:1px solid var(--line);
+  padding-block:calc(var(--co-r)*2) calc(var(--co-r)*3);position:relative;z-index:2}
+.co-shell{max-width:1180px;margin-inline:auto;padding-inline:clamp(1.1rem,4vw,3rem);display:flex;align-items:flex-start;gap:var(--co-r)}
+.co-mark{flex:none;display:block;width:var(--co-teken);height:var(--co-teken);margin-top:var(--co-kap);border-radius:50%;transition:box-shadow .16s}
+.co-mark svg{display:block;width:100%;height:100%}
+.co-mark:hover{box-shadow:0 0 0 4px var(--pink-soft)}
+.co-mark:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+.co-body{max-width:33rem}
+.co-zin{margin:0;font-size:.95rem;line-height:var(--co-r);color:var(--ink-2);text-wrap:pretty}
+.co-zin strong{font-weight:600;color:var(--ink)}
+.co-zin .co-naam{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:.96em;letter-spacing:-.015em;color:var(--ink);white-space:nowrap}
+.co-zin .co-naam em{font-style:italic;color:var(--pink-text)}
+.co-fam{margin:var(--co-r) 0 0;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.66rem;line-height:var(--co-r);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim)}
+/* geen globale ankerreset in dit sjabloon: zonder text-decoration:none krijgt
+   een link hier de browser-onderstreping bovenop de eigen borderlijn */
+.co-fam a{color:var(--pink-text);border-bottom:1px solid var(--pink);text-decoration:none}
+.co-fam a:hover{color:var(--pink-deep);border-bottom-color:var(--pink-deep)}
+/* De verantwoording staat open, als kadertjes zoals op Denk mee: strakke
+   hoeken, haarlijn in de app-tint, en één accentkader voor het voorbehoud dat
+   de lezer het minst mag missen. */
+.ver-kop{display:flex;align-items:baseline;gap:12px;padding:10px 0 14px}
+.ver-kop .kop{font-size:14px;color:var(--ink);font-weight:600}
+.ver-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+@media(max-width:780px){ .ver-grid{grid-template-columns:1fr} }
+.ver-kader{background:var(--paper);border:1px solid rgba(133,104,19,.22);box-shadow:var(--schaduw-zacht);padding:1.25rem 1.35rem 1.1rem}
+.ver-kader h3{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1rem;font-weight:500;letter-spacing:-.005em;color:var(--ink);margin:0 0 .7rem}
+.ver-kader p{font-size:.9rem;line-height:1.6;color:var(--ink-2);margin:0 0 8px}
+.ver-kader p:last-child{margin-bottom:0}
+.ver-kader ul{margin:0;padding-left:1.1rem;font-size:.9rem;line-height:1.6;color:var(--ink-2)}
+.ver-kader li{margin:0 0 6px}
+.ver-kader li:last-child{margin-bottom:0}
+.ver-kader p a{color:var(--pink-text);border-bottom:1px solid var(--pink-text);text-decoration:none}
+.ver-kader p a:hover{color:var(--pink-deep);border-bottom-color:var(--pink-deep)}
+.ver-accent{background:var(--pink-text);border-color:var(--pink-text)}
+.ver-accent h3,.ver-accent p{color:#fff}
+.ver-accent p a{color:#fff;border-bottom-color:#fff}
+#meldingen:empty{display:none}
+.ver-slot{margin:16px 0 0;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--ink-dim)}
+
+/* terug-naar-boven zoals op Lees mee en het portaal: rond en glazig, half
+   doorzichtig tot je hem aanwijst */
+.terug{
+  position:fixed;right:1.1rem;bottom:1.5rem;width:40px;height:40px;z-index:90;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line-2);border-radius:50%;
+  background:rgba(245,241,232,.5);backdrop-filter:blur(9px) saturate(140%);-webkit-backdrop-filter:blur(9px) saturate(140%);
+  color:var(--ink);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.05rem;line-height:1;cursor:pointer;
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease,border-color .18s,color .18s
+}
+.terug.zichtbaar{opacity:.72;transform:none;pointer-events:auto}
+.terug.zichtbaar:hover,.terug.zichtbaar:focus-visible{opacity:1;border-color:var(--pink);color:var(--pink-text)}
+@media(max-width:719px){ .terug{bottom:calc(84px + env(safe-area-inset-bottom))} }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  html{scroll-behavior:auto}
+}
+/* Mobiele overrides staan bewust ALS LAATSTE in de stylesheet: bij gelijke
+   specificiteit wint de laatste regel, en dit blok stond ooit vóór de basisregels
+   van .tegels, waardoor het dood was (ontdekt 04/09/2026). */
+@media(max-width:600px){
+  .tegels{grid-template-columns:repeat(2,1fr)}
+  .tegels .tegel:first-child{grid-column:1/-1}
+  .jaarmerken{gap:0;padding:2px}
+  .jaarmerken button{font-size:11px;padding:7px 2px}
+  .stand b{font-size:14px}
+}
+</style>
+</head>
+<body class="techniek">
+<div class="appbalk" id="appbalk">
+  <div class="balk-in">
+    <a class="brand" href="https://asgaupaust.be/" aria-label="As Gau Paust, naar het portaal"><img class="brand-mug" src="data:image/png;base64,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" alt="" aria-hidden="true" width="512" height="512">As Gau <em>Paust</em></a>
+    <span class="balk-ruimte" aria-hidden="true"></span>
+    <button class="menuknop" id="menuknop" aria-label="Menu" aria-expanded="false" aria-controls="menuvlak" onclick="menu()"><span></span><span></span><span></span></button>
+  </div>
+</div>
+
+<div class="menuvlak" id="menuvlak" hidden onclick="if(event.target===this)menu(false)">
+  <div class="menukaart">
+    <!-- De menukop spiegelt de bovenbalk: zelfde brand op dezelfde plek, zoals
+         op de deelsites. Alleen het sluitkruis komt erbij. -->
+    <div class="menu-kop">
+      <a class="brand" href="https://asgaupaust.be/" aria-label="As Gau Paust, naar het portaal"><img class="brand-mug" src="data:image/png;base64,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" alt="" aria-hidden="true" width="512" height="512">As Gau <em>Paust</em></a>
+      <button class="menu-sluit" onclick="menu(false)" aria-label="Sluit menu">&times;</button>
+    </div>
+    <nav class="menu-lijst" aria-label="Onderdelen">
+      <a href="index.html#camera">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="1.7"/><path d="M12 1.9v3.3M12 18.8v3.3M1.9 12h3.3M18.8 12h3.3" stroke-linecap="round"/></svg></span>
+        <span class="menu-naam">ANPR</span><span class="menu-tel" id="tab-camera"></span></a>
+      <a href="index.html#gas">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></span>
+        <span class="menu-naam">Parkeren</span><span class="menu-tel" id="tab-gas"></span></a>
+      <a href="index.html#geld">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M15.4 8.9a4 4 0 1 0 0 6.2" stroke-linecap="round"/><path d="M7.9 10.9h6.3M7.9 13.1h6.3" stroke-linecap="round"/></svg></span>
+        <span class="menu-naam">Planning en rekening</span><span class="menu-tel" id="tab-geld"></span></a>
+      <a href="index.html#nieuws">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h6M7 12h10M7 16h10M16 8h1"/></svg></span>
+        <span class="menu-naam">In het nieuws <span class="menu-periode" id="menu-periode"></span></span><span class="menu-tel" id="tab-gazet"></span></a>
+      <a href="index.html#verantwoording">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6h.01"/></svg></span>
+        <span class="menu-naam">Verantwoording</span></a>
+      <a href="techniek.html">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/><circle cx="17.5" cy="16" r="3"/><path d="M19.7 18.2 22 20.5"/></svg></span>
+        <span class="menu-naam">Hoe het werkt</span></a>
+    </nav>
+  </div>
+</div>
+
+
+
+<!-- Statusstrook, weg te halen na de lancering. De knop wijst naar het contactvenster van
+     het portaal: dit dashboard heeft er zelf geen, en zo staat het adres hier nergens in de
+     broncode. -->
+<div class="status-strook"><div class="ss-in">
+  <b>Nog niet gelanceerd</b>
+  <span>Dit dashboard is nog in volle voorbereiding: we testen nog of alle cijfers kloppen.
+    Kom je hier toevallig terecht, dan is je feedback nu al welkom.
+    <a class="ss-cta" href="https://asgaupaust.be/#contact">Laat het ons weten</a></span>
+</div></div>
+
+<style>
+/* ==========================================================================
+   Alleen voor de technische pagina. Papier, korrel, nav, kaartvlakken, koppen,
+   app-balk en colofon komen uit de huid van de GAS-pagina zelf: deze pagina
+   gebruikt dezelfde .wrap, .titelrij, .heldkop-klein, .duiding, .eyebrow en
+   .kaartvlak als het dashboard, zodat ze aanvoelt als hetzelfde huis. Hieronder
+   staat enkel wat een leespagina extra nodig heeft: leestekst in kolombreedte,
+   en het contactvenster.
+   ========================================================================== */
+
+/* Leestekst. Op het dashboard staat er korte duiding naast cijfers; hier lees je
+   alinea's, dus iets groter en met meer regelafstand, en nooit breder dan 66
+   tekens, want daarboven verliest het oog de volgende regel. */
+.tech-prose{max-width:66ch}
+.tech-prose p{margin:0 0 .95rem;font-size:15px;line-height:1.72;color:var(--ink-2)}
+.tech-prose p:last-child{margin-bottom:0}
+.tech-prose strong{color:var(--app-tekst);font-weight:600}
+.tech-prose code{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:.08em .38em;color:var(--ink)
+}
+.tech-lijst{margin:0 0 .95rem;padding-left:1.15rem;max-width:66ch}
+.tech-lijst li{font-size:15px;line-height:1.68;color:var(--ink-2);margin:0 0 .5rem}
+.tech-lijst li:last-child{margin-bottom:0}
+.tech-lijst b{color:var(--ink)}
+
+/* Elk hoofdstuk is een kaartvlak, net als de blokken op het dashboard. De kop
+   krijgt hier het formaat dat het dashboard aan zijn blokkoppen geeft. */
+.tech-blok{margin:0 0 16px}
+.tech-blok h2{font-size:19px;margin:2px 0 12px}
+.tech-blok h2 em{color:var(--app-tekst);font-style:normal}
+
+/* Contactvenster: hetzelfde patroon als op het portaal en bij Denk mee, maar in
+   de kleur van deze app. Geen server: het venster stelt een mailbericht samen en
+   geeft dat aan je eigen mailprogramma door. */
+.ct-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}
+.ct-modal[hidden]{display:none}
+.ct-overlay{position:absolute;inset:0;background:rgba(26,23,18,.55);backdrop-filter:blur(4px)}
+.ct-kaart{
+  position:relative;width:min(520px,100%);max-height:86vh;overflow:auto;
+  background:var(--paper-kaart);border:1px solid var(--line);border-radius:var(--rond);
+  padding:22px 22px 18px;box-shadow:0 24px 60px -18px rgba(72,56,38,.45)
+}
+.ct-kaart h3{margin:.35rem 0 .4rem;font-size:21px;letter-spacing:-.01em}
+.ct-uitleg{margin:0 0 1rem;font-size:14px;line-height:1.6;color:var(--ink-2)}
+.ct-sluit{
+  position:absolute;top:12px;right:12px;width:32px;height:32px;line-height:1;font-size:19px;
+  border:1px solid var(--line);border-radius:50%;background:var(--paper-2);color:var(--ink-dim);cursor:pointer
+}
+.ct-sluit:hover{background:var(--app);border-color:var(--app);color:var(--paper)}
+.ct-rij{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){ .ct-rij{grid-template-columns:1fr} }
+.ct-veld{margin:0 0 10px}
+.ct-label{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 .3rem}
+.ct-invoer{
+  width:100%;box-sizing:border-box;font:inherit;font-size:14px;color:var(--ink);
+  background:var(--paper-2);border:1px solid var(--line);border-radius:9px;padding:.55rem .7rem
+}
+.ct-invoer:focus{outline:2px solid var(--app);outline-offset:1px;border-color:var(--app)}
+.ct-fout{margin:0 0 .7rem;font-size:13px;color:var(--roest)}
+.ct-fout[hidden]{display:none}
+.ct-knop{
+  width:100%;font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  background:var(--app);color:var(--ink);border:1px solid var(--app-deep);border-radius:10px;padding:.62rem 1rem
+}
+.ct-knop:hover{background:var(--app-deep);color:var(--paper)}
+.ct-voet{margin:.8rem 0 0;font-size:12px;line-height:1.55;color:var(--ink-dim)}
+/* De knop in de lopende tekst: leest als een link, gedraagt zich als een knop. */
+.ct-open{
+  font:inherit;font-size:inherit;color:var(--app-tekst);background:none;border:0;padding:0;
+  cursor:pointer;text-decoration:underline;text-underline-offset:2px
+}
+.ct-open:hover{color:var(--app-deep)}
+</style>
+
+<main class="wrap tech">
+
+  <p class="eyebrow">Over deze pagina</p>
+  <div class="titelrij">
+    <h1 class="heldkop-klein">De technische pagina van <em>GAS mee met Mechelen</em></h1>
+  </div>
+  <p class="duiding">Waar de cijfers vandaan komen, hoe we ze natellen, en waar dit werk tekortschiet.</p>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">De vaststelling</div>
+    <h2>Wat dit dashboard <em>telt</em></h2>
+    <div class="tech-prose">
+      <p>
+        ANPR-camera's lezen nummerplaten bij het verkeersbord C3: aan het begin van de autoluwe
+        straten, en sinds eind 2022 ook aan de verkeersstops op de vesten en in de wijk
+        Caputsteen-Nekkerspoel. Ziet een camera zo'n overtreding, dan wordt het een GAS 4-dossier,
+        en die dossiers tellen wij. Waarschuwingen niet: op zes plekken stuurde GAS Rivierenland in
+        2024 eerst een brief, zonder boete. De vrachtwagensluis blijft buiten beeld. Parkeren valt
+        ook onder GAS 4, maar daar stelt een vaststeller de overtreding op straat vast; overlast en
+        snelheid lopen via nog andere procedures.
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">De bronnen</div>
+    <h2>Van jaarverslag naar <em>cijfer</em></h2>
+    <div class="tech-prose">
+      <p>
+        De aantallen komen uit de jaarverslagen van GASAM, sinds 2022 GAS Rivierenland. We
+        kregen ze via een openbaarheidsverzoek: de jaargangen 2012 en 2015 tot en met 2024, want
+        voor 2013 en 2014 kregen we geen verslag. Het geld komt uit de jaarrekeningen van stad en
+        OCMW Mechelen.
+      </p>
+      <p>
+        Elk verslag opent met een overzichtstabel, maar de cijfers die wij nodig hebben staan
+        enkel als label bij een staaf in een grafiek: per maand, per jaar en per camera. We
+        koppelen elk getal aan het label op dezelfde plek en toetsen de som aan het gepubliceerde
+        jaartotaal. Klopt die som niet, dan blijft het veld leeg.
+        <strong>We vullen nooit een gat met een schatting.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">Op de kaart</div>
+    <h2>Waar een camera <em>staat</em></h2>
+    <div class="tech-prose">
+      <p>
+        De verslagen noemen een straat, nooit een paal. Elke stip zegt daarom zelf waarop ze
+        steunt: een paal die vrijwilligers intekenden in OpenStreetMap, een plek die het
+        autoluwreglement van de stad beschrijft, een straatfoto waarop we haar terugvonden, of
+        het midden van de straat als niets van dat al bestaat. Zeven van de 38 staan nog op dat
+        straatmidden.
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">De controle</div>
+    <h2>Wat we natellen, en wat we <em>missen</em></h2>
+    <div class="tech-prose">
+      <p>
+        Een leesfout in een grafiek is stil: er rolt gewoon een getal uit, en dat oogt even
+        netjes als het juiste. Daarom loopt <code>steekproef_cijfers.py</code> na elke build 79
+        cijfers na tegen de pdf's, haalde een tweede lezer alle cijfers opnieuw uit de bron
+        zonder onze code, en keken twee lezers de camera's na op straatfoto's.
+      </p>
+      <p>
+        Vergelijk de jaren toch met zorg. Vanaf 14 november 2022 kwamen er zes camera's bij aan de
+        verkeersstops, en in 2022 en 2023 stonden zeven camera's in de binnenstad maandenlang uit
+        door werken. Een hoger cijfer is dus soms gewoon meer camera's, en een lager cijfer een
+        camera die niet keek.
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">Meelezen</div>
+    <h2>Eén pagina, en een <em>uitgestoken</em> hand</h2>
+    <div class="tech-prose">
+      <p>
+        Dit dashboard is één statische pagina: geen server, geen databank, geen trackers, geen
+        cookies. Alleen de kaart haalt haar tegels bij OpenStreetMap en de nieuwspagina haar
+        beelden bij Lees mee, dus die servers zien wat je opvraagt. Persoonsgegevens staan hier
+        niet, enkel <strong>opgetelde cijfers uit openbare verslagen</strong>.
+      </p>
+      <p>
+        De kaartgegevens komen van OpenStreetMap (ODbL), de straatfoto's waarmee we posities
+        nakeken van Panoramax (CC BY-SA 4.0), en de lettertypes staan onder de Open Font License.
+      </p>
+      <p>
+        Zie je een cijfer dat niet klopt of een camera op de verkeerde plek?
+        <button type="button" class="ct-open" onclick="openContact()">Stuur ons een bericht</button>.
+        We kijken elke melding na aan de bron. En aan de stad: publiceer deze cijfers uit eigen
+        beweging, en leesbaar.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- Contactvenster, hetzelfde patroon als op het portaal en bij Denk mee: geen
+     server en geen formulierdienst, maar een venster dat een mailbericht opstelt
+     en dat aan je eigen mailprogramma doorgeeft. Het adres staat in base64, niet
+     omdat dat veilig is, maar omdat het de eenvoudigste oogstrobots weghoudt. -->
+<div class="ct-modal" id="contactModal" hidden>
+  <div class="ct-overlay" onclick="sluitContact()"></div>
+  <div class="ct-kaart" role="dialog" aria-modal="true" aria-labelledby="ctTitel">
+    <button class="ct-sluit" type="button" onclick="sluitContact()" aria-label="Sluit">&#215;</button>
+    <div class="eyebrow">Contact &middot; via e-mail</div>
+    <h3 id="ctTitel">Stuur ons een bericht</h3>
+    <p class="ct-uitleg">Een cijfer dat niet klopt, een camera op de verkeerde plek, of een vraag over de werkwijze? We horen het graag.</p>
+    <form id="ctForm" novalidate>
+      <div class="ct-rij">
+        <div class="ct-veld">
+          <label class="ct-label" for="ctNaam">Naam</label>
+          <input type="text" id="ctNaam" class="ct-invoer" placeholder="Voornaam Naam" autocomplete="name" required>
+        </div>
+        <div class="ct-veld">
+          <label class="ct-label" for="ctEmail">E-mailadres</label>
+          <input type="email" id="ctEmail" class="ct-invoer" placeholder="jij@voorbeeld.be" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="ct-veld">
+        <label class="ct-label" for="ctOnderwerp">Onderwerp</label>
+        <input type="text" id="ctOnderwerp" class="ct-invoer" placeholder="Waarover gaat het?" required>
+      </div>
+      <div class="ct-veld">
+        <label class="ct-label" for="ctBericht">Bericht</label>
+        <textarea id="ctBericht" class="ct-invoer" rows="4" placeholder="Je bericht&#8230;"></textarea>
+      </div>
+      <div class="ct-fout" id="ctFout" role="alert" hidden></div>
+      <button type="submit" class="ct-knop">Open mail-template &#8594;</button>
+    </form>
+    <p class="ct-voet">Je eigen mailprogramma opent met het bericht klaar. Zo komt er geen formulierdienst tussen, en blijft je adres van jou.</p>
+  </div>
+</div>
+
+<script>
+var CONTACT_TO = 'YXNnYXVwYXVzdEBnbWFpbC5jb20=';
+
+function openContact() {
+  document.getElementById('contactModal').hidden = false;
+  document.getElementById('ctNaam').focus();
+}
+
+function sluitContact() {
+  document.getElementById('contactModal').hidden = true;
+}
+
+function contactVerstuur() {
+  var lees = function (id) { return document.getElementById(id).value.trim(); };
+  var naam = lees('ctNaam'), email = lees('ctEmail'), onderwerp = lees('ctOnderwerp'), bericht = lees('ctBericht');
+  var velden = ['ctNaam', 'ctEmail', 'ctOnderwerp'];
+  var wis = function () {
+    velden.forEach(function (id) {
+      var v = document.getElementById(id);
+      v.removeAttribute('aria-invalid');
+      v.removeAttribute('aria-describedby');
+    });
+  };
+  // De melding is niet alleen te zien: role="alert" laat ze voorlezen zodra ze
+  // verschijnt, en aria-describedby plakt ze aan het veld dat het betreft.
+  var fout = function (tekst, id) {
+    var doos = document.getElementById('ctFout');
+    wis();
+    doos.textContent = tekst;
+    doos.hidden = false;
+    if (id) {
+      var v = document.getElementById(id);
+      v.setAttribute('aria-invalid', 'true');
+      v.setAttribute('aria-describedby', 'ctFout');
+      v.focus();
+    }
+  };
+  wis();
+  if (!naam) return fout('Vul je naam in.', 'ctNaam');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fout('Vul een geldig e-mailadres in.', 'ctEmail');
+  if (!onderwerp) return fout('Vul een onderwerp in.', 'ctOnderwerp');
+  var naar = atob(CONTACT_TO);
+  var tekst = 'Naam: ' + naam + '\nE-mail: ' + email + '\n\n' + bericht;
+  window.location.href = 'mailto:' + naar
+    + '?subject=' + encodeURIComponent('[GAS mee met Mechelen] ' + onderwerp)
+    + '&body=' + encodeURIComponent(tekst);
+  sluitContact();
+}
+
+document.getElementById('ctForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  contactVerstuur();
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !document.getElementById('contactModal').hidden) sluitContact();
+});
+</script>
+
+<!-- build.py giet dit fragment in de huid van de GAS-pagina: dezelfde head met de
+     kleurtokens en de lettertypes, dezelfde nav met het merkwoord en het menu, de
+     app-balk onderaan en het familie-colofon. Hier staat enkel de inhoud. -->
+
+<footer class="colofon">
+  <div class="co-shell">
+    <a class="co-mark" href="index.html" aria-label="GAS mee met Mechelen, naar het begin">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="15.2" fill="none" stroke="var(--pink)" stroke-width="1" opacity=".85"/>
+        <circle cx="20" cy="20" r="11.4" fill="none" stroke="var(--pink)" stroke-width=".8" opacity=".22"/>
+        <path d="M20 2.4v3.4M20 34.2v3.4M2.4 20h3.4M34.2 20h3.4" stroke="var(--pink-deep)" stroke-width="1" stroke-linecap="round"/>
+        <path d="M14.9 17.6l1.7-2.7a2 2 0 0 1 1.7-.95h3.4a2 2 0 0 1 1.7.95l1.7 2.7z" fill="var(--pink)"/>
+        <rect x="12" y="17.2" width="16" height="5.8" rx="2.6" fill="var(--pink)"/>
+        <path d="M16.7 16.8l1.05-1.7a1.3 1.3 0 0 1 1.1-.6h2.3a1.3 1.3 0 0 1 1.1.6l1.05 1.7z" fill="var(--pink-deep)"/>
+        <circle cx="15.7" cy="23" r="1.9" fill="var(--pink-deep)"/>
+        <circle cx="24.3" cy="23" r="1.9" fill="var(--pink-deep)"/>
+        <circle cx="15.7" cy="23" r=".7" fill="var(--paper-2)"/>
+        <circle cx="24.3" cy="23" r=".7" fill="var(--paper-2)"/>
+      </svg>
+    </a>
+    <div class="co-body">
+      <p class="co-zin"><strong class="co-naam">GAS mee <em>met Mechelen</em></strong>, een experiment van <strong>As Gau Paust</strong>.
+      Zo zie je wat de camera's aan de autoluwe zones vaststellen, en wat de stad aan GAS plant en int.</p>
+      <p class="co-fam">Onderdeel van <a href="https://asgaupaust.be">asgaupaust.be</a> &middot; <a href="https://asgaupaust.be/privacy/">Privacy</a> &middot; <a href="techniek.html">Hoe het werkt</a></p>
+    </div>
+  </div>
+</footer>
+
+<nav class="onderbalk" role="tablist" aria-label="Onderdelen">
+  <a role="tab" href="index.html#camera">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="1.7"/><path d="M12 1.9v3.3M12 18.8v3.3M1.9 12h3.3M18.8 12h3.3" stroke-linecap="round"/></svg>ANPR</a>
+  <a role="tab" href="index.html#gas">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg>Parkeren</a>
+  <a role="tab" href="index.html#geld">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M15.4 8.9a4 4 0 1 0 0 6.2" stroke-linecap="round"/><path d="M7.9 10.9h6.3M7.9 13.1h6.3" stroke-linecap="round"/></svg>Geld</a>
+  <a role="tab" href="index.html#nieuws">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h6M7 12h10M7 16h10M16 8h1"/></svg>Nieuws</a>
+  <a class="portaalknop" href="https://asgaupaust.be/" aria-label="Naar het portaal As Gau Paust">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAs5ElEQVR42u2deZhV1ZX2f3vvc86tCSjmeRBQCCioSBxIhCgG7dhqDKBtBhOjojF2m6m7EzsfVKc1X3fi1yZO0RgSu5M4YIymYwwSFYygNoqJijKITMqgQhVQ0z3D3t8fa9+amBSrqAt6nuc+cKlL3XP2WnsN73rX2opD7HKgYIaGMQqqMgWu9c8vroTSQaCHQHIy6DKwJ4MOwRlgHGD28usz4EVQGdgE9NNg6yF8GuwGaHhDcVfN7vcz28ArDubZtvdT7Jc6tIQOinlZ659dORiYAPbjwHFgPwKqOwQ5eTwF2ObfRLafbzMtlkX7/+OANA+uGvSrwAug/ww8r7htY+v7meGV69BQBlXcgp+t4RXVUuiOq7tCfiJwFujJYMdCVCrCskDqBWYdKC951+I5ld7Pt9oWn/UCdBq0kuUKaP6uuAH0crCLgEcgt1Rx087WyjDGKarshwrwngTfeuEcV+cgmQacB5wBZpAIIfMvl4FzoJQIS3XEszlRLGWbv0sZsRjGK0T2BrAAeBDC+Yqb8ntT5A8VYK+Cv88qv/Mcl48GcyFwAZjRcrsJkFlZcaX8dlSd553wCoEGoyEsuJoVwL2Q3aO4Y4V82CmYqYtJEVRx7virzgD7VbDTIMqJWU+t3316/2a8056kxT0GWtxFnAc9H/TNilsWFJtFUJ3v46FZ8LPOAP0tUGfIxo69eUcVr9D3GUs4cRORdxFuAdgfKG5fsKfn/8AoQCGqL+yA1oJXQGx9AKYPlUzlXbgJBZH2WUUbRZhhOitrUJ1h7psFf8nREF4L4YXy7E2CNxyeV9asCApI7oHkOsXcl9uuzWGnAC13vWNGBD2/Deo7YCLIH+6C34si5DRkMbjrYdv3FfPig20N1MHy9c1+/oppwA0QjhUfbzPxkx/Ey2WgfYyQLAe+ofjJ/LZrdkgrgGNyoFiUOiYHMPoHEFwjyp2kXvCKD/blRBHCQJYivRFWfKuwZopF6SGrAI7ZgaIqdcw6EvTPIZwEDfbdIXIfOD3w61KqIVkM9kuK21cX1rCjvlV3lL/3Jix1XDoT9DNgJkFDKoL/UPh72It+XRpSWSv9jOPSmbKGs7XroM2qO8bf4xRV1jFrDuTuBdcD8hmo4ENB71cRAlkr1wNy9zpmzVFUWQWugBsUrQsoBC6OS7pA7kaILoGGzKN36kPhvqfV9MWsUgPxXMhfo5i7q72DQ9X+wr+yO7j5EE2ExgQBxz+8DvxKoCSEeCmoaYrbqttTCXT7Cv8iL/zwQ+G33xXKWoYTwc13XNRd1rp93IFuX+F3LQg//VD47a4Eqaxt13ZVAt0xwu/kYE8djuiCCjpCCVT7+fwiEX5T/QXPDznsgsMUSgJI2iUmUAeO6ztgVimohT7gKx7h50LhjKTZYQo0FpQgXgpuCtzeAIoDUfcDNB+zjWft3Aq5iZBPOl34WgEp9uj+NCy9msb5l+IGVgLZYZiBqkDWPDcRuFVkMdsclBigGd69bA6UXVw00b4CyLBj+mKP6Y+dOBg3sCvCHDucs4Oyix2XzfGIYdChCiD16qrUcel0iGZDQ/Gkek60QO1qRNXmIbO4biUchkFAGyVoSCCa7bh0ushmhukQBZBoc551XDkcwjsgc2CDouO47soLfbAsxB3V+wNQbLSByCK8Q2Qz7z1lBvrdB32v+OaM7NdguoO1xehcVdacAbieZR8ABVBKZGG6i2xmaHhFvdvi0bvUlAJ/r/KHUHIi5FOKkr2j4J06sYpa4fp3kdu07jBXAozIpOREqPyhyGqGbhcFKPDUHJdNheia4kn39hID1OZRjSlOK+zwnmDMIdQE1x5AUXSN47Kpnnpn3pcCiBkZ4xyXh6Bu8YzW4q7lFzq4nIMuOaHn7ysQ1MqnkIcFPuBZx+oWkdkYtz9XoPdv+qssZNdC7ihIsuImcyjhU9QlogOlIa4k8Aqwl3WwsTQCHzakkiQTWWXXiuz27Qr0vqHeeZnQuaLveOZuEQtf2gjUjkb069twSkG3Euhe2mTLdvu8huzc8dhTjzqM0kWlRVbRdxyzjhQZ7j0r2IdAX/FL5q6DIPT9b6qo5Q+QZfBWLco6sQAV0e7C9ahhdsYo8r+6iPwvZuIGdxfU8NB3B0IeEpld11qW71IBmgO/WVMgmuHpXMVP3dYyC0Bv2un11e3ZaCnfqjmwK4Qa16sMO6TyXcwOOGR0wIjMohmOWVP2FRDuxQKM8VvGzj70bKNFbdwBqYOySAJB9lIoSzJJES0orQ5Tyrmd3Vqm+1EAD/dav/unQP4Q69hxqB0Ngo1EptkF7Em+qWum3zUkh1uuaER20RSxAlV2T1ZA73v3qxZTMg6h6506SPyur8jtLtgCWGgLsx4AfTgy1QuA4N6tgN7z7r/iNL/77aHXr6dRb+5E1eUhMtijekHbSrlqqQcKtMZVhB3r7ZSPUUybV8ei6cZnBFMcV5y2JyuwF7XPvuE7sw/J3EhlFlKLUwrXvXR3BWjFvPZ/prbjoHrtA3ObQJb3r0b503U0X0E5P07nG3v6adAyK5Zo8fIRoD/hff+haRdT6wWqBAlUvhvbtXEBiZVCWuHv7RkDKI9I2kyEXFKKHdEPN6Q7lAa47qWojTvQz72B2r5LkFznOqj5J+/AfMJx+QjFHWtE1hIZt8D0Z2uosuA+L1O3GtKi7uRptWv8/Cbnn3d7A9TmAYedOBjKSqC+URpxWxWGWlQOI9N+LkCrJsG7bhVknz6G9ILx2PH9BZwyfuiYdehlb5C74Feojds7SgmUUMiiUmj4PDCnWdZ+h4shrMocXysF9TkJj4sU9Sukay71r8yDgH7HoVGNCao2RiUZ9vgBpBeMl88W2MIF3TG6eQZJ1E5FI63E1FeUkF54AvlHLiW+5Tzs1JHQu1yCzfpYeAtxij1pKPFPPgOlOT9iSHUQOpg6UJ8TGVdlhbwoaFnuddSdBtGIooV9FWBTQOP6VYp5b0xR2+rB5uVxggDimOAXzxOP6w8O4h+dA9YR/GKJzI90LVyFn+RDkrVGFA9E8M6BzWPHDSW++Tzs8QNEyQBqGtDPv4l57DX0y1twuZDk38/CDdJkJw3Bju6LfmEdqKgjYlEtaVFuBNSdpuBhP4giKygAMM//RfmZNkXm/5UCl5B++liyL0/EjugpChBnqNe3EzyyAvPbl1GbtwEhwdxncb3KSL5zGgDxTeeCVgRzn4KoDDIlQnfeIxp94Lu/YPKVIr3iVJLZZ+B6lIq7STKC/1pGcPvT6BXvQNLYNCTEDa0k+f6ZEhP07wIvFCyA6xiETH75DODhgswDmXg4M5MZu24apKroYF9vVrNTjyL58Tm4AV3FVRop9arRvYknD0d99RSCeS8SXvc4xI2E//44hIbkW5NFCW44W+LCny0WU5xYoY+XhtjTR2Iee/W9q72/NzewB8m/TSOdPg5CA40p+q+bCOf8CfP4avlsLoSwxFuKGFXd4EcK2hZAlOtAeDhV4KY5Lq5UzKxxEnXM0DAvg9xxEPbzg5p0cZl9mbaWXnkSrl8XaEgInliD2lCDHdYDN64fdmA3OLIXybemkJ0yjPDGpzAPv0j4r49CXUzyf6ZCLiD+f38LmSP4xULUW7V+NlVGeslE1F83E9y7FEyuKTvYv/Bj7MQjiG88BzthoJBS1mzD/HEl5r4XMc+uhJIuJDPGQWUJevF6zLL1EEZkZ44SZamLxY3RoY0sSnxe1A/UccATMEMH0N3PXHVnefUvMvOvxFx2r5Ao2oFeW0105W9Rb2yHslLs6N5k54whveg43BHdsZOHkz+6H8GvRxD9yx8Jb/gTOEi+ezrkjFiCzBL897ME814kvXgCjhzJj84BB8F9z4GO9k0l88LPZkwgvu5M3KCuoDV66UbMb5c3Az06FGvTrQR6lUNZCCrDVZZhj+0PWqG21qI27RLcxnVwoQStRdY8Ad11AP19vXjTVJF9MXZROInSQ4MzCt6qFbhXSUStl61DL1uLue8vpJeeSHrlydA1R/r3k3DDehBdcT/h/3tUlGD2VCiPiH/wKXCO6KoHZW987nhclxzxzeeCcwTzngOd27MSaAU2T3rBROIfnQtdIggDzP+8QvT1h3BdSiXP31ADVkOcYpash9IAtWEHOEf2ieG4wd3AOswfVqC27RAr7VxHE0gBpnqOQGaqWOTmMKI/BFVgQ4qttdLPfVbWkX7ueOjbBRdqwntfRO2sl9xeGdAh6q0azPxVqK112FOGQhTgxvbFHj8Is3gD5pEXodZiP34EVERkU0eiNtYQ/vtC3IBu2HH9ITJknzwKtbEW/dLG3aEQ4+ORmRO88HMQGczdfyGaNQ+1dSfqrZ3o9e+gduabSKlq83bUxu2onfW4vj2JbzwHBlXC9nqif/wDamsN6KCjLYAMb0F1g+qfK27c6U19OBHCsuaxrEVG9FAK6vOYp9ZK5N6zDDu2r4dRfYyQWTHbOiC480miz96NWvk2NKbY00eQv+si3JDehDc/Rjh7gQRdpRHxLZ8mvWA80d8/RPDz5+R3lYbEt55HNmMCuKTZKGoFWUx2zjgRYJecwKm/XEbuK79B7WyUsYclJVBWLpyMghKXlEJFOShFdvZHcBMGij79eR16+Rbp8eh49rLyE8nKROa+0DOHCbMgPFnC4nYKALUvdOzpRcv37zbHTlE7EtKZ46BUcuXgdyta75gCGhhE6Nc3Yxatx04ahuteijuiB/aYAZgFqyXabwA7eThoRXbuWNTyLYQ3PokbVIk9dgCUBLgjehDc8yLEqWQcNsUeO4T4p9NxvcvBKMyDyzEL1+BSi96yA6KQ5DPHYE8Ziooz1ObtUFJCMmMc9oRBMKi7uKb+3WBnI9E1/4Pe8I5YMnewppFFGtLNVTw/X3tfcHy7+3+bNBMubd6//PsmBC9r7fMKDN22L896Vsu3oFe9Iz70U6OwJw4FF+9eyk0tmFL0ik1En7sbvWyToG6njSC+8XyoKCP88ULC65/w9+pI/vMcXLdSwn/6A3r5VpzRQinr4tvLsgzXpxvxTedKwBdozH0vop9Ygz2ih5BPnJX77V4qqF9p2PxcPcsk1vj88djjB4K1BLc/i1myGlR4EHsXmuKA4x2ztZnDiArQc4Au/mSNdlECO34g2afHYU85Ajt2AJSV4rqV4Xp3lXxYa1QYNB/uURic2Uo5fL3eOTABqqEBtWYH2TkfgW6l2FG9ML9fhapr3N1wOQcmRL1Tg166iWzyCOhWghvbF5TBPPEq+pVtZOeNxfXrgnq7juCXL6C2VZOdPBx7/FD0yq2Edz0vFkApkv/7N2RnfwRCg/n9CqIrfoOqT1Bv7kCv3Y7aFQsUHWeoDTXoddWoXXl51p0N2KlHkc0cD1qh/7yW3JUP7JWs1PHjM1wOam4P5HAlVen5cOr9o3Uprm8l+Qe+gBvWQxYPpGchn0rhoT6W95lFbW9A1TSAkvxZv7RZ4N3qBtTa7aiGxOfJu4AAs3A15nevkl10LHbSMJLvnUn01QeaLUnLjZRZMCXolzeSu+IB8vd+FtengvRLJ6AfXYVZvA6VzyAwUBsLRq8jXK9yeZxt9bCrEVxK+uVJpF/+qGzo594guuq3qB11qL/W+czZnxySZOhl6/yNGAgiyNfihh1F+oUJAlxtqyP8/hOQz0uaeHA7l5TIWlWCHhKAGgGmFBLXPi5AQ10e9epbuK4l4m6Mlvy3S04qdLqiGfRSqmmXK+upWakEdao+lsWJM0H4vv841NUT/XARjVOG4wZ0Jb1wPPrZDYLzmxJ/mEgbJQhK0M+sIpy9gPi2T+P6lJNcezrctBjXvwsqyQRWdkAUibnGQV0MrgE7ZhjJ9z4pocvWWqK//534dpOD0Ff24syfaQHkSpufq7Eee/JRxDf+rcx0CDTBrc9gnnh172nmQRlBF5SCHRGAOsGXxN4/+8czx1VtnpKZvxKmbY9Sac7oVY7t2wWMwg3qhj1uoOTPWuN6l8tnjBZfWiK4vO1VLjsmsSTfnIzt35Xo6/+DenUD4XcfJb7lPCgJSK49DbV2O2bRij0rgY8Jgl/+L3ZsX9Kvfxz70UHk75wOpVKC1euqUXV5XL+uuAqJ7tX2elzXbiT/9yyxCjsaMQ++LJZCKYGZP3M0dC/FLFkvOz9XRvKZsdC7QlLSuAvxrefj+neVdPGu5wn/4zHJWFxnCB8va21AnRCAKu8QK1OfR6/Y1IqRa1q0tbsuzXVxV1kqliIX4Pp2gZzMTXaDK7Fj+5KdNhI3tJLs744lroiI/uEhgl8/jetVLsIZ2I345vPIXXY/+pk1sjOt3T1DyDLC258lO3eMCCTQAvlqhXp9G2SN2JFHSEyQpbhB3UgvPYls6pGQWfTr21Cbd+F6lPkiEnsI+MD1rkAFGju+P+msk7Cje0vc8NArRN94yCdbphMVoElO5WYOx1eBHuT9QvtlAUp5JQsE4NCB/N0DKyqfohpjVEOMqq5FvVOL2roDveYt9KrN6JVb0EvXYx5egVm2iezkodC7HDe6D25YD8xjr2MWrQQC7KnDoGc52SlD0Su3oV/f4sEh1ZoFpAPUtp3Qswv2jCOhzuf4gcb8cRXmyRW48UPILhwPiZWi00mDxXTvigWwWb4FtXGH5PytAj4fBBqDqqmHKCD5xmTcsf2hJMAsWE106b0SV+igk4VfIFBkysxhwhVgBviKi2r379nTq+VsZKWb0TxlvLKE/hWA0qgNb2EWbySbMhx6lOFG98YN7YH581rM/OWgQ+zkIwQgmjIc1WDRL7wpJVoT0GpqGBlqR0x63tEygNOfABf+/Dn0ijewxw0j+8wx4tOjQCDoyBDc/xLhfzyKfqPGC78Z4dMbt4nwdQBJHW5AT5LvfRJ3dH8oCdFPbyD3pXtRm6oFKOr8dnXnIc0tutNYv4X0zjnfnOFfmUf1Ci/rJJJ/aSO5z9+DWvG2xHYzxpH8xzm4ruWE3/sj4ZwFkDlxBzecTXzL+bgBlUK+dP55lbgf/do29CtbRbiFIwAzB1kDbkglLvT/bn1Qt6OR4JYlkItw5bsjfK68wtPNYtILTyT/wBck148MZv4qcp/9FWrDO77KWFRnSBozhxNukYpFEY/SKuT0m7dhnt5I9omR0KMMO64flJdgFq7BLFwFdRl20jDIBdiJg7GTR6DW70Rv3glxY7PZjS3Z34wSTCCfgdG4oZXgcmR/dxz079LcV1AeYRavJ7x1Cen547CThjUjfGUlJDPHYz86GKUU6QXHkfzoXMl4QoP57XKiL96DemuHj/iLRfgFMEj1MXOYUNX5/fzv4oVAvGpzNebpDWSnDIM+FdgJA3FdSjFPrcU8tQq9ZqfU5ctCXP+uZNPHyWdTJRFa7HCjepNdfIKMkLESBLph3cnOGYvrWS7m3/NmXXlIcM9fMY+uID3tSFTPMvTGGtQb1eCMKGGXHOmXJpJ95aQm8x784nlys+6X/gQdFOuUEq0cl7vODUbSllWfPbT7qt1awCHDHjWQ+GczBF8HgtueIbr2D9BQixvcj7jqk2SfPlo+ngvl1+zMozbWQM8yyTbiTPL47Q2ozEp0HxnBIgoCKwuJvvkwwS1Pkk0Yhgo16rVtqLfewQ3rT/KVk8nOO1pKu40JanMtwc/+l/CGhXKvBTygSK/OpX0HhuzMMQLGbN6FK4+gaw52NApdKjS4shD1dp2MfaksEaRtxdvoVZvIXfRr8r+8CHvSYNIrToSykPCGJ2HrLoLfvIydMgLXp7w5b88Z3Jg+Yt7jDBoTwu8twjz8KmSO7PSRZOcfjZ0wSFLRhkTiilwANsEsXSOE1L6VJF/5BOnVk3BDKkVZUovaUkt09YNSbGo6eVwVe/NYJ1gAz6ZJv3wK8c3n+Ylznqhc2DFZi/eFgDAwYC2quoHwuscJ5i7GHdGH/NwLpMZfF6Pe9kOiuuZkTqBr26jhv6trjuDHi4m+cX/rfWAM6YxjSb5/ltDPkgxqY4L/eh4qS7Fj++L6dpHWcq38vCzhJ6rqBvTzbwisXBcTffdR1Ns1nQH3FrkF8P35qrpBovOCz/UkT5SGUDUHgJFpaqRAyegXIXgqgp8tIrrsfuI7Z2AnH4EtC0VRnEMV2r0KfIGCyc8cNKSYJ9f6tLNFapY5gnueQ7+8hfj26RJPlEP69VOblTPJPKO4BR08yXDdSoTnpxSEmvzwHpK5bC1eJejEGMBBYCRdCkXArpCWBUYg2tRK0ag0FDCmPsaO7kvyT1PEVdTFhN99lPC2J3DD+pF+6aNkpwyF1KILhaXMwfZ6KTrV1pFeeALpVSeDc4Tf/iPhjxe2LseqZuKHG9aH/C8vxJ4wWOoCWrWBvf1nC3iBc3K/zjOHQoNeuIbcF+5BbanximaLTgE6ceafQ46Dbxv47c1siE/N/nY8+dvOhz4VUNNANGcBwa2PARF0rRCznM/7w6ezFsFjA9lZk8g/8AUINcHPlhLNunfPBFCjBRo+bhj5330R172sefp4oKAkxBmFakhRr72DXvYm5ql1qNXvQEVE+sUTyD41GgKDfuw1cl++T4CgwH+Xa/NYe51506FNy5lyXLYMwuPalQ10IGPd2gh5L9wwT85oJDvnOOJbP43rWyG1/B8+SXjrYmhsFO59zuC6leKO6I7rXYHrloPyiPRvx2I/Pky+bUMNJWf8VNjFe0rVvBJk0yeQ//lMH4eIrzfzXkKveltg4Je2SHZB3iuaxfXqTv4XF2CnHglGoxesInfpPNSmt/cwXlm10QTV+mcF99eurKBQQ/KCcly2FMITOk0BDihy0ZA2kJ19rJR3+3WB2hjz9HrYtBM3uFJMcNcSqUh2zYkwjRYhNqayoBWRWIEr7veULNdmjoDMHKIkomHJVbjRvSHJiK5+iOCup1sopecCGN3caZQmuIHdiW89n2zqSMgFmD+sILjxSdTWOlRNo9xDZCRLaUw9jVzqC8JxVJ43kW/nmdxNCvBc0CIR55Bq/w5KMb9/gTDQJN4SpGeOasPidag4lkZnl+3eYFqfkF4wHvPoKswDy3wVsYUSOB+QNjZiHn6VdGxf6fhZ9qYoRlDW4oB42wzzWieFpze3E826n/jOmWRnjCQ7bSTZx49AbasXEkwqY2yojWFnoyhQaCBOUQ0JLhegttcT3LwE87/r5V7a1x2kAegloE865IZBpCKA4MFlqHxK8u3TcL3KUdvqpOOnMUXtymMnDMKO6gVWtWgjd2JFrIPQEP/735DbUotesloSI62brYGWHn/z3BukeQlI08s+SvgftaiaGGobfeYStHbW1glVfUuNV4LpZNNG4Wwg5e+9Htyi2lTSynA9yjBn39mOrWOFoRF6SQCujkP1Si3oEswjyzELVmMHV6K318OOeiCPO2IgyT9NwY7sKZ8PjT9uJ4OaRlmDihxuYDfyd80k/P4TBL96HvKxKEIBhnZOhk0FGhoS0i+egJ10BOxqxDy8guCXz6M279y9xl9QgjeriS6ZR/rVU7BH9oLUSfNooFF1iXAIysX6qPpYALDyEPKZWIBf/6WjgvA65bjsHAgfaj9KWGc1j7oW5BOLPWUk+Z98GjeyV9OOV1tr0YvXYR5eIdNEK3Iks6dixw3wFVKN+f2rhLMfRa96W4ZOkuF6VxLf8RnJ8RtTIa6UeF5DIt3J0TX/g5n/sm/vdnvgSmY+I9HNfEFU8z03KY+fVGL8MAuXdABk45wALcm5ynHpWDBLwZVyKF9GicBKQpKvnSodwaWhNEXXNBDMXUrws2elBy8uLGqebPpHJcIv8PnKItTWXai129HPbkTtypOefwxuZA8/S8ChNtSg6mJcjzJcnwooC1GvvUPugl+hX3pzzxlFAYl0LRpe21r8PaWFhXil3UEk1QDZxADsBtA1QgzN3CE5LE8ryBLc8D7E151Jdt5YWbCdeWnR/sEizIKXQeVIPnsc9CxDP70B89yq3Re6NsZ1L8MO6Ib96JDmDZMI6TO6+neYR14Rg1lhSL47jfSSibhRvUm+OZncxb/a+0Aqt4e8vq3g275vf/TQkyOyGrAbAhhcB5tXgenvw1hzKE3FldJ2gj1tFPEPzsaO7SMU87XVmN+8JOcH7fR9A+U54fD1LEcFGmxIOmOcFH7qfMEokihcb6uTCWPKQ9XlEeGPFhH86hlvjjXsSgm//QfckErSs0ZjJwzC9alEvbXzvXP+3H7e054dwsZAtgoG1xUOHFzmfZM7FIWffuGj5O+6ADuqNyiFXvg6uRn/TXDvX9BPr0e/uROcgcYEs3g9+tFVqHXboaIcO35Ac/pmgPqY6MrfUvKxH5P7u7ulw7c0lIDvoeWSIRghrRLkUDt2oJ9cKxakWw43qFuRn1RWYLOyTFFVOPRJLQL7tUMmCGwSfkw66+PE/zatmYVzz1+IrnkItb22WeELQE1qfdMGMi18xom4AZ4XABAF6KfWE8x7CWyM2fg84bDuwulH4UrD1t9fCOYqIh9SZDL8qai9aBMbaFGLQZHJUkjq/WgYd2ick5SSXv6xZuE7CG5/htxXHkBtr9t7l25pGZSV4IYNIPnnKb7E7JqgX7N4Hbg85EoEzFm7XVakPMSeO0aIpmns/6zD9etBdsaRksLtbERv3tXRkz7ep/9XRmSdLAUIfHPoFti0EiJfEyjiOKDAJfj8icTXnyn+2zrM/S+hl71JdmRvzF82QKhJPnNMm6aNUpILxslKjOqDHduv6YCpwrRQ/fIWQUqtBWvQK99Grd2OG9qddOZ41Ktvo59ei6pPsQO7kF45CXtMf5S1UgiqaywSzv/e/H9gIF4Jg7c4ZusANhvFHYnjsj+BPq55fmqxCj8h+9hRJNefKaBOLiC4aQn6r5uwI3thVr+zly5dyfMpl2ke2adGS3WvIHyjpWy8ZrsYxszDuWu2EP7bY8Q/OR/Xp4L4pnMklazN4wZ0k+6muliCx1zQPOuvKKlgTf7/TzI3+PJQQ3UBiXjEgxK6eIWf4ob0IvnPs6U8GwUEtz5DeO3D6Be3YOavRK/dLlF6YmXnP7paAj4VQJxgnnsTO3UkblRvEXLsiR2hQa/bjn6jpnlWj3OgQoK7XyD69iOoTTsgDLAjekjw2KtM7qsiB2lGNmU4ydemiBJQlLia9v7/EXlbbQOY5xUg/wK4LRD0Kzo8oDDQOTDEcz6JPaa/gGXzXiT6x99DPkW9sH4fXbp+gGSSJ5t8BNm0UdCYCLdwxVuk54wBo9BPrYfq2t1HtqaO4McL0Y+uJvnHydCnAqcVKnPoFzdBbUz6+eNxI3qJZeqSk+lkqqhIob4AEm+B+AX5p3k2kNu7z8jcuMvnQ/AFsY1FNCfYp3vJVz8hbVvOoZesJ/ra7wS316H0Fu6pS7cAEzfWkn5hEsmcMyDNUGu3E37td9hPHuWBJId57DVQqfy+tmPidIResZncJXe3gXEtkGGeWEP+5zNxQ7uT/PMnILWE1y/wHU/FoATO98Fn8xV31XiZZ97czyt8ap4fEqGLLeizxw8l+a5M/VTrqjG/X4Hr11UKW5EEfMklE2XQEwnkZFRLMusk7LAe2OOGk/zbtCZSaDD3OcySVz0A5COkUb32Hr37Ei86bDaOSst7U4p+Zg3RrN8IMcQ5kn85neTbU5uVpPPdgfaynddS5gUF8HTL8schXuMZmbY4xsNmuB5dhARaFkE+xTyyEiItNPG9jmWRLl1w2JOHEN8xXVq8S0KCO5cS3vQkqAj98lb5fJyRXHs62dnHQtbQPOO3rRK0xPBdC8KpiTBPrib3pftQ66oluf4/U0n+9azCBztTCazINF4D5Y+LrOc1B3yStc42iv9sAPdLIb25IlAAmQqeTR2FPXmIoHzL3iS4+wX0n9ehX9/u/X2bgA8j7N7HVqKqG0mu+Rj2I72lyfO/XyC89vdN0/LNn1YS3LxEXEh5RPzT6WTTTxAlCPS7h24zKf3qJa+Ru+x+bwkg+eapJLOndXJg6KyX6S9FxrONajpst9WBEVh/YMRLYEvozFN3C7u/ZwWNj1yCO2YA1MeU/M1c9LMrm/H4JsgiaR3wpQ3Yo4cQz52JHdMHyiLp1bvkbtSOxmYCh7My6OF7Z5FcdTKEBrWtjuirD2J+u8zXyOx7TlXtqUeSv3O60NOcI7zuCcLr5vvW8IMaExToy41gj2l7YEQT4FMFTs4M+u9tczjuFCg5yj+57rTyrkvIph9LNkt67sx9LxLetljQvCiShSw0lJTkIPIHRKUNZGePJ557AW5ETyiNMH9cSXT5PNS22tbTOZTwBM2iNUJTP3EIlEfY049EbdiFfnnDe4uHHaANat1bmL9uJZs0TKajnDwUykpkcLRSB9MSWMhpSBYofnqzyPgVu58zg8wNvvitOm88sMz2yc4cJfq6K0948xJQmmT6uNYBX0lIMnMcyaUTZQTMFycR/2ymPxjSYO5/ieiSe1Fbd+zOzS/w/hJL+L0FhD98EuIMV1lCfMt5ZOccK6QM/R6WwjrJGp5cJZPEVr4NkSH5+seJq870YNHBcgfOb3Zzw37PDSycM6v4yeMQLxTN6YTjNP0gB/uRPt73g16+Bf3KZmnCqGwR8BVmCUYBZI7kHz5GfMt50meYCzD/9Ty5L92zZ+G3VQILYdUfZRZAYwq9y0lmneTJmO/RZFsHJof58yqiqx8SmDjQpP84maTqTH/wRYcrQSYyjBcqfvJ44Tzo/ZwaVjhnVld5OEx1mgKM6YsbVCk5+uJ1ctiCc+jF69ALVqM2VEtRpj6WFsLzxgpO4C1I8OPFMovPj3/bZ1dOYVCEUkTXP45+/g2cU0IpL8kdGELux9SZRSuIrnoQteodmTf4zVNJ/mWaWGfXkaVj52M9XbW3M4T17ta3YAVuX+itgOqcQ3WdUNcLC/l2XdPIe7NsHeapV1Eb35I28evPIvnOadIgCqi11URf/z3R13/rT7w3764ly/rybm0Del21/L8CsHTAe7CgBCslO1j1NmglOMHsac0SUB2y+5Xs/tsX7mn374Np2NIK8ERn5YAqnzWfgDuqt+/hs1BWhj2qN9mnRgsda0iluLk4xTy4XEidr2/1wd575bmIJXC5oDU7+32JwoLJoZ9ZQ+7S+wUxHNmT5NufQK18m+DupR01Nk7ta/fvVQEKp02L5lw+D3IzoPHgnSDuhJCvNu0U82002fRxxF1KpEF0XH/s8B5yCIMWq6A27SL84SKC2xY3QbcHxKdTSlrQaxpE8iUB5Ayk6fvj5XuwSP/vWpla+uNzccN7yFlBtHfDh8ugxEB+nuKOhYXT4N9je3jhnFl1LaTntSCLdHxMYJ2gdEvWEH5/oRysZDTpZ49tsSsdJBb12jaC37xEMHcpat1WIGqHXjrXzBIyLdrW37dRlgYS/efVlJw1Fzu8O+bpDb766NqT9CG9aahr93Vy+D4VoHDOrOL21Y4vXw9lsw+6FVCa8IePo6rrpSW80BcIMh72gZfRC9dI6zWqefTq+xG+x8dcF48pFGYct1dXjgOUdAyZLdvaueevgPqVGKj/nuJnq/150Nk+RzXsS5VgtoLNBngZgqMObhOpaqq2uT6VUBriIiNDJjfthLTRt3KZA/D1+0by4p/MJJk1CfPkakqm3QmNfqhke23UlhNL2r3pM10FHA39M6hy+7prvb/jJeAVpbgjAXeVZ0Pag0thU/44mB2o9e+gV29Bbdjm28JyPsJ37RxAWfAxgCsLBVNob+/nXEc0e/ic0l0lMntlvyqr978HCwHhT/8E8Y0SFbn0oM6QsK7FyNnCBFE6QPAtVN+2+f6iv1wqsolvVPz0T/sK/N6TAtBULp5hoOab0PiskN8OMjbQdqKo62DX001iAFUXo+riDj7UsV1y/kBkU/NNfyysfZckgXd30pBEkvMsmIsgq27uoT5Mr3wqLrVLDtettIhHvjknssiqRTbzLIxx7zZa0e9+T1RZOWT6ttchudyPs0gPO8ErHwNkHhDqkvP9/MVKltZ+tEhyuchmRqHbi3ZVgBYwcaC4836Iqzz9JjkMNUCgYBRqfTV64/b2ztXb60pEBnGV4s77RTbzsvf+tO85LpsdKKpSx+W/gJKLJUdq94S2cxnIJSHp+ceg125HP71GYOjiUgCpg9N4l+KOLxZkcmDqfgDJmbiYWaWgFkI0URCTImISt9sIO+112xVjxL8U3BS4vQHUATWk6QM9fhLmKMUd9aCnSZ/ZQU4PD0ZJ2uQ8C7gYhZ8sBT1NZDDngCEq9f72yGwtkPFF3aHrfDmO9HCzBBSp8HdOU/y6uiCD98EVfz/ussrKDfy6GnYenpbgMBZ+u/QB7l0JDrfsoNMDvnYXfrs1grZWAlVQgvBDJWjPaD9ZCqpdhd+uncDNSnBbNcSnQzLX4wTZYY0YdiwrJpM1TOZCfLritnYVfocw0VreoGPWHAhmS9kgO3hcgkNf+JkMcjJAWqW4fU7btS1aBWjJIxCrcOlMCG8D00MA9g8zhP0He7kAsu2QXKm48z6Z4lLlOmLwjOpYKKWAGM46EvTPIZwEDba5JefDqzWZA6BUQ7IY7JeEjXVgCF9RKIAoweRAsSh1TA5g9A8guMajbKl3CeqDLnkx+aEnOaQ3wopvFdZMsSjt+MpHhz9hy7jgimnADRCOlRM97Ac4NnCZ8NkiIFkOfEPxk/kd5e87TQGa44IZ2jOMIuj5bVDfkXlued8sxwdFETLp2slpyGJw18O27yvmxQUyx8EaNKcOvr1rpio5LjkawmshvFCeNz7cFcELPtKy9Mk9kFynmPty27XhoBa/O2FaYcEa+HTxDNDfAnWG3FKTIujDIEbw40EKgneAWwD2B4rbFxQEfzB3facrQMvYoJlt1FYRtD/1y/mjug61rKFpJIj38XYPgm/9/HQa/aXTt8gMIzy2giJcdQbYr4KdJlMfUn88iLLgdPEqg2txj4GWvps4D3o+6JsVt7QQ/CvqYJv7olWA1opwn1X+/CLH5aPBXAhcAGa095u+0a5p6lJnuomCeffuyuhm8ki2ArgXsnsUd6yQDzsFM3UxCL4oFWDvFuHqHCTTgPOAM8AMKpwi7g+GzJob/J0PsNr92TwXXdkWwwRM02BK6WB6A1gAPAjhfMVN+WLb8YeEArSOEVovnOPqrpCfCJwFejLYsRCVFg5sFHfR1E1imwclND2yfneIXOF0LRClKpxwGdD8XXED6OVgFwGPQG6p4qade1NkipYCW/xhtIIZusBMbv2zKwcDE8B+HDgO7EdAdYcgR9OJnC3bfPa3CVuCk7rFgIA0D64a9KvAC6D/DDyvuG3j7tYLOiuqPywVYM/KMEZBVdZ2kR0XV0LpINBDIDkZdBnYk4Xc5wwwbh84Qwa8CCoDm4B+Gmw9hE/L2UoNbyjuqtlD4cvAK+5QEXrL6/8Da0D7ey0xaD4AAAAASUVORK5CYII=" alt="" width="512" height="512">Portaal</a>
+</nav>
+<button class="terug" id="terug" title="Terug naar boven" aria-label="Terug naar boven">&uarr;</button>
+<script>
+function menu(open) {
+  const vlak = document.getElementById("menuvlak"), knop = document.getElementById("menuknop");
+  if (!vlak || !knop) return;
+  const nu = open === undefined ? vlak.hidden : open;
+  vlak.hidden = !nu;
+  knop.setAttribute("aria-expanded", String(nu));
+  document.body.classList.toggle("menu-open", nu);
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") menu(false); });
+(function () {
+  const terug = document.getElementById("terug");
+  if (!terug) return;
+  const toon = () => terug.classList.toggle("zichtbaar", window.scrollY > 600);
+  window.addEventListener("scroll", toon, {passive: true}); toon();
+  terug.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
+})();
+</script>
+</body>
+</html>

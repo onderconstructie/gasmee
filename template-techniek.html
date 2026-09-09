@@ -1,0 +1,277 @@
+<style>
+/* ==========================================================================
+   Alleen voor de technische pagina. Papier, korrel, nav, kaartvlakken, koppen,
+   app-balk en colofon komen uit de huid van de GAS-pagina zelf: deze pagina
+   gebruikt dezelfde .wrap, .titelrij, .heldkop-klein, .duiding, .eyebrow en
+   .kaartvlak als het dashboard, zodat ze aanvoelt als hetzelfde huis. Hieronder
+   staat enkel wat een leespagina extra nodig heeft: leestekst in kolombreedte,
+   en het contactvenster.
+   ========================================================================== */
+
+/* Leestekst. Op het dashboard staat er korte duiding naast cijfers; hier lees je
+   alinea's, dus iets groter en met meer regelafstand, en nooit breder dan 66
+   tekens, want daarboven verliest het oog de volgende regel. */
+.tech-prose{max-width:66ch}
+.tech-prose p{margin:0 0 .95rem;font-size:15px;line-height:1.72;color:var(--ink-2)}
+.tech-prose p:last-child{margin-bottom:0}
+.tech-prose strong{color:var(--app-tekst);font-weight:600}
+.tech-prose code{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:.08em .38em;color:var(--ink)
+}
+.tech-lijst{margin:0 0 .95rem;padding-left:1.15rem;max-width:66ch}
+.tech-lijst li{font-size:15px;line-height:1.68;color:var(--ink-2);margin:0 0 .5rem}
+.tech-lijst li:last-child{margin-bottom:0}
+.tech-lijst b{color:var(--ink)}
+
+/* Elk hoofdstuk is een kaartvlak, net als de blokken op het dashboard. De kop
+   krijgt hier het formaat dat het dashboard aan zijn blokkoppen geeft. */
+.tech-blok{margin:0 0 16px}
+.tech-blok h2{font-size:19px;margin:2px 0 12px}
+.tech-blok h2 em{color:var(--app-tekst);font-style:normal}
+
+/* Contactvenster: hetzelfde patroon als op het portaal en bij Denk mee, maar in
+   de kleur van deze app. Geen server: het venster stelt een mailbericht samen en
+   geeft dat aan je eigen mailprogramma door. */
+.ct-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}
+.ct-modal[hidden]{display:none}
+.ct-overlay{position:absolute;inset:0;background:rgba(26,23,18,.55);backdrop-filter:blur(4px)}
+.ct-kaart{
+  position:relative;width:min(520px,100%);max-height:86vh;overflow:auto;
+  background:var(--paper-kaart);border:1px solid var(--line);border-radius:var(--rond);
+  padding:22px 22px 18px;box-shadow:0 24px 60px -18px rgba(72,56,38,.45)
+}
+.ct-kaart h3{margin:.35rem 0 .4rem;font-size:21px;letter-spacing:-.01em}
+.ct-uitleg{margin:0 0 1rem;font-size:14px;line-height:1.6;color:var(--ink-2)}
+.ct-sluit{
+  position:absolute;top:12px;right:12px;width:32px;height:32px;line-height:1;font-size:19px;
+  border:1px solid var(--line);border-radius:50%;background:var(--paper-2);color:var(--ink-dim);cursor:pointer
+}
+.ct-sluit:hover{background:var(--app);border-color:var(--app);color:var(--paper)}
+.ct-rij{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){ .ct-rij{grid-template-columns:1fr} }
+.ct-veld{margin:0 0 10px}
+.ct-label{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 .3rem}
+.ct-invoer{
+  width:100%;box-sizing:border-box;font:inherit;font-size:14px;color:var(--ink);
+  background:var(--paper-2);border:1px solid var(--line);border-radius:9px;padding:.55rem .7rem
+}
+.ct-invoer:focus{outline:2px solid var(--app);outline-offset:1px;border-color:var(--app)}
+.ct-fout{margin:0 0 .7rem;font-size:13px;color:var(--roest)}
+.ct-fout[hidden]{display:none}
+.ct-knop{
+  width:100%;font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  background:var(--app);color:var(--ink);border:1px solid var(--app-deep);border-radius:10px;padding:.62rem 1rem
+}
+.ct-knop:hover{background:var(--app-deep);color:var(--paper)}
+.ct-voet{margin:.8rem 0 0;font-size:12px;line-height:1.55;color:var(--ink-dim)}
+/* De knop in de lopende tekst: leest als een link, gedraagt zich als een knop. */
+.ct-open{
+  font:inherit;font-size:inherit;color:var(--app-tekst);background:none;border:0;padding:0;
+  cursor:pointer;text-decoration:underline;text-underline-offset:2px
+}
+.ct-open:hover{color:var(--app-deep)}
+</style>
+
+<main class="wrap tech">
+
+  <p class="eyebrow">Over deze pagina</p>
+  <div class="titelrij">
+    <h1 class="heldkop-klein">De technische pagina van <em>GAS mee met Mechelen</em></h1>
+  </div>
+  <p class="duiding">Waar de cijfers vandaan komen, hoe we ze natellen, en waar dit werk tekortschiet.</p>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">De vaststelling</div>
+    <h2>Wat dit dashboard <em>telt</em></h2>
+    <div class="tech-prose">
+      <p>
+        ANPR-camera's lezen nummerplaten bij het verkeersbord C3: aan het begin van de autoluwe
+        straten, en sinds eind 2022 ook aan de verkeersstops op de vesten en in de wijk
+        Caputsteen-Nekkerspoel. Ziet een camera zo'n overtreding, dan wordt het een GAS 4-dossier,
+        en die dossiers tellen wij. Waarschuwingen niet: op zes plekken stuurde GAS Rivierenland in
+        2024 eerst een brief, zonder boete. De vrachtwagensluis blijft buiten beeld. Parkeren valt
+        ook onder GAS 4, maar daar stelt een vaststeller de overtreding op straat vast; overlast en
+        snelheid lopen via nog andere procedures.
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">De bronnen</div>
+    <h2>Van jaarverslag naar <em>cijfer</em></h2>
+    <div class="tech-prose">
+      <p>
+        De aantallen komen uit de jaarverslagen van GASAM, sinds 2022 GAS Rivierenland. We
+        kregen ze via een openbaarheidsverzoek: de jaargangen 2012 en 2015 tot en met 2024, want
+        voor 2013 en 2014 kregen we geen verslag. Het geld komt uit de jaarrekeningen van stad en
+        OCMW Mechelen.
+      </p>
+      <p>
+        Elk verslag opent met een overzichtstabel, maar de cijfers die wij nodig hebben staan
+        enkel als label bij een staaf in een grafiek: per maand, per jaar en per camera. We
+        koppelen elk getal aan het label op dezelfde plek en toetsen de som aan het gepubliceerde
+        jaartotaal. Klopt die som niet, dan blijft het veld leeg.
+        <strong>We vullen nooit een gat met een schatting.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">Op de kaart</div>
+    <h2>Waar een camera <em>staat</em></h2>
+    <div class="tech-prose">
+      <p>
+        De verslagen noemen een straat, nooit een paal. Elke stip zegt daarom zelf waarop ze
+        steunt: een paal die vrijwilligers intekenden in OpenStreetMap, een plek die het
+        autoluwreglement van de stad beschrijft, een straatfoto waarop we haar terugvonden, of
+        het midden van de straat als niets van dat al bestaat. Zeven van de 38 staan nog op dat
+        straatmidden.
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">De controle</div>
+    <h2>Wat we natellen, en wat we <em>missen</em></h2>
+    <div class="tech-prose">
+      <p>
+        Een leesfout in een grafiek is stil: er rolt gewoon een getal uit, en dat oogt even
+        netjes als het juiste. Daarom loopt <code>steekproef_cijfers.py</code> na elke build 79
+        cijfers na tegen de pdf's, haalde een tweede lezer alle cijfers opnieuw uit de bron
+        zonder onze code, en keken twee lezers de camera's na op straatfoto's.
+      </p>
+      <p>
+        Vergelijk de jaren toch met zorg. Vanaf 14 november 2022 kwamen er zes camera's bij aan de
+        verkeersstops, en in 2022 en 2023 stonden zeven camera's in de binnenstad maandenlang uit
+        door werken. Een hoger cijfer is dus soms gewoon meer camera's, en een lager cijfer een
+        camera die niet keek.
+      </p>
+    </div>
+  </section>
+
+  <section class="kaartvlak tech-blok">
+    <div class="eyebrow">Meelezen</div>
+    <h2>Eén pagina, en een <em>uitgestoken</em> hand</h2>
+    <div class="tech-prose">
+      <p>
+        Dit dashboard is één statische pagina: geen server, geen databank, geen trackers, geen
+        cookies. Alleen de kaart haalt haar tegels bij OpenStreetMap en de nieuwspagina haar
+        beelden bij Lees mee, dus die servers zien wat je opvraagt. Persoonsgegevens staan hier
+        niet, enkel <strong>opgetelde cijfers uit openbare verslagen</strong>.
+      </p>
+      <p>
+        De kaartgegevens komen van OpenStreetMap (ODbL), de straatfoto's waarmee we posities
+        nakeken van Panoramax (CC BY-SA 4.0), en de lettertypes staan onder de Open Font License.
+      </p>
+      <p>
+        Zie je een cijfer dat niet klopt of een camera op de verkeerde plek?
+        <button type="button" class="ct-open" onclick="openContact()">Stuur ons een bericht</button>.
+        We kijken elke melding na aan de bron. En aan de stad: publiceer deze cijfers uit eigen
+        beweging, en leesbaar.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- Contactvenster, hetzelfde patroon als op het portaal en bij Denk mee: geen
+     server en geen formulierdienst, maar een venster dat een mailbericht opstelt
+     en dat aan je eigen mailprogramma doorgeeft. Het adres staat in base64, niet
+     omdat dat veilig is, maar omdat het de eenvoudigste oogstrobots weghoudt. -->
+<div class="ct-modal" id="contactModal" hidden>
+  <div class="ct-overlay" onclick="sluitContact()"></div>
+  <div class="ct-kaart" role="dialog" aria-modal="true" aria-labelledby="ctTitel">
+    <button class="ct-sluit" type="button" onclick="sluitContact()" aria-label="Sluit">&#215;</button>
+    <div class="eyebrow">Contact &middot; via e-mail</div>
+    <h3 id="ctTitel">Stuur ons een bericht</h3>
+    <p class="ct-uitleg">Een cijfer dat niet klopt, een camera op de verkeerde plek, of een vraag over de werkwijze? We horen het graag.</p>
+    <form id="ctForm" novalidate>
+      <div class="ct-rij">
+        <div class="ct-veld">
+          <label class="ct-label" for="ctNaam">Naam</label>
+          <input type="text" id="ctNaam" class="ct-invoer" placeholder="Voornaam Naam" autocomplete="name" required>
+        </div>
+        <div class="ct-veld">
+          <label class="ct-label" for="ctEmail">E-mailadres</label>
+          <input type="email" id="ctEmail" class="ct-invoer" placeholder="jij@voorbeeld.be" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="ct-veld">
+        <label class="ct-label" for="ctOnderwerp">Onderwerp</label>
+        <input type="text" id="ctOnderwerp" class="ct-invoer" placeholder="Waarover gaat het?" required>
+      </div>
+      <div class="ct-veld">
+        <label class="ct-label" for="ctBericht">Bericht</label>
+        <textarea id="ctBericht" class="ct-invoer" rows="4" placeholder="Je bericht&#8230;"></textarea>
+      </div>
+      <div class="ct-fout" id="ctFout" role="alert" hidden></div>
+      <button type="submit" class="ct-knop">Open mail-template &#8594;</button>
+    </form>
+    <p class="ct-voet">Je eigen mailprogramma opent met het bericht klaar. Zo komt er geen formulierdienst tussen, en blijft je adres van jou.</p>
+  </div>
+</div>
+
+<script>
+var CONTACT_TO = 'YXNnYXVwYXVzdEBnbWFpbC5jb20=';
+
+function openContact() {
+  document.getElementById('contactModal').hidden = false;
+  document.getElementById('ctNaam').focus();
+}
+
+function sluitContact() {
+  document.getElementById('contactModal').hidden = true;
+}
+
+function contactVerstuur() {
+  var lees = function (id) { return document.getElementById(id).value.trim(); };
+  var naam = lees('ctNaam'), email = lees('ctEmail'), onderwerp = lees('ctOnderwerp'), bericht = lees('ctBericht');
+  var velden = ['ctNaam', 'ctEmail', 'ctOnderwerp'];
+  var wis = function () {
+    velden.forEach(function (id) {
+      var v = document.getElementById(id);
+      v.removeAttribute('aria-invalid');
+      v.removeAttribute('aria-describedby');
+    });
+  };
+  // De melding is niet alleen te zien: role="alert" laat ze voorlezen zodra ze
+  // verschijnt, en aria-describedby plakt ze aan het veld dat het betreft.
+  var fout = function (tekst, id) {
+    var doos = document.getElementById('ctFout');
+    wis();
+    doos.textContent = tekst;
+    doos.hidden = false;
+    if (id) {
+      var v = document.getElementById(id);
+      v.setAttribute('aria-invalid', 'true');
+      v.setAttribute('aria-describedby', 'ctFout');
+      v.focus();
+    }
+  };
+  wis();
+  if (!naam) return fout('Vul je naam in.', 'ctNaam');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fout('Vul een geldig e-mailadres in.', 'ctEmail');
+  if (!onderwerp) return fout('Vul een onderwerp in.', 'ctOnderwerp');
+  var naar = atob(CONTACT_TO);
+  var tekst = 'Naam: ' + naam + '\nE-mail: ' + email + '\n\n' + bericht;
+  window.location.href = 'mailto:' + naar
+    + '?subject=' + encodeURIComponent('[GAS mee met Mechelen] ' + onderwerp)
+    + '&body=' + encodeURIComponent(tekst);
+  sluitContact();
+}
+
+document.getElementById('ctForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  contactVerstuur();
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !document.getElementById('contactModal').hidden) sluitContact();
+});
+</script>
+
+<!-- build.py giet dit fragment in de huid van de GAS-pagina: dezelfde head met de
+     kleurtokens en de lettertypes, dezelfde nav met het merkwoord en het menu, de
+     app-balk onderaan en het familie-colofon. Hier staat enkel de inhoud. -->

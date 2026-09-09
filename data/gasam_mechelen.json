@@ -1,0 +1,2506 @@
+{
+ "bron": "GASAM-jaarverslagen, verkregen via openbaarheidsverzoek",
+ "jaren": {
+  "2012": {
+   "bestand": "Jaarverslag 2012.pdf",
+   "hoofdstuk": [
+    45,
+    49
+   ]
+  },
+  "2015": {
+   "bestand": "Jaarverslag 2015.pdf",
+   "hoofdstuk": [
+    42,
+    57
+   ],
+   "autoluw": {
+    "totaal": 31698,
+    "per_maand": [
+     3037,
+     2741,
+     2917,
+     2833,
+     2640,
+     2696,
+     2796,
+     2155,
+     2460,
+     2563,
+     1877,
+     2983
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 28789,
+     "gunstig": 1389,
+     "ongunstig": 1475,
+     "sepot": 39,
+     "beroep": 6,
+     "verweer": 2870
+    },
+    "afhandeling_per_jaar": {},
+    "woonplaats": {
+     "niet_inwoners_procent": 83.68,
+     "inwoners_procent": 16.32
+    },
+    "paginas": [
+     48,
+     52
+    ],
+    "maandgrafiek_pagina": 48,
+    "per_camera": {
+     "Frederik de Merodestraat": 10816,
+     "Steenweg 20": 2545,
+     "Vijfhoek": 947,
+     "Zoutwerf": 1122,
+     "Lange Schipstraat": 4425,
+     "Haverwerf": 357,
+     "Begijnenstraat": 544,
+     "Tuinstraatje": 1108,
+     "Steenweg 44": 6107,
+     "onbekend": 3727
+    },
+    "per_camera_herkomst": "tabel per camera per maand (overgetypt uit het beeld, nageteld)",
+    "per_camera_pagina": null,
+    "per_camera_som": 31698,
+    "per_camera_maand": {
+     "Frederik de Merodestraat": [
+      1265,
+      1182,
+      987,
+      933,
+      808,
+      1154,
+      1055,
+      846,
+      1047,
+      809,
+      0,
+      730
+     ],
+     "Steenweg 20": [
+      0,
+      0,
+      134,
+      457,
+      161,
+      321,
+      278,
+      348,
+      362,
+      180,
+      0,
+      304
+     ],
+     "Vijfhoek": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      82,
+      388,
+      477
+     ],
+     "Zoutwerf": [
+      225,
+      161,
+      227,
+      132,
+      134,
+      149,
+      94,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Lange Schipstraat": [
+      594,
+      423,
+      490,
+      337,
+      159,
+      225,
+      404,
+      96,
+      321,
+      323,
+      459,
+      594
+     ],
+     "Haverwerf": [
+      16,
+      30,
+      54,
+      23,
+      59,
+      87,
+      62,
+      14,
+      12,
+      0,
+      0,
+      0
+     ],
+     "Begijnenstraat": [
+      86,
+      45,
+      62,
+      42,
+      19,
+      54,
+      34,
+      15,
+      52,
+      26,
+      61,
+      48
+     ],
+     "Tuinstraatje": [
+      105,
+      150,
+      111,
+      82,
+      61,
+      74,
+      90,
+      53,
+      75,
+      68,
+      83,
+      156
+     ],
+     "Steenweg 44": [
+      745,
+      632,
+      642,
+      538,
+      295,
+      487,
+      368,
+      341,
+      550,
+      259,
+      576,
+      674
+     ],
+     "onbekend": [
+      1,
+      118,
+      210,
+      289,
+      944,
+      145,
+      411,
+      442,
+      41,
+      816,
+      310,
+      0
+     ]
+    }
+   },
+   "parkeren": {
+    "totaal": 5559,
+    "per_maand": [
+     406,
+     506,
+     565,
+     456,
+     535,
+     394,
+     421,
+     256,
+     514,
+     521,
+     485,
+     500
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 5107,
+     "gunstig": 143,
+     "ongunstig": 293,
+     "sepot": 9,
+     "beroep": 7,
+     "verweer": 443
+    },
+    "afhandeling_per_jaar": {},
+    "woonplaats": {
+     "inwoners_procent": 55.7,
+     "niet_inwoners_procent": 44.3
+    },
+    "paginas": [
+     53,
+     56
+    ],
+    "maandgrafiek_pagina": 53,
+    "top_inbreuken": [
+     {
+      "feitcode": "7097",
+      "aantal": 1799,
+      "aandeel_procent": 32.36
+     },
+     {
+      "feitcode": "8604",
+      "aantal": 975,
+      "aandeel_procent": 17.54
+     },
+     {
+      "feitcode": "8437",
+      "aantal": 639,
+      "aandeel_procent": 11.49
+     },
+     {
+      "feitcode": "8472",
+      "aantal": 441,
+      "aandeel_procent": 7.93
+     },
+     {
+      "feitcode": "7115",
+      "aantal": 240,
+      "aandeel_procent": 4.32
+     }
+    ]
+   }
+  },
+  "2016": {
+   "bestand": "Jaarverslag 2016.pdf",
+   "hoofdstuk": [
+    54,
+    68
+   ],
+   "autoluw": {
+    "totaal": 19489,
+    "per_maand": [
+     1444,
+     2683,
+     2626,
+     2711,
+     1407,
+     1294,
+     1204,
+     1066,
+     1094,
+     1155,
+     1374,
+     1431
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 17536,
+     "gunstig": 1065,
+     "ongunstig": 624,
+     "sepot": 264
+    },
+    "afhandeling_per_jaar": {},
+    "woonplaats": {
+     "niet_inwoners_procent": 81.28,
+     "inwoners_procent": 18.72
+    },
+    "paginas": [
+     59,
+     63
+    ],
+    "maandgrafiek_pagina": 59,
+    "per_camera": {
+     "Frederik de Merodestraat": 60,
+     "Steenweg 20": 715,
+     "Zakstraat": 199,
+     "Vijfhoek": 4388,
+     "Zoutwerf": 0,
+     "Lange Schipstraat": 5258,
+     "Haverwerf": 8,
+     "Begijnenstraat": 344,
+     "Tuinstraatje": 1439,
+     "Steenweg 44": 5724,
+     "onbekend": 1354
+    },
+    "per_camera_herkomst": "tabel per camera per maand (overgetypt uit het beeld, nageteld)",
+    "per_camera_pagina": null,
+    "per_camera_som": 19489,
+    "per_camera_maand": {
+     "Frederik de Merodestraat": [
+      60,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Steenweg 20": [
+      11,
+      0,
+      0,
+      704,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Zakstraat": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      17,
+      25,
+      26,
+      18,
+      57,
+      56
+     ],
+     "Vijfhoek": [
+      466,
+      615,
+      586,
+      348,
+      340,
+      333,
+      356,
+      254,
+      229,
+      261,
+      292,
+      308
+     ],
+     "Zoutwerf": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Lange Schipstraat": [
+      553,
+      500,
+      488,
+      353,
+      462,
+      313,
+      353,
+      277,
+      260,
+      432,
+      595,
+      672
+     ],
+     "Haverwerf": [
+      0,
+      0,
+      0,
+      0,
+      8,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Begijnenstraat": [
+      29,
+      33,
+      25,
+      19,
+      32,
+      60,
+      29,
+      19,
+      17,
+      50,
+      31,
+      0
+     ],
+     "Tuinstraatje": [
+      109,
+      167,
+      166,
+      123,
+      130,
+      55,
+      127,
+      71,
+      122,
+      172,
+      67,
+      130
+     ],
+     "Steenweg 44": [
+      216,
+      1368,
+      1361,
+      714,
+      435,
+      279,
+      183,
+      106,
+      249,
+      216,
+      332,
+      265
+     ],
+     "onbekend": [
+      0,
+      0,
+      0,
+      450,
+      0,
+      254,
+      139,
+      314,
+      191,
+      6,
+      0,
+      0
+     ]
+    }
+   },
+   "parkeren": {
+    "totaal": 9904,
+    "per_maand": [
+     766,
+     1985,
+     1190,
+     851,
+     629,
+     532,
+     448,
+     430,
+     675,
+     920,
+     881,
+     597
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 9019,
+     "gunstig": 287,
+     "ongunstig": 529,
+     "sepot": 46,
+     "beroep": 6
+    },
+    "afhandeling_per_jaar": {},
+    "woonplaats": {
+     "inwoners_procent": 55.0,
+     "niet_inwoners_procent": 45.0
+    },
+    "paginas": [
+     64,
+     68
+    ],
+    "maandgrafiek_pagina": 64,
+    "top_inbreuken": [
+     {
+      "feitcode": "7097",
+      "aantal": 3358,
+      "aandeel_procent": 34.0
+     },
+     {
+      "feitcode": "8604",
+      "aantal": 2163,
+      "aandeel_procent": 22.0
+     },
+     {
+      "feitcode": "8437",
+      "aantal": 1608,
+      "aandeel_procent": 16.0
+     },
+     {
+      "feitcode": "7115",
+      "aantal": 360,
+      "aandeel_procent": 4.0
+     },
+     {
+      "feitcode": "8472",
+      "aantal": 348,
+      "aandeel_procent": 3.0
+     }
+    ]
+   }
+  },
+  "2017": {
+   "bestand": "Jaarverslag 2017.pdf",
+   "hoofdstuk": [
+    57,
+    72
+   ],
+   "autoluw": {
+    "totaal": 22709,
+    "per_maand": [
+     1319,
+     1000,
+     1211,
+     1156,
+     2188,
+     2151,
+     2411,
+     1279,
+     2568,
+     3110,
+     3141,
+     1175
+    ],
+    "reeks_per_jaar": {
+     "2015": 31698,
+     "2016": 19489,
+     "2017": 22709
+    },
+    "afhandeling": {
+     "initieel": 20127,
+     "gunstig": 1547,
+     "ongunstig": 949,
+     "sepot": 86
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2015": 2870,
+      "2016": 1689,
+      "2017": 2496
+     },
+     "gunstig": {
+      "2015": 1389,
+      "2016": 1065,
+      "2017": 1547
+     },
+     "ongunstig": {
+      "2015": 1475,
+      "2016": 624,
+      "2017": 949
+     }
+    },
+    "woonplaats": {
+     "niet_inwoners_procent": 82.0,
+     "inwoners_procent": 18.0
+    },
+    "paginas": [
+     62,
+     67
+    ],
+    "maandgrafiek_pagina": 62,
+    "per_camera": {
+     "Begijnenstraat": 283,
+     "Désiré Boucherystraat": 121,
+     "Frederik de Merodestraat": 2309,
+     "Lange Schipstraat": 5462,
+     "Sint-Janstraat": 5466,
+     "Steenweg 20": 1255,
+     "Steenweg 44": 3911,
+     "Tuinstraatje": 653,
+     "Van Hoeystraat": 205,
+     "Veemarkt": 942,
+     "Vijfhoek": 1620,
+     "Zakstraat": 482
+    },
+    "per_camera_herkomst": "tabel per camera per maand",
+    "per_camera_pagina": 63,
+    "per_camera_som": 22709,
+    "per_camera_maand": {
+     "Begijnenstraat": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      59,
+      81,
+      102,
+      41
+     ],
+     "Désiré Boucherystraat": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      16,
+      87,
+      18
+     ],
+     "Frederik de Merodestraat": [
+      0,
+      0,
+      0,
+      0,
+      347,
+      425,
+      167,
+      75,
+      539,
+      299,
+      283,
+      174
+     ],
+     "Lange Schipstraat": [
+      553,
+      290,
+      401,
+      471,
+      288,
+      333,
+      525,
+      439,
+      468,
+      695,
+      677,
+      322
+     ],
+     "Sint-Janstraat": [
+      0,
+      0,
+      0,
+      0,
+      1001,
+      954,
+      705,
+      0,
+      796,
+      1077,
+      704,
+      229
+     ],
+     "Steenweg 20": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      236,
+      208,
+      94,
+      214,
+      391,
+      112
+     ],
+     "Steenweg 44": [
+      294,
+      382,
+      458,
+      347,
+      297,
+      266,
+      361,
+      257,
+      289,
+      427,
+      377,
+      156
+     ],
+     "Tuinstraatje": [
+      102,
+      120,
+      108,
+      54,
+      99,
+      79,
+      91,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Van Hoeystraat": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      205,
+      0
+     ],
+     "Veemarkt": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      204,
+      183,
+      190,
+      167,
+      136,
+      62
+     ],
+     "Vijfhoek": [
+      328,
+      178,
+      193,
+      221,
+      133,
+      65,
+      77,
+      85,
+      91,
+      99,
+      110,
+      40
+     ],
+     "Zakstraat": [
+      42,
+      30,
+      51,
+      63,
+      23,
+      29,
+      45,
+      32,
+      42,
+      35,
+      69,
+      21
+     ]
+    }
+   },
+   "parkeren": {
+    "totaal": 9451,
+    "per_maand": [
+     1182,
+     666,
+     1042,
+     863,
+     872,
+     519,
+     606,
+     613,
+     776,
+     865,
+     670,
+     777
+    ],
+    "reeks_per_jaar": {
+     "2015": 5559,
+     "2016": 9904,
+     "2017": 9451
+    },
+    "afhandeling": {
+     "initieel": 8532,
+     "gunstig": 321,
+     "ongunstig": 555,
+     "sepot": 37,
+     "beroep": 6
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2015": 443,
+      "2016": 822,
+      "2017": 882
+     },
+     "gunstig": {
+      "2015": 143,
+      "2016": 287,
+      "2017": 321
+     },
+     "ongunstig": {
+      "2015": 293,
+      "2016": 529,
+      "2017": 555
+     },
+     "beroep": {
+      "2015": 7,
+      "2016": 6,
+      "2017": 6
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 51.0,
+     "niet_inwoners_procent": 49.0
+    },
+    "paginas": [
+     68,
+     72
+    ],
+    "maandgrafiek_pagina": 68,
+    "top_inbreuken": [
+     {
+      "feitcode": "7097",
+      "aantal": 2291,
+      "aandeel_procent": 24.0
+     },
+     {
+      "feitcode": "8604",
+      "aantal": 1783,
+      "aandeel_procent": 19.0
+     },
+     {
+      "feitcode": "8437",
+      "aantal": 1255,
+      "aandeel_procent": 13.0
+     },
+     {
+      "feitcode": "8109",
+      "aantal": 1175,
+      "aandeel_procent": 13.0
+     },
+     {
+      "feitcode": "8472",
+      "aantal": 478,
+      "aandeel_procent": 5.0
+     }
+    ]
+   }
+  },
+  "2018": {
+   "bestand": "Jaarverslag 2018.pdf",
+   "hoofdstuk": [
+    62,
+    76
+   ],
+   "autoluw": {
+    "totaal": 25616,
+    "per_maand": [
+     2457,
+     2390,
+     1622,
+     1062,
+     2110,
+     2357,
+     2057,
+     1555,
+     2647,
+     2405,
+     2434,
+     2520
+    ],
+    "reeks_per_jaar": {
+     "2015": 31698,
+     "2016": 19489,
+     "2017": 22709,
+     "2018": 25616
+    },
+    "afhandeling": {
+     "initieel": 22816,
+     "gunstig": 1747,
+     "ongunstig": 956,
+     "sepot": 95,
+     "beroep": 2
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2015": 2870,
+      "2016": 1689,
+      "2017": 2496,
+      "2018": 2676
+     },
+     "gunstig": {
+      "2015": 1389,
+      "2016": 1065,
+      "2017": 1547,
+      "2018": 1726
+     },
+     "ongunstig": {
+      "2015": 1475,
+      "2016": 624,
+      "2017": 949,
+      "2018": 950
+     }
+    },
+    "woonplaats": {
+     "niet_inwoners_procent": 85.0,
+     "inwoners_procent": 15.0
+    },
+    "paginas": [
+     66,
+     71
+    ],
+    "maandgrafiek_pagina": 66,
+    "per_camera": {
+     "Begijnenstraat": 639,
+     "Désiré Boucherystraat": 407,
+     "Haverwerf": 1529,
+     "Frederik de Merodestraat": 2681,
+     "Lange Schipstraat": 3987,
+     "Sint-Janstraat": 6184,
+     "Steenweg 20": 2848,
+     "Steenweg 44": 3525,
+     "Tuinstraatje": 0,
+     "Van Beethovenstraat": 17,
+     "Van Hoeystraat": 85,
+     "Veemarkt": 1333,
+     "Vijfhoek": 1116,
+     "Zakstraat": 355,
+     "Zoutwerf": 910
+    },
+    "per_camera_herkomst": "tabel per camera per maand",
+    "per_camera_pagina": 67,
+    "per_camera_som": 25616,
+    "per_camera_maand": {
+     "Begijnenstraat": [
+      49,
+      26,
+      39,
+      27,
+      66,
+      75,
+      59,
+      51,
+      84,
+      57,
+      37,
+      69
+     ],
+     "Désiré Boucherystraat": [
+      20,
+      39,
+      27,
+      15,
+      56,
+      32,
+      25,
+      31,
+      63,
+      22,
+      27,
+      50
+     ],
+     "Haverwerf": [
+      43,
+      216,
+      173,
+      57,
+      163,
+      102,
+      81,
+      121,
+      157,
+      178,
+      201,
+      37
+     ],
+     "Frederik de Merodestraat": [
+      242,
+      198,
+      123,
+      170,
+      157,
+      278,
+      227,
+      133,
+      238,
+      179,
+      187,
+      549
+     ],
+     "Lange Schipstraat": [
+      628,
+      346,
+      190,
+      136,
+      244,
+      260,
+      331,
+      285,
+      325,
+      359,
+      393,
+      490
+     ],
+     "Sint-Janstraat": [
+      649,
+      686,
+      502,
+      244,
+      616,
+      700,
+      500,
+      346,
+      588,
+      618,
+      469,
+      266
+     ],
+     "Steenweg 20": [
+      261,
+      310,
+      193,
+      124,
+      283,
+      267,
+      265,
+      129,
+      396,
+      220,
+      237,
+      163
+     ],
+     "Steenweg 44": [
+      307,
+      284,
+      214,
+      155,
+      291,
+      357,
+      332,
+      221,
+      304,
+      310,
+      367,
+      383
+     ],
+     "Tuinstraatje": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Van Beethovenstraat": [
+      15,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0
+     ],
+     "Van Hoeystraat": [
+      85,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "Veemarkt": [
+      120,
+      165,
+      80,
+      60,
+      79,
+      144,
+      123,
+      104,
+      129,
+      113,
+      108,
+      108
+     ],
+     "Vijfhoek": [
+      16,
+      94,
+      58,
+      62,
+      134,
+      106,
+      102,
+      115,
+      123,
+      100,
+      112,
+      94
+     ],
+     "Zakstraat": [
+      22,
+      26,
+      23,
+      12,
+      21,
+      28,
+      3,
+      7,
+      42,
+      37,
+      73,
+      61
+     ],
+     "Zoutwerf": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      8,
+      9,
+      12,
+      196,
+      212,
+      223,
+      250
+     ]
+    }
+   },
+   "parkeren": {
+    "totaal": 9230,
+    "per_maand": [
+     884,
+     869,
+     954,
+     516,
+     611,
+     505,
+     518,
+     633,
+     677,
+     633,
+     1090,
+     1340
+    ],
+    "reeks_per_jaar": {
+     "2015": 5559,
+     "2016": 9904,
+     "2017": 9451,
+     "2018": 9230
+    },
+    "afhandeling": {
+     "initieel": 8415,
+     "gunstig": 308,
+     "ongunstig": 482,
+     "sepot": 21,
+     "beroep": 4
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2015": 443,
+      "2016": 822,
+      "2017": 882,
+      "2018": 794
+     },
+     "gunstig": {
+      "2015": 143,
+      "2016": 287,
+      "2017": 321,
+      "2018": 308
+     },
+     "ongunstig": {
+      "2015": 293,
+      "2016": 529,
+      "2017": 555,
+      "2018": 482
+     },
+     "beroep": {
+      "2015": 7,
+      "2016": 6,
+      "2017": 6,
+      "2018": 4
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 50.2,
+     "niet_inwoners_procent": 49.8
+    },
+    "paginas": [
+     72,
+     76
+    ],
+    "maandgrafiek_pagina": 72,
+    "top_inbreuken": [
+     {
+      "feitcode": "7097",
+      "aantal": 2236,
+      "aandeel_procent": 24.0
+     },
+     {
+      "feitcode": "8604",
+      "aantal": 2314,
+      "aandeel_procent": 25.0
+     },
+     {
+      "feitcode": "8437",
+      "aantal": 1868,
+      "aandeel_procent": 20.0
+     },
+     {
+      "feitcode": "8109",
+      "aantal": 402,
+      "aandeel_procent": 4.0
+     },
+     {
+      "feitcode": "8472",
+      "aantal": 318,
+      "aandeel_procent": 4.0
+     }
+    ]
+   }
+  },
+  "2019": {
+   "bestand": "Jaarverslag 2019 DEFINITIEF.pdf",
+   "hoofdstuk": [
+    67,
+    80
+   ],
+   "autoluw": {
+    "totaal": 29464,
+    "per_maand": [
+     1994,
+     2116,
+     1732,
+     1822,
+     939,
+     1419,
+     3349,
+     2340,
+     2638,
+     3789,
+     4271,
+     3055
+    ],
+    "reeks_per_jaar": {
+     "2015": 31698,
+     "2016": 19489,
+     "2017": 22709,
+     "2018": 25616,
+     "2019": 29464
+    },
+    "afhandeling": {
+     "initieel": 26434,
+     "gunstig": 1989,
+     "ongunstig": 997,
+     "sepot": 40,
+     "beroep": 4,
+     "verweer": 2990
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2015": 2870,
+      "2016": 1689,
+      "2017": 2496,
+      "2018": 2705,
+      "2019": 2990
+     },
+     "gunstig": {
+      "2015": 1389,
+      "2016": 1065,
+      "2017": 1547,
+      "2018": 1747,
+      "2019": 1989
+     },
+     "ongunstig": {
+      "2015": 1475,
+      "2016": 624,
+      "2017": 949,
+      "2018": 956,
+      "2019": 997
+     },
+     "beroep": {
+      "2015": 6,
+      "2016": 0,
+      "2017": 0,
+      "2018": 2,
+      "2019": 4
+     }
+    },
+    "woonplaats": {
+     "niet_inwoners_procent": 80.0,
+     "inwoners_procent": 20.0
+    },
+    "paginas": [
+     70,
+     74
+    ],
+    "maandgrafiek_pagina": 70,
+    "per_camera": {
+     "Begijnenstraat": 1070,
+     "Désiré Boucherystraat": 322,
+     "Haverwerf": 1074,
+     "Kruisbaan": 10337,
+     "Lange Schipstraat": 3586,
+     "Frederik de Merodestraat": 1991,
+     "Sint-Janstraat": 2423,
+     "Steenweg 20": 1380,
+     "Steenweg 44": 2872,
+     "Tuinstraatje": 0,
+     "Van Beethovenstraat": 287,
+     "Van Hoeystraat": 0,
+     "Veemarkt": 973,
+     "Vijfhoek": 736,
+     "Wollemarkt": 251,
+     "Zakstraat": 290,
+     "Zoutwerf": 1872
+    },
+    "per_camera_herkomst": "staafgrafiek per camera (namen uit camera_labels.json)",
+    "per_camera_pagina": 71,
+    "per_camera_som": 29464
+   },
+   "parkeren": {
+    "totaal": 12373,
+    "per_maand": [
+     1583,
+     1418,
+     1032,
+     1126,
+     1314,
+     923,
+     286,
+     584,
+     734,
+     1065,
+     1180,
+     1128
+    ],
+    "reeks_per_jaar": {
+     "2015": 5559,
+     "2016": 9904,
+     "2017": 9451,
+     "2018": 9230,
+     "2019": 12373
+    },
+    "afhandeling": {
+     "initieel": 11258,
+     "gunstig": 359,
+     "ongunstig": 697,
+     "sepot": 50,
+     "beroep": 9,
+     "verweer": 1065
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2015": 443,
+      "2016": 822,
+      "2017": 882,
+      "2018": 794,
+      "2019": 1065
+     },
+     "gunstig": {
+      "2015": 143,
+      "2016": 287,
+      "2017": 321,
+      "2018": 308,
+      "2019": 359
+     },
+     "ongunstig": {
+      "2015": 293,
+      "2016": 529,
+      "2017": 555,
+      "2018": 482,
+      "2019": 697
+     },
+     "beroep": {
+      "2015": 7,
+      "2016": 6,
+      "2017": 6,
+      "2018": 4,
+      "2019": 9
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 52.0,
+     "niet_inwoners_procent": 48.0
+    },
+    "paginas": [
+     75,
+     80
+    ],
+    "maandgrafiek_pagina": 75,
+    "top_inbreuken": [
+     {
+      "feitcode": "7097",
+      "omschrijving": "Parkeren waar een verkeersbord E1 opgesteld staat",
+      "aandeel_procent": 25.0
+     },
+     {
+      "feitcode": "8604",
+      "omschrijving": "Parkeren waar een zonaal verkeersbord E1 van toepassing is",
+      "aandeel_procent": 21.0
+     },
+     {
+      "feitcode": "8437",
+      "omschrijving": "parkeren of stilstaan op een trottoir of verhoogde berm binnen de bebouwde kom",
+      "aandeel_procent": 19.0
+     },
+     {
+      "feitcode": "7114",
+      "omschrijving": "Parkeren van een voertuig op de rijbaan waar deze in rijstroken verdeeld is",
+      "aandeel_procent": 5.0
+     },
+     {
+      "feitcode": "8109",
+      "omschrijving": "Parkeren of stilstaan waar een verkeersbord E3 opgesteld staat",
+      "aandeel_procent": 4.0
+     }
+    ]
+   }
+  },
+  "2020": {
+   "bestand": "Jaarverslag 2020 DEFINITIEF.pdf",
+   "hoofdstuk": [
+    60,
+    73
+   ],
+   "autoluw": {
+    "totaal": 20366,
+    "per_maand": [
+     1634,
+     1583,
+     1338,
+     584,
+     1147,
+     1781,
+     1624,
+     1353,
+     1606,
+     2936,
+     2113,
+     2667
+    ],
+    "reeks_per_jaar": {
+     "2016": 19489,
+     "2017": 22709,
+     "2018": 25616,
+     "2019": 29464,
+     "2020": 20366
+    },
+    "afhandeling": {
+     "initieel": 17819,
+     "gunstig": 1646,
+     "ongunstig": 834,
+     "sepot": 61,
+     "beroep": 6,
+     "verweer": 2486
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2016": 1689,
+      "2017": 2496,
+      "2018": 2705,
+      "2019": 2990,
+      "2020": 2486
+     },
+     "gunstig": {
+      "2016": 1065,
+      "2017": 1547,
+      "2018": 1747,
+      "2019": 1989,
+      "2020": 1646
+     },
+     "ongunstig": {
+      "2016": 624,
+      "2017": 949,
+      "2018": 956,
+      "2019": 997,
+      "2020": 834
+     },
+     "beroep": {
+      "2016": 0,
+      "2017": 0,
+      "2018": 2,
+      "2019": 4,
+      "2020": 6
+     }
+    },
+    "woonplaats": {
+     "niet_inwoners_procent": 80.0,
+     "inwoners_procent": 20.0
+    },
+    "paginas": [
+     64,
+     68
+    ],
+    "maandgrafiek_pagina": 64,
+    "per_camera": {
+     "Begijnenstraat": 758,
+     "Désiré Boucherystraat": 0,
+     "Frederik de Merodestraat": 1346,
+     "Haverwerf": 575,
+     "IJzerenleen": 601,
+     "Lange Schipstraat": 2726,
+     "Mechelsbroekstraat": 729,
+     "Nauwstraat": 99,
+     "Onze-Lieve-Vrouwestraat": 2376,
+     "Sint-Janstraat": 3602,
+     "Steenweg 20": 1456,
+     "Steenweg 44": 1621,
+     "Tuinstraatje": 0,
+     "Van Beethovenstraat": 433,
+     "Van Hoeystraat": 767,
+     "Veemarkt": 1082,
+     "Vijfhoek": 1261,
+     "Wollemarkt": 204,
+     "Zakstraat": 0,
+     "Zoutwerf": 730
+    },
+    "per_camera_herkomst": "staafgrafiek per camera (namen uit camera_labels.json)",
+    "per_camera_pagina": 65,
+    "per_camera_som": 20366
+   },
+   "parkeren": {
+    "totaal": 7190,
+    "per_maand": [
+     993,
+     1067,
+     610,
+     465,
+     755,
+     423,
+     235,
+     278,
+     655,
+     700,
+     567,
+     442
+    ],
+    "reeks_per_jaar": {
+     "2016": 9904,
+     "2017": 9451,
+     "2018": 9230,
+     "2019": 12373,
+     "2020": 7190
+    },
+    "afhandeling": {
+     "initieel": 6491,
+     "gunstig": 268,
+     "ongunstig": 402,
+     "sepot": 26,
+     "beroep": 3,
+     "verweer": 673
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2016": 822,
+      "2017": 882,
+      "2018": 794,
+      "2019": 1065,
+      "2020": 673
+     },
+     "gunstig": {
+      "2016": 287,
+      "2017": 321,
+      "2018": 308,
+      "2019": 359,
+      "2020": 268
+     },
+     "ongunstig": {
+      "2016": 529,
+      "2017": 555,
+      "2018": 482,
+      "2019": 697,
+      "2020": 402
+     },
+     "beroep": {
+      "2016": 6,
+      "2017": 6,
+      "2018": 4,
+      "2019": 9,
+      "2020": 3
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 54.0,
+     "niet_inwoners_procent": 46.0
+    },
+    "paginas": [
+     69,
+     73
+    ],
+    "maandgrafiek_pagina": 69,
+    "top_inbreuken": [
+     {
+      "feitcode": "7097",
+      "omschrijving": "Parkeren waar een verkeersbord E1 opgesteld staat",
+      "aandeel_procent": 25.0
+     },
+     {
+      "feitcode": "8437",
+      "omschrijving": "Parkeren of stilstaan op een trottoir en binnen de bebouwde kom op een verhoogde berm",
+      "aandeel_procent": 17.0
+     },
+     {
+      "feitcode": "8604",
+      "omschrijving": "Parkeren waar een zonaal verkeersbord E1 van toepassing is",
+      "aandeel_procent": 17.0
+     },
+     {
+      "feitcode": "8109",
+      "omschrijving": "Parkeren of stilstaan waar een verkeersbord E3 opgesteld staat",
+      "aandeel_procent": 6.0
+     },
+     {
+      "feitcode": "7115",
+      "omschrijving": "Parkeren op de rijbaan langs een gele onderbroken streep",
+      "aandeel_procent": 4.0
+     }
+    ]
+   }
+  },
+  "2021": {
+   "bestand": "Jaarverslag 2021 definitief.pdf",
+   "hoofdstuk": [
+    75,
+    95
+   ],
+   "autoluw": {
+    "totaal": 35913,
+    "per_maand": [
+     2507,
+     1476,
+     1771,
+     2140,
+     2428,
+     2638,
+     4300,
+     3449,
+     3161,
+     4035,
+     3668,
+     4340
+    ],
+    "reeks_per_jaar": {
+     "2017": 22709,
+     "2018": 25616,
+     "2019": 29464,
+     "2020": 20366,
+     "2021": 35913
+    },
+    "afhandeling": {
+     "initieel": 32500,
+     "gunstig": 1685,
+     "ongunstig": 1296,
+     "sepot": 432,
+     "verweer": 2981
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2017": 2496,
+      "2018": 2705,
+      "2019": 2990,
+      "2020": 2486,
+      "2021": 2981
+     },
+     "gunstig": {
+      "2017": 1547,
+      "2018": 1747,
+      "2019": 1989,
+      "2020": 1646,
+      "2021": 1685
+     },
+     "ongunstig": {
+      "2017": 949,
+      "2018": 956,
+      "2019": 997,
+      "2020": 834,
+      "2021": 1296
+     },
+     "beroep": {
+      "2017": 0,
+      "2018": 2,
+      "2019": 4,
+      "2020": 6,
+      "2021": 0
+     }
+    },
+    "woonplaats": {
+     "niet_inwoners_procent": 80.0,
+     "inwoners_procent": 20.0
+    },
+    "paginas": [
+     80,
+     83
+    ],
+    "maandgrafiek_pagina": 80,
+    "per_camera": {
+     "Begijnenstraat": 784,
+     "Désiré Boucherystraat": 141,
+     "Frederik de Merodestraat": 2881,
+     "Haverwerf": 523,
+     "IJzerenleen": 1504,
+     "Ivo Cornelisstraat": 1529,
+     "Lange Schipstraat": 2229,
+     "Mechelsbroekstraat": 1207,
+     "Nauwstraat": 357,
+     "Onze-Lieve-Vrouwestraat": 7289,
+     "Sint-Janstraat": 4662,
+     "Steenweg 20": 841,
+     "Steenweg 44": 2754,
+     "Tuinstraatje": 0,
+     "Van Beethovenstraat": 478,
+     "Van Hoeystraat": 5050,
+     "Veemarkt": 1916,
+     "Vijfhoek": 1607,
+     "Wollemarkt": 138,
+     "Zakstraat": 20,
+     "Zoutwerf": 3
+    },
+    "per_camera_herkomst": "staafgrafiek per camera (namen uit camera_labels.json)",
+    "per_camera_pagina": 81,
+    "per_camera_som": 35913
+   },
+   "parkeren": {
+    "totaal": 7462,
+    "per_maand": [
+     632,
+     677,
+     499,
+     512,
+     559,
+     533,
+     458,
+     492,
+     584,
+     671,
+     674,
+     1171
+    ],
+    "reeks_per_jaar": {
+     "2016": 9904,
+     "2017": 9451,
+     "2018": 9230,
+     "2019": 12373,
+     "2020": 7190,
+     "2021": 7462
+    },
+    "afhandeling": {
+     "initieel": 6440,
+     "gunstig": 247,
+     "ongunstig": 471,
+     "sepot": 298,
+     "beroep": 6,
+     "verweer": 724
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2016": 822,
+      "2017": 882,
+      "2018": 794,
+      "2019": 1065,
+      "2020": 673,
+      "2021": 724
+     },
+     "gunstig": {
+      "2016": 287,
+      "2017": 321,
+      "2018": 308,
+      "2019": 359,
+      "2020": 268,
+      "2021": 247
+     },
+     "ongunstig": {
+      "2016": 529,
+      "2017": 555,
+      "2018": 482,
+      "2019": 697,
+      "2020": 402,
+      "2021": 471
+     },
+     "beroep": {
+      "2016": 6,
+      "2017": 6,
+      "2018": 4,
+      "2019": 9,
+      "2020": 3,
+      "2021": 6
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 55.0,
+     "niet_inwoners_procent": 45.0
+    },
+    "paginas": [
+     84,
+     89
+    ],
+    "maandgrafiek_pagina": 84,
+    "top_inbreuken": [
+     {
+      "feitcode": "7097",
+      "omschrijving": "Parkeren waar een verkeersbord E1 geldt",
+      "aandeel_procent": 27.0
+     },
+     {
+      "feitcode": "8604",
+      "omschrijving": "Parkeren waar een zonaal verkeersbord E1 van toepassing is",
+      "aandeel_procent": 19.0
+     },
+     {
+      "feitcode": "8437",
+      "omschrijving": "Parkeren of stilstaan op een trottoir en binnen de bebouwde kom op een verhoogde berm",
+      "aandeel_procent": 14.0
+     },
+     {
+      "feitcode": "7115",
+      "omschrijving": "Parkeren op de rijbaan langs een gele onderbroken streep",
+      "aandeel_procent": 5.0
+     },
+     {
+      "feitcode": "7087",
+      "omschrijving": "Parkeren of stilstaan op minder dan 5 meter van een kruispunt",
+      "aandeel_procent": 5.0
+     }
+    ]
+   }
+  },
+  "2022": {
+   "bestand": "Jaarverslag 2022 definitief.pdf",
+   "hoofdstuk": [
+    89,
+    113
+   ],
+   "autoluw": {
+    "totaal": 60952,
+    "per_maand": [
+     3201,
+     3212,
+     2095,
+     2074,
+     2265,
+     1966,
+     1589,
+     1482,
+     2432,
+     2587,
+     14887,
+     23162
+    ],
+    "reeks_per_jaar": {
+     "2018": 25616,
+     "2019": 29464,
+     "2020": 20366,
+     "2021": 35913,
+     "2022": 60952
+    },
+    "afhandeling": {
+     "initieel": 53752,
+     "gunstig": 3353,
+     "ongunstig": 3056,
+     "sepot": 781,
+     "beroep": 10,
+     "verweer": 6419
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2018": 2705,
+      "2019": 2990,
+      "2020": 2486,
+      "2021": 2981,
+      "2022": 6419
+     },
+     "gunstig": {
+      "2018": 1747,
+      "2019": 1989,
+      "2020": 1646,
+      "2021": 1685,
+      "2022": 3353
+     },
+     "ongunstig": {
+      "2018": 956,
+      "2019": 997,
+      "2020": 834,
+      "2021": 1296,
+      "2022": 3056
+     },
+     "beroep": {
+      "2018": 2,
+      "2019": 4,
+      "2020": 6,
+      "2021": 0,
+      "2022": 10
+     }
+    },
+    "woonplaats": {
+     "niet_inwoners_procent": 81.0,
+     "inwoners_procent": 19.0
+    },
+    "paginas": [
+     93,
+     97
+    ],
+    "maandgrafiek_pagina": 93,
+    "per_camera": {
+     "Begijnenstraat": 1289,
+     "Caputsteenstraat": 3351,
+     "Désiré Boucherystraat": 19,
+     "Frederik de Merodestraat": 1995,
+     "Haverwerf": 805,
+     "Hendrik Speecqvest": 2323,
+     "IJzerenleen": 1408,
+     "Ivo Cornelisstraat": 2536,
+     "Lange Schipstraat": 885,
+     "Kleine Nieuwedijkstraat": 1327,
+     "Koningin Astridlaan": 4764,
+     "Mechelsbroekstraat": 1292,
+     "Nauwstraat": 174,
+     "Onze-Lieve-Vrouwestraat": 2944,
+     "Sint-Janstraat": 5844,
+     "Steenweg 20": 440,
+     "Steenweg 44": 2663,
+     "Tuinstraatje": 1047,
+     "Van Beethovenstraat": 979,
+     "Van Benedenlaan 1": 5779,
+     "Van Benedenlaan 47": 14344,
+     "Van Hoeystraat": 3415,
+     "Veemarkt": 1071,
+     "Vijfhoek": 0,
+     "Wollemarkt": 142,
+     "Zakstraat": 110,
+     "Zoutwerf": 6
+    },
+    "per_camera_herkomst": "figuur per camera (overgetypt uit het beeld, nageteld)",
+    "per_camera_pagina": 94,
+    "per_camera_som": 60952
+   },
+   "parkeren": {
+    "totaal": 8733,
+    "per_maand": [
+     1485,
+     805,
+     692,
+     452,
+     932,
+     673,
+     753,
+     430,
+     724,
+     743,
+     479,
+     565
+    ],
+    "reeks_per_jaar": {
+     "2017": 9451,
+     "2018": 9230,
+     "2019": 12373,
+     "2020": 7190,
+     "2021": 7462,
+     "2022": 8733
+    },
+    "afhandeling": {
+     "initieel": 7898,
+     "gunstig": 203,
+     "ongunstig": 529,
+     "sepot": 85,
+     "beroep": 18,
+     "verweer": 750
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2017": 882,
+      "2018": 794,
+      "2019": 1065,
+      "2020": 673,
+      "2021": 724,
+      "2022": 750
+     },
+     "gunstig": {
+      "2017": 321,
+      "2018": 308,
+      "2019": 359,
+      "2020": 268,
+      "2021": 247,
+      "2022": 203
+     },
+     "ongunstig": {
+      "2017": 555,
+      "2018": 482,
+      "2019": 697,
+      "2020": 402,
+      "2021": 471,
+      "2022": 529
+     },
+     "beroep": {
+      "2017": 6,
+      "2018": 4,
+      "2019": 9,
+      "2020": 3,
+      "2021": 6,
+      "2022": 18
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 50.0,
+     "niet_inwoners_procent": 50.0
+    },
+    "paginas": [
+     102,
+     107
+    ],
+    "maandgrafiek_pagina": 102,
+    "top_inbreuken": [
+     {
+      "feitcode": "Art. 25 (E1)",
+      "omschrijving": "Parkeren waar een verkeersbord E1 geldt",
+      "aandeel_procent": 25.1
+     },
+     {
+      "feitcode": "Art. 51,1°",
+      "omschrijving": "Parkeren of stilstaan op een trottoir en binnen de bebouwde kom op een verhoogde berm",
+      "aandeel_procent": 16.1
+     },
+     {
+      "feitcode": "Art. 25 (Bord E1)",
+      "omschrijving": "Parkeren waar een tijdelijk verkeersbord E1 geldt",
+      "aandeel_procent": 16.0
+     },
+     {
+      "feitcode": "Art. 25 (E3)",
+      "omschrijving": "Parkeren of stilstaan waar een verkeersbord E3 geldt",
+      "aandeel_procent": 6.7
+     },
+     {
+      "feitcode": "Art. 19,7°",
+      "omschrijving": "Parkeren op de rijbaan langs een gele onderbroken streep",
+      "aandeel_procent": 5.1
+     }
+    ]
+   }
+  },
+  "2023": {
+   "bestand": "Jaarverslag 2023 definitieve versie.pdf",
+   "hoofdstuk": [
+    99,
+    124
+   ],
+   "autoluw": {
+    "totaal": 121617,
+    "per_maand": [
+     9859,
+     10863,
+     14784,
+     10402,
+     12382,
+     12532,
+     12037,
+     10091,
+     8085,
+     8803,
+     6231,
+     5548
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 111760,
+     "gunstig": 2961,
+     "ongunstig": 4557,
+     "sepot": 2313,
+     "beroep": 26,
+     "verweer": 7544
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2019": 2990,
+      "2020": 2486,
+      "2021": 2981,
+      "2022": 6419,
+      "2023": 7544
+     },
+     "gunstig": {
+      "2019": 1989,
+      "2020": 1646,
+      "2021": 1685,
+      "2022": 3353,
+      "2023": 2961
+     },
+     "ongunstig": {
+      "2019": 997,
+      "2020": 834,
+      "2021": 1296,
+      "2022": 3056,
+      "2023": 4557
+     },
+     "beroep": {
+      "2019": 4,
+      "2020": 6,
+      "2021": 0,
+      "2022": 10,
+      "2023": 26
+     }
+    },
+    "woonplaats": {
+     "niet_inwoners_procent": 88.0,
+     "inwoners_procent": 12.0
+    },
+    "paginas": [
+     104,
+     109
+    ],
+    "maandgrafiek_pagina": 104,
+    "per_camera": {
+     "Begijnenstraat": 1270,
+     "Désiré Boucherystraat": 45,
+     "Frederik de Merodestraat": 5659,
+     "Haverwerf": 136,
+     "IJzerenleen": 1635,
+     "Ivo Cornelisstraat": 1648,
+     "Lange Schipstraat": 182,
+     "Mechelsbroekstraat": 994,
+     "Nauwstraat": 165,
+     "Onze-Lieve-Vrouwestraat": 540,
+     "Sint-Janstraat": 9195,
+     "Steenweg 20": 885,
+     "Steenweg 44": 2669,
+     "Tuinstraatje": 372,
+     "Van Beethovenstraat": 307,
+     "Van Hoeystraat": 0,
+     "Veemarkt": 2575,
+     "Vijfhoek": 529,
+     "Wollemarkt": 142,
+     "Zakstraat": 125,
+     "Zoutwerf": 19,
+     "Caputsteenstraat": 9326,
+     "Frans Halsvest": 4793,
+     "Hendrik Speecqvest": 5475,
+     "Hoogstratenplein": 11667,
+     "Kleine Nieuwedijkstraat": 4754,
+     "Koningin Astridlaan": 11542,
+     "Olivetenvest": 4379,
+     "Schuttersvest": 2501,
+     "Sint-Gommarusstraat": 2940,
+     "Van Benedenlaan 1": 11151,
+     "Van Benedenlaan 47": 23997
+    },
+    "per_camera_herkomst": "figuur per camera (overgetypt uit het beeld, nageteld)",
+    "per_camera_pagina": 105,
+    "per_camera_som": 121617
+   },
+   "parkeren": {
+    "totaal": 7192,
+    "per_maand": [
+     620,
+     820,
+     1095,
+     549,
+     587,
+     435,
+     386,
+     353,
+     574,
+     506,
+     667,
+     600
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 6459,
+     "gunstig": 166,
+     "ongunstig": 472,
+     "sepot": 82,
+     "beroep": 13,
+     "verweer": 651
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2018": 794,
+      "2019": 1065,
+      "2020": 673,
+      "2021": 724,
+      "2022": 750,
+      "2023": 651
+     },
+     "gunstig": {
+      "2018": 308,
+      "2019": 359,
+      "2020": 268,
+      "2021": 247,
+      "2022": 203,
+      "2023": 166
+     },
+     "ongunstig": {
+      "2018": 482,
+      "2019": 697,
+      "2020": 402,
+      "2021": 471,
+      "2022": 529,
+      "2023": 472
+     },
+     "beroep": {
+      "2018": 4,
+      "2019": 9,
+      "2020": 3,
+      "2021": 6,
+      "2022": 18,
+      "2023": 13
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 48.0,
+     "niet_inwoners_procent": 52.0
+    },
+    "paginas": [
+     114,
+     118
+    ],
+    "maandgrafiek_pagina": 114,
+    "top_inbreuken": [
+     {
+      "feitcode": "Art. 25 (E1)",
+      "omschrijving": "Parkeren waar een verkeersbord E1 geldt",
+      "aandeel_procent": 26.0
+     },
+     {
+      "feitcode": "Art. 25 (Tijdelijke E1)",
+      "omschrijving": "Parkeren waar een tijdelijk verkeersbord E1 geldt",
+      "aandeel_procent": 19.0
+     },
+     {
+      "feitcode": "Art. 51,1°",
+      "omschrijving": "Parkeren of stilstaan op een trottoir en binnen de bebouwde kom op een verhoogde berm",
+      "aandeel_procent": 14.0
+     },
+     {
+      "feitcode": "Art. 25 (E3)",
+      "omschrijving": "Parkeren of stilstaan waar een verkeersbord E3 geldt",
+      "aandeel_procent": 7.0
+     },
+     {
+      "feitcode": "Art. 19,7°",
+      "omschrijving": "Parkeren op de rijbaan langs een gele onderbroken streep",
+      "aandeel_procent": 5.0
+     }
+    ]
+   }
+  },
+  "2024": {
+   "bestand": "Jaarverslag GAS Rivierenland 2024.pdf",
+   "hoofdstuk": [
+    98,
+    124
+   ],
+   "autoluw": {
+    "totaal": 93422,
+    "per_maand": [
+     7946,
+     8106,
+     7278,
+     8070,
+     8842,
+     8441,
+     7963,
+     7007,
+     7756,
+     7898,
+     7124,
+     6991
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 84565,
+     "sepot": 1844,
+     "verweer": 7013,
+     "gunstig": 3534,
+     "ongunstig": 3423,
+     "beroep": 56
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2020": 2486,
+      "2021": 2981,
+      "2022": 6419,
+      "2023": 7544,
+      "2024": 7013
+     },
+     "gunstig": {
+      "2020": 1646,
+      "2021": 1685,
+      "2022": 3353,
+      "2023": 2961,
+      "2024": 3534
+     },
+     "ongunstig": {
+      "2020": 834,
+      "2021": 1296,
+      "2022": 3056,
+      "2023": 4557,
+      "2024": 3423
+     },
+     "beroep": {
+      "2020": 6,
+      "2021": 0,
+      "2022": 10,
+      "2023": 26,
+      "2024": 56
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 17.0,
+     "niet_inwoners_procent": 83.0
+    },
+    "paginas": [
+     103,
+     107
+    ],
+    "maandgrafiek_pagina": 103,
+    "per_camera": {
+     "Begijnenstraat": 925,
+     "Désiré Boucherystraat": 233,
+     "Frederik de Merodestraat": 2231,
+     "Grote Markt": 1673,
+     "Haverwerf": 536,
+     "Hoogstraat/Milsenstraat": 24,
+     "IJzerenleen": 596,
+     "Ivo Cornelisstraat": 1497,
+     "Korenmarkt": 9655,
+     "Lange Schipstraat": 166,
+     "Mechelsbroekstraat": 1186,
+     "Mezenstraat": 3762,
+     "Nauwstraat": 38,
+     "Sint-Janstraat": 5018,
+     "Steenweg 20": 582,
+     "Steenweg 44": 2613,
+     "Tuinstraatje": 598,
+     "Van Beethovenstraat": 2502,
+     "Van Hoeystraat": 2872,
+     "Veemarkt": 2194,
+     "Vijfhoek": 2662,
+     "Wollemarkt": 51,
+     "Zakstraat": 367,
+     "Zoutwerf": 309,
+     "Caputsteenstraat": 8067,
+     "Frans Halsvest": 2736,
+     "Hendrik Speecqvest": 2745,
+     "Hoogstratenplein": 1710,
+     "Kleine Nieuwedijkstraat": 347,
+     "Koningin Astridlaan": 2244,
+     "Olivetenvest": 814,
+     "Schuttersvest": 13660,
+     "Sint-Gommarusstraat": 702,
+     "Van Benedenlaan 1": 7036,
+     "Van Benedenlaan 47": 10774,
+     "Zwartzustersvest": 297
+    },
+    "per_camera_herkomst": "figuur per camera (overgetypt uit het beeld, nageteld)",
+    "per_camera_pagina": 104,
+    "per_camera_som": 93422
+   },
+   "parkeren": {
+    "totaal": 9496,
+    "per_maand": [
+     687,
+     650,
+     932,
+     822,
+     552,
+     578,
+     413,
+     876,
+     1104,
+     847,
+     1038,
+     997
+    ],
+    "reeks_per_jaar": null,
+    "afhandeling": {
+     "initieel": 8354,
+     "sepot": 134,
+     "verweer": 1008,
+     "gunstig": 343,
+     "ongunstig": 659,
+     "beroep": 6
+    },
+    "afhandeling_per_jaar": {
+     "verweer": {
+      "2020": 673,
+      "2021": 724,
+      "2022": 750,
+      "2023": 651,
+      "2024": 1008
+     },
+     "gunstig": {
+      "2020": 268,
+      "2021": 247,
+      "2022": 203,
+      "2023": 166,
+      "2024": 343
+     },
+     "ongunstig": {
+      "2020": 402,
+      "2021": 471,
+      "2022": 529,
+      "2023": 472,
+      "2024": 659
+     },
+     "beroep": {
+      "2020": 3,
+      "2021": 6,
+      "2022": 18,
+      "2023": 13,
+      "2024": 6
+     }
+    },
+    "woonplaats": {
+     "inwoners_procent": 49.0,
+     "niet_inwoners_procent": 51.0
+    },
+    "paginas": [
+     116,
+     119
+    ],
+    "maandgrafiek_pagina": 116,
+    "top_inbreuken": [
+     {
+      "feitcode": "Art. 25 (E1)",
+      "omschrijving": "",
+      "aandeel_procent": 32.0
+     },
+     {
+      "feitcode": "Art. 51,1°",
+      "omschrijving": "",
+      "aandeel_procent": 22.0
+     },
+     {
+      "feitcode": "Art. 25 (Tijdelijke E1)",
+      "omschrijving": "",
+      "aandeel_procent": 11.0
+     },
+     {
+      "feitcode": "Art. 25 (E3)",
+      "omschrijving": "",
+      "aandeel_procent": 5.0
+     },
+     {
+      "feitcode": "Art. 10",
+      "omschrijving": "",
+      "aandeel_procent": 5.0
+     }
+    ]
+   }
+  }
+ },
+ "meldingen": [
+  "2018 autoluw: het verslag spreekt zichzelf tegen (gunstig 1.726 in de tabel, 1.747 in de figuur; ongunstig 950 in de tabel, 956 in de figuur)"
+ ]
+}

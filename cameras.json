@@ -1,0 +1,1065 @@
+{
+ "_leesmij": "Posities, in volgorde van sterkte: handmatig > camerapunt met ANPR-tag uit OpenStreetMap (ODbL, verifieer_cameras_osm.py) > de plek die een officiele omschrijving aanwijst (plaats_verkeersstops.py: het autoluwreglement, een stratenlijst met huisnummers, of voor de knip van 2019 de regionale pers; het citaat en de rekenwijze staan onder reglement_positie) > verkeerscamera uit OpenStreetMap zonder ANPR-tag > midden van de straat uit het Vlaams Adressenregister (geocode_cameras.py). Vul 'handmatig' met [lengtegraad, breedtegraad] om een camera vast te zetten; de scripts blijven daar af. Zet er 'handmatig_bron' bij om te zeggen waarop die plaats steunt: die zin komt op de site bij de stip, in plaats van het kale 'handmatig ingevuld'. Google Maps is geen bron: hun licentie verbiedt coordinaten overnemen.",
+ "cameras": {
+  "Begijnenstraat": {
+   "jaren": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.478449,
+    51.028473
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": [
+    4.477673,
+    51.027776
+   ],
+   "osm_positie": {
+    "punt": [
+     4.478449,
+     51.028473
+    ],
+    "node": 5519359627,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 2,
+    "afstand_tot_referentie_m": 94
+   }
+  },
+  "Caputsteenstraat": {
+   "jaren": [
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.490199,
+    51.033882
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.487999,
+    51.034462
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.490199,
+     51.033882
+    ],
+    "citaat": "Verkeersstop die de Caputsteenstraat onderbreekt, gelegen ten westen van de spoorlijn",
+    "rekenwijze": "kruising van Caputsteenstraat met de spoorlijn (1 m)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Désiré Boucherystraat": {
+   "jaren": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.482492,
+    51.026834
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": [
+    4.48238,
+    51.027245
+   ],
+   "osm_positie": {
+    "punt": [
+     4.482492,
+     51.026834
+    ],
+    "node": 12453366012,
+    "soort": "ALPR",
+    "zone": "traffic",
+    "beheerder": "Stad Mechelen",
+    "afstand_tot_straat_m": 6,
+    "afstand_tot_referentie_m": 46
+   }
+  },
+  "Frans Halsvest": {
+   "jaren": [
+    2023,
+    2024
+   ],
+   "positie": [
+    4.486165,
+    51.032464
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.487209,
+    51.031516
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.486165,
+     51.032464
+    ],
+    "citaat": "Verkeersstop die de Frans Halsvest onderbreekt, gelegen tussen de Jan Bolstraat en Populierendreef",
+    "rekenwijze": "midden van Frans Halsvest tussen Jan Bolstraat en Populierendreef (16 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Frederik de Merodestraat": {
+   "jaren": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.482232,
+    51.030567
+   ],
+   "positie_bron": "plaats nagekeken op open straatfoto's (Panoramax, CC BY-SA 4.0): de paal met de twee camerakoppen staat in de straatmond",
+   "positie_straatmidden": [
+    4.481726,
+    51.030145
+   ],
+   "osm_positie": {
+    "punt": [
+     4.482341,
+     51.030625
+    ],
+    "node": 5538415823,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 3,
+    "afstand_tot_referentie_m": 68
+   },
+   "handmatig": [
+    4.482232,
+    51.030567
+   ],
+   "handmatig_bron": "plaats nagekeken op open straatfoto's (Panoramax, CC BY-SA 4.0): de paal met de twee camerakoppen staat in de straatmond",
+   "opmerking": "Fotocontrole 07/09/2026: twee lezers zien de paal 8 tot 13 m ten zuidwesten van het OSM-punt, in de mond van de Frederik de Merodestraat richting centrum, naast de mobipunt-infozuil. Stip gezet op 10 m, peiling 230 graden."
+  },
+  "Grote Markt": {
+   "jaren": [
+    2024
+   ],
+   "positie": [
+    4.479724,
+    51.027925
+   ],
+   "positie_bron": "verkeerscamera uit OpenStreetMap (ODbL), daar niet als ANPR gemarkeerd",
+   "positie_straatmidden": [
+    4.480167,
+    51.027966
+   ],
+   "osm_positie": {
+    "punt": [
+     4.479724,
+     51.027925
+    ],
+    "node": 5519373222,
+    "soort": "camera",
+    "zone": "traffic",
+    "beheerder": "overheid",
+    "afstand_tot_straat_m": 2,
+    "afstand_tot_referentie_m": 31
+   }
+  },
+  "Haverwerf": {
+   "jaren": [
+    2015,
+    2016,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.475125,
+    51.026641
+   ],
+   "positie_bron": "midden van de straat (Vlaams Adressenregister)",
+   "positie_straatmidden": [
+    4.475125,
+    51.026641
+   ]
+  },
+  "Hendrik Speecqvest": {
+   "jaren": [
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.48267,
+    51.02043
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.484998,
+    51.02112
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.48267,
+     51.02043
+    ],
+    "citaat": "Verkeersstop langs de binnenkant van de vesten, die de verbinding richting het Kardinaal Mercierplein onderbreekt",
+    "rekenwijze": "kruising Hendrik Speecqvest x Kardinaal Mercierplein (straten 0 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Hoogstraat/Milsenstraat": {
+   "jaren": [
+    2024
+   ],
+   "positie": [
+    4.474935,
+    51.02343
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.474955,
+    51.023273
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.474935,
+     51.02343
+    ],
+    "citaat": "camera Hoogstraat/Milsenstraat (jaarverslag 2024)",
+    "rekenwijze": "kruising Hoogstraat x Milsenstraat (straten 0 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Hoogstratenplein": {
+   "jaren": [
+    2023,
+    2024
+   ],
+   "positie": [
+    4.488818,
+    51.029006
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.4886,
+    51.028713
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.488818,
+     51.029006
+    ],
+    "citaat": "Hoogstratenplein: binnenkant van de vesten ter hoogte van de Keizerstraat",
+    "rekenwijze": "kruising Hoogstratenplein x Keizerstraat (straten 11 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "IJzerenleen": {
+   "jaren": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.479155,
+    51.027083
+   ],
+   "positie_bron": "verkeerscamera uit OpenStreetMap (ODbL), daar niet als ANPR gemarkeerd",
+   "positie_straatmidden": [
+    4.478464,
+    51.026527
+   ],
+   "osm_positie": {
+    "punt": [
+     4.479155,
+     51.027083
+    ],
+    "node": 12467569612,
+    "soort": "camera",
+    "zone": "traffic",
+    "beheerder": "Stad Mechelen",
+    "afstand_tot_straat_m": 3,
+    "afstand_tot_referentie_m": 78
+   }
+  },
+  "Ivo Cornelisstraat": {
+   "jaren": [
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.483412,
+    51.002996
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.484602,
+    51.000247
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.483412,
+     51.002996
+    ],
+    "citaat": "Ivo Cornelisstraat: tussen de Abeelstraat en Kardinaal Cardynstraat",
+    "rekenwijze": "midden van Ivo Cornelisstraat tussen Abeelstraat en Kardinaal Cardynstraat (87 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Kleine Nieuwedijkstraat": {
+   "jaren": [
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.491152,
+    51.038165
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.492149,
+    51.038247
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.491152,
+     51.038165
+    ],
+    "citaat": "Verkeersstop die de Kleine Nieuwedijkstraat onderbreekt ter hoogte van de spoorweg",
+    "rekenwijze": "kruising van Kleine Nieuwedijkstraat met de spoorlijn (2 m)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Koningin Astridlaan": {
+   "jaren": [
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.470172,
+    51.027703
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.470971,
+    51.025199
+   ],
+   "osm_positie": {
+    "punt": [
+     4.469852,
+     51.026985
+    ],
+    "node": 8275120440,
+    "soort": "camera",
+    "zone": "traffic",
+    "beheerder": null,
+    "afstand_tot_straat_m": 5,
+    "afstand_tot_referentie_m": 212
+   },
+   "reglement_positie": {
+    "punt": [
+     4.470172,
+     51.027703
+    ],
+    "citaat": "Verkeersstop langs de binnenkant van de vesten, die de doorgang onderbreekt van Koningin Astridlaan naar het kruispunt met de Adegemstraat/Battelsesteenweg",
+    "rekenwijze": "40 m voorbij de kruising Koningin Astridlaan x Adegemstraat",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Korenmarkt": {
+   "jaren": [
+    2024
+   ],
+   "positie": [
+    4.476806,
+    51.024976
+   ],
+   "positie_bron": "plaats volgens de stratenlijst van het autoluwreglement (Korenmarkt 3-7), gezet op het adrespunt uit het Vlaams Adressenregister",
+   "positie_straatmidden": [
+    4.475897,
+    51.024661
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.476806,
+     51.024976
+    ],
+    "citaat": "Korenmarkt (nrs 3-7)",
+    "rekenwijze": "adrespunt Korenmarkt 3 (Vlaams Adressenregister)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stratenlijst zone 2 (GR 16/09/2025); RTV 11/2023: het heraangelegde deel tussen de Korenmarkt en de Louizastraat wordt autoluw",
+    "label": "plaats volgens de stratenlijst van het autoluwreglement (Korenmarkt 3-7), gezet op het adrespunt uit het Vlaams Adressenregister"
+   }
+  },
+  "Kruisbaan": {
+   "jaren": [
+    2019
+   ],
+   "positie": [
+    4.466796,
+    51.009474
+   ],
+   "positie_bron": "plaats volgens de regionale pers van december 2019 (knip ter hoogte van kleuterschool Pius X), gezet op het adrespunt Kruisbaan 119",
+   "positie_straatmidden": [
+    4.470715,
+    51.009088
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.466796,
+     51.009474
+    ],
+    "citaat": "de knip op de Kruisbaan ter hoogte van kleuterschool Pius X",
+    "rekenwijze": "adrespunt Kruisbaan 119 (Vlaams Adressenregister)",
+    "bron": "RTV (december 2019) en Radio Reflex (10/12/2019); de kleuterschool is Kruisbaan 119 (OpenStreetMap, Vlaams Adressenregister)",
+    "label": "plaats volgens de regionale pers van december 2019 (knip ter hoogte van kleuterschool Pius X), gezet op het adrespunt Kruisbaan 119"
+   }
+  },
+  "Lange Schipstraat": {
+   "jaren": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.480748,
+    51.024185
+   ],
+   "positie_bron": "midden van de straat (Vlaams Adressenregister)",
+   "positie_straatmidden": [
+    4.480748,
+    51.024185
+   ]
+  },
+  "Mechelsbroekstraat": {
+   "jaren": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.500073,
+    51.029359
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.499532,
+    51.029577
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.500073,
+     51.029359
+    ],
+    "citaat": "Verkeersstop die de straat onderbreekt tussen de sporthal en nr 21",
+    "rekenwijze": "adrespunt Mechelsbroekstraat 21 (Vlaams Adressenregister)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Mezenstraat": {
+   "jaren": [
+    2024
+   ],
+   "positie": [
+    4.470769,
+    51.0501
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op het einde van de straat richting het woonzorgcentrum (OpenStreetMap); de paal kan iets verder op die doorsteek staan",
+   "positie_straatmidden": [
+    4.470032,
+    51.049647
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.470769,
+     51.0501
+    ],
+    "citaat": "Verkeersstop die de route onderbreekt tussen de Mezenstraat en het woonzorgcentrum Roosendaelveld",
+    "rekenwijze": "einde van Mezenstraat het dichtst bij Woonzorgcentrum Roosendaelveld (112 m ervandaan)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op het einde van de straat richting het woonzorgcentrum (OpenStreetMap); de paal kan iets verder op die doorsteek staan"
+   }
+  },
+  "Nauwstraat": {
+   "jaren": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.477868,
+    51.026031
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": [
+    4.477364,
+    51.026242
+   ],
+   "osm_positie": {
+    "punt": [
+     4.477868,
+     51.026031
+    ],
+    "node": 5518699521,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 1,
+    "afstand_tot_referentie_m": 42
+   }
+  },
+  "Olivetenvest": {
+   "jaren": [
+    2023,
+    2024
+   ],
+   "positie": [
+    4.470508,
+    51.028622
+   ],
+   "positie_bron": "plaats nagekeken op open straatfoto's (Panoramax, CC BY-SA 4.0): het afgesloten stuk begint aan de binnenkant van de vesten",
+   "positie_straatmidden": [
+    4.470824,
+    51.029127
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.470215,
+     51.028752
+    ],
+    "citaat": "Olivetenvest: binnenkant van de vesten ten noorden van het kruispunt (met de Adegemstraat/Battelsesteenweg)",
+    "rekenwijze": "40 m voorbij de kruising Olivetenvest x Battelsesteenweg, kant noord",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   },
+   "handmatig": [
+    4.470508,
+    51.028622
+   ],
+   "handmatig_bron": "plaats nagekeken op open straatfoto's (Panoramax, CC BY-SA 4.0): het afgesloten stuk begint aan de binnenkant van de vesten",
+   "opmerking": "Fotocontrole 07/09/2026: beide lezers zien op de westelijke ventweg geen camera en wijzen naar de overkant, waar de binnenkantrijstrook begint bij de betonblokken en het B1/D1-bord. Stip 25 m naar het zuidoosten, peiling 125 graden."
+  },
+  "Onze-Lieve-Vrouwestraat": {
+   "jaren": [
+    2020,
+    2021,
+    2022,
+    2023
+   ],
+   "positie": [
+    4.479475,
+    51.023495
+   ],
+   "positie_bron": "midden van de straat (Vlaams Adressenregister)",
+   "positie_straatmidden": [
+    4.479475,
+    51.023495
+   ]
+  },
+  "Schuttersvest": {
+   "jaren": [
+    2023,
+    2024
+   ],
+   "positie": [
+    4.482207,
+    51.020647
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.480522,
+    51.02072
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.482207,
+     51.020647
+    ],
+    "citaat": "Verkeersstop langs de binnenkant van de vesten die de verbinding komende vanaf het Kardinaal Mercierplein richting Schuttersvest onderbreekt",
+    "rekenwijze": "kruising Schuttersvest x Kardinaal Mercierplein (straten 0 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Sint-Gommarusstraat": {
+   "jaren": [
+    2023,
+    2024
+   ],
+   "positie": [
+    4.488095,
+    51.032263
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.488351,
+    51.033138
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.488095,
+     51.032263
+    ],
+    "citaat": "Verkeersstop op de aansluiting van de Sint-Gommarusstraat met de Jan Bolstraat",
+    "rekenwijze": "kruising Sint-Gommarusstraat x Jan Bolstraat (straten 0 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Sint-Janstraat": {
+   "jaren": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.482382,
+    51.030664
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": [
+    4.480649,
+    51.030765
+   ],
+   "osm_positie": {
+    "punt": [
+     4.482382,
+     51.030664
+    ],
+    "node": 5538415623,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 1,
+    "afstand_tot_referentie_m": 122
+   }
+  },
+  "Steenweg 20": {
+   "jaren": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.478916,
+    51.028306
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": [
+    4.478935,
+    51.028164
+   ],
+   "osm_positie": {
+    "punt": [
+     4.478916,
+     51.028306
+    ],
+    "node": 5519359626,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 2,
+    "afstand_tot_referentie_m": 16
+   }
+  },
+  "Steenweg 44": {
+   "jaren": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.479074,
+    51.027579
+   ],
+   "positie_bron": "verkeerscamera uit OpenStreetMap (ODbL), daar niet als ANPR gemarkeerd",
+   "positie_straatmidden": [
+    4.478857,
+    51.027733
+   ],
+   "osm_positie": {
+    "punt": [
+     4.479074,
+     51.027579
+    ],
+    "node": 12467594228,
+    "soort": "camera",
+    "zone": "traffic",
+    "beheerder": "Stad Mechelen",
+    "afstand_tot_straat_m": 2,
+    "afstand_tot_referentie_m": 23
+   }
+  },
+  "Tuinstraatje": {
+   "jaren": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.472281,
+    51.029129
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": null,
+   "osm_positie": {
+    "punt": [
+     4.472281,
+     51.029129
+    ],
+    "node": 5518627693,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 1,
+    "afstand_tot_referentie_m": 0
+   }
+  },
+  "Van Beethovenstraat": {
+   "jaren": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.476626,
+    51.025752
+   ],
+   "positie_bron": "midden van de straat (Vlaams Adressenregister)",
+   "positie_straatmidden": [
+    4.476626,
+    51.025752
+   ]
+  },
+  "Van Benedenlaan 1": {
+   "jaren": [
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.474023,
+    51.021933
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.474235,
+    51.022054
+   ],
+   "osm_positie": {
+    "punt": [
+     4.474252,
+     51.021794
+    ],
+    "node": 10598716978,
+    "soort": "camera",
+    "zone": "traffic",
+    "beheerder": null,
+    "afstand_tot_straat_m": 2,
+    "afstand_tot_referentie_m": 29
+   },
+   "reglement_positie": {
+    "punt": [
+     4.474023,
+     51.021933
+    ],
+    "citaat": "Brusselpoort / Van Benedenlaan 1: verkeersstop langs de binnenkant van de vesten, die de doorgang onderbreekt tussen de Hoogstraat en Koningin Astridlaan",
+    "rekenwijze": "midden van Van Benedenlaan tussen Hoogstraat en Koningin Astridlaan (27 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Van Benedenlaan 47": {
+   "jaren": [
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.475515,
+    51.021218
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.475841,
+    51.021305
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.475515,
+     51.021218
+    ],
+    "citaat": "Verkeersstop langs de binnenkant van de vesten, die de doorgang onderbreekt op de Van Benedenlaan ter hoogte van de Groenstraat",
+    "rekenwijze": "kruising Van Benedenlaan x Groenstraat (straten 0 m uiteen)",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  },
+  "Van Hoeystraat": {
+   "jaren": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.480995,
+    51.031915
+   ],
+   "positie_bron": "midden van de straat (Vlaams Adressenregister)",
+   "positie_straatmidden": [
+    4.480995,
+    51.031915
+   ]
+  },
+  "Veemarkt": {
+   "jaren": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.484051,
+    51.028889
+   ],
+   "positie_bron": "midden van de straat (Vlaams Adressenregister)",
+   "positie_straatmidden": [
+    4.484051,
+    51.028889
+   ]
+  },
+  "Vijfhoek": {
+   "jaren": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.482159,
+    51.022991
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": [
+    4.482026,
+    51.022827
+   ],
+   "osm_positie": {
+    "punt": [
+     4.482159,
+     51.022991
+    ],
+    "node": 5518534921,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 6,
+    "afstand_tot_referentie_m": 20
+   }
+  },
+  "Wollemarkt": {
+   "jaren": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.479367,
+    51.029221
+   ],
+   "positie_bron": "plaats volgens de stratenlijst van het autoluwreglement (Wollemarkt 2-10), gezet op het adrespunt uit het Vlaams Adressenregister",
+   "positie_straatmidden": [
+    4.4792,
+    51.029826
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.479367,
+     51.029221
+    ],
+    "citaat": "Wollemarkt (nrs 2-10)",
+    "rekenwijze": "adrespunt Wollemarkt 2 (Vlaams Adressenregister)",
+    "bron": "Reglement autoluwe binnenstad, stratenlijst zone 2 (GR 27/11/2023); Radio Reflex 02/07/2019: de nieuwe camera op de Wollemarkt achter de kathedraal controleert ook de Schoolstraat, Nieuwwerk en de Scheerstraat",
+    "label": "plaats volgens de stratenlijst van het autoluwreglement (Wollemarkt 2-10), gezet op het adrespunt uit het Vlaams Adressenregister"
+   }
+  },
+  "Zakstraat": {
+   "jaren": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.482797,
+    51.027751
+   ],
+   "positie_bron": "midden van de straat (Vlaams Adressenregister)",
+   "positie_straatmidden": [
+    4.482797,
+    51.027751
+   ]
+  },
+  "Zoutwerf": {
+   "jaren": [
+    2015,
+    2016,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+   ],
+   "positie": [
+    4.477366,
+    51.02564
+   ],
+   "positie_bron": "ANPR-camerapunt uit OpenStreetMap (ODbL)",
+   "positie_straatmidden": [
+    4.478636,
+    51.024907
+   ],
+   "osm_positie": {
+    "punt": [
+     4.477366,
+     51.02564
+    ],
+    "node": 5518644022,
+    "soort": "ALPR",
+    "zone": null,
+    "beheerder": null,
+    "afstand_tot_straat_m": 2,
+    "afstand_tot_referentie_m": 120
+   }
+  },
+  "Zwartzustersvest": {
+   "jaren": [
+    2024
+   ],
+   "positie": [
+    4.487114,
+    51.030486
+   ],
+   "positie_bron": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap",
+   "positie_straatmidden": [
+    4.485757,
+    51.031611
+   ],
+   "reglement_positie": {
+    "punt": [
+     4.487114,
+     51.030486
+    ],
+    "citaat": "Verkeersstop gelegen langs de binnenkant van de vesten ten zuiden van de Zwartzustersberg",
+    "rekenwijze": "40 m voorbij de kruising Zwartzustersvest x Zwartzustersberg, kant zuid",
+    "bron": "Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2026)",
+    "label": "verkeersstop volgens het autoluwreglement van de stad, gezet op de kruising of doorgang uit OpenStreetMap"
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+# --- GAS mee met Mechelen ---
+# De gepubliceerde site is dist/index.html: één zelfstandig bestand, mét de cijfers erin.
+# De json-bestanden in data/ gaan WEL mee, zodat build.py op een verse kloon kan herbouwen
+# zonder de pdf's opnieuw te lezen.
+
+# Python
+__pycache__/
+*.pyc
+
+# Werkkopieën en reservekopieën van de parser
+*.bak
+data/*.bak
+
+# Regelbestand voor de sessie: blijft lokaal, hoort nooit in git
+CLAUDE.local.md
+
+# Werknotities: procesverhaal, correcties en sessiedata. GitHub is een etalage, geen
+# tweede site. Wat de lezer moet weten staat op de techniekpagina en in de docstrings.
+leesmij.md
+
+# Live opgehaalde pagina's horen in de kladmap, nooit in een repo-map
+*.tmp
+p.tmp

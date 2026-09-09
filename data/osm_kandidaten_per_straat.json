@@ -1,0 +1,409 @@
+{
+ "Begijnenstraat": [
+  [
+   2,
+   5519359627,
+   "ALPR",
+   null,
+   null,
+   "230"
+  ]
+ ],
+ "Caputsteenstraat": [],
+ "Désiré Boucherystraat": [
+  [
+   6,
+   12453337986,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "268"
+  ],
+  [
+   6,
+   12453358255,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   null
+  ],
+  [
+   6,
+   12453365499,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   null
+  ],
+  [
+   6,
+   12453366012,
+   "ALPR",
+   "traffic",
+   "Stad Mechelen",
+   "325"
+  ],
+  [
+   7,
+   5519359622,
+   "camera;ALPR",
+   "traffic;town",
+   "overheid",
+   "270;300;230"
+  ],
+  [
+   7,
+   12453363379,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "239"
+  ]
+ ],
+ "Frans Halsvest": [],
+ "Frederik de Merodestraat": [
+  [
+   3,
+   5538415823,
+   "ALPR",
+   null,
+   null,
+   "235"
+  ],
+  [
+   4,
+   5538415623,
+   "ALPR",
+   null,
+   null,
+   "280"
+  ]
+ ],
+ "Grote Markt": [
+  [
+   2,
+   5519373222,
+   "camera",
+   "traffic",
+   "overheid",
+   null
+  ],
+  [
+   2,
+   12467584021,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   null
+  ],
+  [
+   3,
+   5519359627,
+   "ALPR",
+   null,
+   null,
+   "230"
+  ],
+  [
+   25,
+   5519359626,
+   "ALPR",
+   null,
+   null,
+   "150"
+  ]
+ ],
+ "Haverwerf": [],
+ "Hendrik Speecqvest": [],
+ "Hoogstraat/Milsenstraat": [
+  [
+   29,
+   10598716978,
+   "camera",
+   "traffic",
+   null,
+   null
+  ]
+ ],
+ "Hoogstratenplein": [],
+ "IJzerenleen": [
+  [
+   1,
+   5518699521,
+   "ALPR",
+   null,
+   null,
+   "90"
+  ],
+  [
+   3,
+   12467569612,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   null
+  ],
+  [
+   3,
+   12467594228,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "27"
+  ],
+  [
+   7,
+   12453353480,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "221"
+  ],
+  [
+   22,
+   5518616043,
+   "ALPR",
+   null,
+   null,
+   "180"
+  ]
+ ],
+ "Ivo Cornelisstraat": [],
+ "Kleine Nieuwedijkstraat": [],
+ "Koningin Astridlaan": [
+  [
+   5,
+   8275120440,
+   "camera",
+   "traffic",
+   null,
+   null
+  ],
+  [
+   23,
+   10598716978,
+   "camera",
+   "traffic",
+   null,
+   null
+  ]
+ ],
+ "Korenmarkt": [],
+ "Kruisbaan": [],
+ "Lange Schipstraat": [
+  [
+   15,
+   5518699521,
+   "ALPR",
+   null,
+   null,
+   "90"
+  ]
+ ],
+ "Mechelsbroekstraat": [],
+ "Mezenstraat": [],
+ "Nauwstraat": [
+  [
+   1,
+   5518699521,
+   "ALPR",
+   null,
+   null,
+   "90"
+  ]
+ ],
+ "Olivetenvest": [],
+ "Onze-Lieve-Vrouwestraat": [],
+ "Schuttersvest": [],
+ "Sint-Gommarusstraat": [],
+ "Sint-Janstraat": [
+  [
+   1,
+   5538415623,
+   "ALPR",
+   null,
+   null,
+   "280"
+  ],
+  [
+   4,
+   5538415823,
+   "ALPR",
+   null,
+   null,
+   "235"
+  ]
+ ],
+ "Steenweg 20": [
+  [
+   0,
+   5518616043,
+   "ALPR",
+   null,
+   null,
+   "180"
+  ],
+  [
+   2,
+   5519359626,
+   "ALPR",
+   null,
+   null,
+   "150"
+  ],
+  [
+   2,
+   12467594228,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "27"
+  ],
+  [
+   3,
+   5519359627,
+   "ALPR",
+   null,
+   null,
+   "230"
+  ],
+  [
+   14,
+   5519373222,
+   "camera",
+   "traffic",
+   "overheid",
+   null
+  ],
+  [
+   14,
+   12467584021,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   null
+  ],
+  [
+   25,
+   12453353480,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "221"
+  ]
+ ],
+ "Steenweg 44": [
+  [
+   0,
+   5518616043,
+   "ALPR",
+   null,
+   null,
+   "180"
+  ],
+  [
+   2,
+   5519359626,
+   "ALPR",
+   null,
+   null,
+   "150"
+  ],
+  [
+   2,
+   12467594228,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "27"
+  ],
+  [
+   3,
+   5519359627,
+   "ALPR",
+   null,
+   null,
+   "230"
+  ],
+  [
+   14,
+   5519373222,
+   "camera",
+   "traffic",
+   "overheid",
+   null
+  ],
+  [
+   14,
+   12467584021,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   null
+  ],
+  [
+   25,
+   12453353480,
+   "camera",
+   "traffic",
+   "Stad Mechelen",
+   "221"
+  ]
+ ],
+ "Tuinstraatje": [
+  [
+   1,
+   5518627693,
+   "ALPR",
+   null,
+   null,
+   "270"
+  ]
+ ],
+ "Van Beethovenstraat": [],
+ "Van Benedenlaan 1": [
+  [
+   2,
+   10598716978,
+   "camera",
+   "traffic",
+   null,
+   null
+  ]
+ ],
+ "Van Benedenlaan 47": [
+  [
+   2,
+   10598716978,
+   "camera",
+   "traffic",
+   null,
+   null
+  ]
+ ],
+ "Van Hoeystraat": [],
+ "Veemarkt": [],
+ "Vijfhoek": [
+  [
+   6,
+   5518534921,
+   "ALPR",
+   null,
+   null,
+   "0"
+  ]
+ ],
+ "Wollemarkt": [],
+ "Zakstraat": [],
+ "Zoutwerf": [
+  [
+   2,
+   5518644022,
+   "ALPR",
+   null,
+   null,
+   "Overheid"
+  ]
+ ],
+ "Zwartzustersvest": []
+}

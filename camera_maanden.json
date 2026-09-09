@@ -1,0 +1,31 @@
+{
+  "_leesmij": "De jaarverslagen 2015 en 2016 bevatten wél een tabel 'Aantal vaststellingen per camera per maand', maar die staat als BEELD in de pdf: er is geen tekstlaag om te lezen. Deze cijfers zijn daarom overgenomen van de tabel zelf (2015: pagina 48, 2016: pagina 59). parse_gasam.py telt ze na op drie manieren voor ze gebruikt worden: elke rij moet het cameratotaal halen dat in de tabel staat, elke kolom moet gelijk zijn aan de maandgrafiek die wél uit de tekstlaag komt, en het geheel moet het gepubliceerde jaartotaal halen. Klopt er iets niet, dan weigert de parser de tabel en blijft het veld leeg. De jaargangen 2017 en 2018 hebben dezelfde tabel wél als tekst; die wordt rechtstreeks gelezen. Vanaf 2019 publiceert GASAM geen maandcijfers per camera meer.",
+  "_volgorde": ["jan", "feb", "maa", "apr", "mei", "juni", "jul", "aug", "sep", "okt", "nov", "dec"],
+  "2015": {
+    "_bron": "Jaarverslag 2015, pagina 48, Tabel 1",
+    "Merode":         [1265, 1182, 987, 933, 808, 1154, 1055, 846, 1047, 809, 0, 730],
+    "Steen 20":       [0, 0, 134, 457, 161, 321, 278, 348, 362, 180, 0, 304],
+    "Vijfhoek":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 388, 477],
+    "Zout":           [225, 161, 227, 132, 134, 149, 94, 0, 0, 0, 0, 0],
+    "L. Schipstraat": [594, 423, 490, 337, 159, 225, 404, 96, 321, 323, 459, 594],
+    "Haver":          [16, 30, 54, 23, 59, 87, 62, 14, 12, 0, 0, 0],
+    "Begijn":         [86, 45, 62, 42, 19, 54, 34, 15, 52, 26, 61, 48],
+    "Tuin":           [105, 150, 111, 82, 61, 74, 90, 53, 75, 68, 83, 156],
+    "Steen 44":       [745, 632, 642, 538, 295, 487, 368, 341, 550, 259, 576, 674],
+    "?":              [1, 118, 210, 289, 944, 145, 411, 442, 41, 816, 310, 0]
+  },
+  "2016": {
+    "_bron": "Jaarverslag 2016, pagina 59, Tabel 1",
+    "Merode":            [60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "Steenweg 20":       [11, 0, 0, 704, 0, 0, 0, 0, 0, 0, 0, 0],
+    "Zakstraat":         [0, 0, 0, 0, 0, 0, 17, 25, 26, 18, 57, 56],
+    "Vijfhoek":          [466, 615, 586, 348, 340, 333, 356, 254, 229, 261, 292, 308],
+    "Zoutwerf":          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "Lange Schipstraat": [553, 500, 488, 353, 462, 313, 353, 277, 260, 432, 595, 672],
+    "Haverwerf":         [0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0],
+    "Begijnenstraat":    [29, 33, 25, 19, 32, 60, 29, 19, 17, 50, 31, 0],
+    "Tuinstraatje":      [109, 167, 166, 123, 130, 55, 127, 71, 122, 172, 67, 130],
+    "Steenweg 44":       [216, 1368, 1361, 714, 435, 279, 183, 106, 249, 216, 332, 265],
+    "ONBEKEND":          [0, 0, 0, 450, 0, 254, 139, 314, 191, 6, 0, 0]
+  }
+}

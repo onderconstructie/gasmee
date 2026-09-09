@@ -1,0 +1,3029 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#d2a213">
+<title>GAS mee met Mechelen</title>
+<meta name="description" content="Wat de ANPR-camera's aan de autoluwe zones van Mechelen vaststellen, jaar na jaar en camera per camera, uit de jaarverslagen van GASAM en GAS Rivierenland. Een experiment van As Gau Paust.">
+<meta property="og:title" content="GAS mee met Mechelen">
+<meta property="og:description" content="Wat de ANPR-camera's aan de autoluwe zones van Mechelen vaststellen, jaar na jaar en camera per camera.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_BE">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='15.2' fill='none' stroke='%23d2a213' stroke-width='1.2' opacity='.85'/><circle cx='20' cy='20' r='11.4' fill='none' stroke='%23d2a213' stroke-width='.8' opacity='.22'/><path d='M20 2.4v3.4M20 34.2v3.4M2.4 20h3.4M34.2 20h3.4' stroke='%237a5c10' stroke-width='1.2' stroke-linecap='round'/><path d='M14.9 17.6l1.7-2.7a2 2 0 0 1 1.7-.95h3.4a2 2 0 0 1 1.7.95l1.7 2.7z' fill='%23d2a213'/><rect x='12' y='17.2' width='16' height='5.8' rx='2.6' fill='%23d2a213'/><path d='M16.7 16.8l1.05-1.7a1.3 1.3 0 0 1 1.1-.6h2.3a1.3 1.3 0 0 1 1.1.6l1.05 1.7z' fill='%237a5c10'/><circle cx='15.7' cy='23' r='1.9' fill='%237a5c10'/><circle cx='24.3' cy='23' r='1.9' fill='%237a5c10'/><circle cx='15.7' cy='23' r='.7' fill='%23fffdf7'/><circle cx='24.3' cy='23' r='.7' fill='%23fffdf7'/></svg>">
+<style>
+@font-face{font-family:'Geist';font-style:normal;font-weight:100 900;font-display:swap;src:url('fonts/geist-var.woff2') format('woff2');}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url('fonts/jbmono-var.woff2') format('woff2');}
+
+/* ================================================================
+   Palet en materiaal: het familiepapier van As Gau Paust, maar dan
+   als app-huid. Papier blijft de grond, inkt is warm, roze is de
+   enige kleur die iets beweert.
+   ================================================================ */
+:root{
+  --paper:#f5f1e8; --paper-2:#fffdf7; --paper-kaart:#faf6ef; --paper-3:#ece7db;
+  --ink:#1a1712; --ink-2:#514a40; --ink-dim:#6a6153;
+  /* De eigen app-kleur is oker, verlicht en gemeten 26/08/2026: accent
+     #d2a213 op inkt 7,59:1, leestint en vlak #856813 op papier 4,67:1 en
+     onder wit 5,27:1 (beide boven AA). --pink is een alias van de app-kleur,
+     zodat alles meekleurt; het familie-roze zelf (--agp-pink) draagt enkel
+     nog het merkwoord As Gau Paust en de portaaltoets, de weg terug. */
+  --agp-pink:#FF0066; --agp-pink-tekst:#c80054;
+  --app:#d2a213; --app-tekst:#856813; --app-deep:#7a5c10;
+  --pink:var(--app); --pink-text:var(--app-tekst); --pink-deep:var(--app-deep);
+  --pink-soft:rgba(210,162,19,.13); --pink-soft-2:rgba(210,162,19,.22);
+  --groen:#2f7d5f; --oker:#8a6d1f; --steen:#8a8177; --steen-2:#c9c0b2; --leisteen:#4e6d8c; --roest:#b0522f;
+  --line:rgba(26,23,18,.13); --line-2:rgba(26,23,18,.24);
+  --schaduw-zacht:0 1px 2px rgba(72,56,38,.05), 0 10px 30px -14px rgba(72,56,38,.28);
+  --schaduw-til:0 2px 4px rgba(72,56,38,.06), 0 24px 50px -22px rgba(72,56,38,.5);
+  --schaduw-roze:0 8px 26px -12px rgba(170,131,24,.4);
+  --rond:16px; --rond-klein:11px;
+  --balk:60px;          /* hoogte appbalk */
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  --stip:radial-gradient(rgba(26,23,18,.045) 1px, transparent 1px);
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}  /* anders wint display:flex van het hidden-attribuut */
+:focus-visible{outline:2px solid var(--pink-text);outline-offset:2px;border-radius:6px}
+:focus:not(:focus-visible){outline:none}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{
+  /* het familievel: papier met puntjesraster, en de ruislaag via ::before */
+  background-color:var(--paper);
+  background-image:var(--stip);
+  background-size:3px 3px;
+  color:var(--ink);
+  font-family:'Geist',system-ui,-apple-system,sans-serif;
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;background-image:var(--grain);mix-blend-mode:multiply}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"tnum","zero"}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
+
+/* Statusstrook, weg te halen na de lancering. Dezelfde strook en hetzelfde badge-woord als op
+   het portaal, zodat de bezoeker overal hetzelfde signaal krijgt. Bewust geen pop-up: het is
+   een mededeling, geen toestemming die we vragen. Het donker is --ink, precies het diepe vel
+   van het portaal; het badge-woord draagt de app-kleur (gemeten 7,59:1 op inkt), niet het
+   familie-roze, want dat blijft voorbehouden aan het merkwoord en de portaaltoets. */
+.status-strook{background:var(--ink);color:var(--paper);border-bottom:1px solid rgba(245,241,232,.14)}
+.status-strook .ss-in{max-width:1180px;margin:0 auto;padding:.8rem clamp(1.1rem,4vw,3rem);
+  display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap}
+.status-strook b{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.68rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--app);flex:none}
+.status-strook span{font-size:.9rem;line-height:1.5;color:rgba(245,241,232,.82)}
+.status-strook .ss-cta{font:inherit;color:#fff;text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.6)}
+.status-strook .ss-cta:hover{border-bottom-color:#fff}
+
+/* ================================================================
+   Appbalk: krantlijn, geen matglas. Papier met eigen korrel, een
+   haarlijn onderaan, en een inktlijn die aanzet zodra je scrolt.
+   ================================================================ */
+.appbalk{
+  position:sticky; top:0; z-index:100;
+  background-color:var(--paper); background-image:var(--stip); background-size:3px 3px;
+  border-bottom:1px solid var(--line);
+}
+.appbalk::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:var(--grain);mix-blend-mode:multiply}
+.appbalk::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .22s ease}
+.appbalk.gescrold::after{transform:scaleY(1)}
+.balk-in{
+  position:relative; z-index:2;
+  height:var(--balk); display:flex; align-items:center; gap:12px; min-width:0;
+  max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,3rem);
+}
+/* alleen voor schermlezers: de tussenkoppen die het oog al aan de opmaak ziet */
+.stil{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.duo-vakken{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+.duo-vakken .eyebrow{margin:0 0 6px}
+@media(max-width:720px){ .duo-vakken{grid-template-columns:1fr} }
+.noot{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;color:var(--ink-dim);margin:8px 0 0}
+/* De balk volgt de deelsites: linksboven de mug met As Gau Paust als weg terug
+   naar het portaal (het enige roze hier), rechts het hamburgermenu. */
+.brand{display:inline-flex;align-items:center;gap:.65rem;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600;font-size:1rem;letter-spacing:-.01em;white-space:nowrap;color:var(--ink);text-decoration:none}
+.brand-mug{width:34px;height:34px;display:block}
+.brand em{font-style:normal;color:var(--agp-pink-tekst)}
+.brand:hover em{color:var(--agp-pink)}
+.balk-ruimte{flex:1}
+.menuknop{position:relative;display:flex;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;padding:8px;background:transparent;border:1px solid var(--pink);cursor:pointer;flex-shrink:0}
+.menuknop span{display:block;width:100%;height:1.5px;background:var(--ink);transition:transform .25s, opacity .25s}
+.menuknop span:nth-child(2){background:var(--pink)}
+.menuknop:hover{background:var(--pink-soft)}
+.menuknop[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.menuknop[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menuknop[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.menuvlak{position:fixed;inset:0;z-index:200;background:rgba(26,23,18,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;justify-content:flex-end;animation:menuFade .2s ease-out}
+.menuvlak[hidden]{display:none}
+@keyframes menuFade{from{opacity:0}to{opacity:1}}
+.menukaart{background:var(--paper);width:min(560px,100%);height:100%;display:flex;flex-direction:column;border-left:1px solid var(--ink);box-shadow:-32px 0 80px -10px rgba(72,56,38,.3);overflow-y:auto;animation:menuGlijdt .3s cubic-bezier(.16,1,.3,1)}
+@keyframes menuGlijdt{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+.menu-kop{display:flex;justify-content:space-between;align-items:center;height:var(--balk);padding:0 clamp(1.1rem,4vw,3rem);border-bottom:1px solid var(--line);flex-shrink:0}
+.menu-sluit{font-size:1.8rem;width:38px;height:38px;color:var(--ink);cursor:pointer;line-height:1;flex-shrink:0;background:none;border:0}
+.menu-sluit:hover{color:var(--pink-text)}
+.menu-lijst{display:flex;flex-direction:column}
+.menu-lijst a{display:grid;grid-template-columns:40px 1fr auto;gap:.6rem;align-items:center;padding:1.05rem clamp(1.1rem,4vw,3rem);border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);transition:background .15s}
+.menu-lijst a:hover{background:var(--paper-2)}
+.menu-lijst a:hover .menu-ic{color:var(--pink-text)}
+.menu-lijst a:last-child{border-bottom:none}
+.menu-ic{color:var(--ink-dim);transition:color .15s}
+.menu-ic svg{width:22px;height:22px;display:block;stroke:currentColor;fill:none;stroke-width:1.7}
+.menu-naam{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.05rem;font-weight:500;letter-spacing:-.005em}
+.menu-periode{font-weight:400;color:var(--ink-dim);font-size:.88em}
+.menu-tel{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.8rem;color:var(--ink-dim);letter-spacing:-.01em;white-space:nowrap}
+body.menu-open{overflow:hidden}
+
+.chip{
+  font-family:'JetBrains Mono',ui-monospace,monospace; font-size:10.5px;
+  letter-spacing:.14em; text-transform:uppercase;
+  padding:4px 9px; border-radius:999px; border:1px solid var(--line-2); color:var(--ink-2);
+  white-space:nowrap;
+}
+.chip.roze{background:var(--pink-text);border-color:var(--pink-text);color:#fff}
+.balk-rechts{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto;justify-content:flex-end}
+
+/* Tabbalk onder de appbalk (desktop) */
+
+
+/* Onderste tabbalk op smalle schermen: duimbereik, zoals in een app */
+.onderbalk{
+  position:fixed;left:0;right:0;bottom:0;z-index:100;display:none;
+  background:var(--paper-2);border-top:1px solid var(--line);
+  padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+  box-shadow:0 -8px 30px -20px rgba(72,56,38,.7);
+}
+.onderbalk button,.onderbalk .portaalknop{
+  appearance:none;border:0;background:none;cursor:pointer;flex:1;
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;border-radius:12px;
+  font-size:11.5px;color:var(--ink-2)   /* --ink-dim haalde hier maar 2,24:1 */
+}
+.onderbalk .portaalknop{color:var(--agp-pink-tekst);text-decoration:none}
+.onderbalk .portaalknop img{width:20px;height:20px}
+.onderbalk button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+.onderbalk button[aria-selected="true"]{color:var(--pink-text);background:var(--pink-soft)}
+@media(max-width:719px){ .onderbalk{display:flex} body{padding-bottom:86px} }
+
+/* ================================================================
+   Weergaven
+   ================================================================ */
+.weergave{display:none;padding:0 0 40px}
+.weergave.aan{display:block;animation:opkomst .34s ease both}
+@keyframes opkomst{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.titelrij{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin:22px 0 6px}
+/* De held volgt de familietaal van asgaupaust.be: eyebrow met pulserende stip,
+   een monospace-kop met de vangst in het inktkader (roze op warme inkt), en
+   rechts het vizier met de uitdijende roze ringen van het portaal. */
+.held{display:grid;grid-template-columns:minmax(0,1fr);gap:10px 28px;align-items:center;margin:26px 0 8px}
+@media(min-width:860px){ .held{grid-template-columns:minmax(0,1fr) 170px} }
+.held-eyebrow{margin:0 0 12px}
+.eyebrow .puls{width:.55em;height:.55em;background:var(--pink);border-radius:50%;margin-right:.7em;display:inline-block;
+  animation:pulsstip 2s infinite}
+@keyframes pulsstip{0%{box-shadow:0 0 0 0 rgba(210,162,19,.6)}70%{box-shadow:0 0 0 8px rgba(210,162,19,0)}100%{box-shadow:0 0 0 0 rgba(210,162,19,0)}}
+.heldkop{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;letter-spacing:-.04em;
+  font-size:clamp(26px,3.8vw,44px);line-height:1.28;margin:0 0 10px
+}
+.heldkop em{color:var(--pink-text);font-style:normal}
+.kader-in-kop{
+  color:var(--pink);background:var(--ink);padding:0 .14em;white-space:nowrap;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone
+}
+.held-periode{font-size:.52em;color:var(--ink-dim);letter-spacing:-.01em}
+.held-cijfer{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600;letter-spacing:-.02em;font-size:clamp(19px,2.7vw,25px);margin:14px 0 0;color:var(--ink)}
+.held-cijfer b{color:var(--app-tekst);font-weight:600}
+.held-cijfer em{font-style:normal}
+.held-cijfer .held-periode{font-size:.72em;letter-spacing:0}
+.leeslink{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;margin:10px 0 0}
+.leeslink a{color:var(--pink-text);text-decoration:none;border-bottom:1px solid rgba(150,113,22,.45)}
+.leeslink a:hover{border-bottom-color:var(--pink-text)}
+.leeslink span{color:var(--pink-text)}
+.heldkop-klein{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;letter-spacing:-.03em;
+  font-size:clamp(22px,3vw,32px);line-height:1.2;margin:0
+}
+.heldkop-klein em{color:var(--pink-text);font-style:normal}
+.held-merk{position:relative;width:150px;aspect-ratio:1;display:none;place-items:center;justify-self:end;
+  background:none;border:0;padding:0;cursor:pointer;border-radius:50%}
+.held-merk svg{transition:transform .18s ease}
+.held-merk:hover svg{transform:scale(1.05)}
+@media(min-width:860px){ .held-merk{display:grid} }
+.held-merk svg{width:74%;height:74%;filter:drop-shadow(0 10px 26px rgba(210,162,19,.35)) drop-shadow(0 2px 6px rgba(72,56,38,.12))}
+.held-merk .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(210,162,19,.55);animation:agpRing 3.6s ease-out infinite}
+.held-merk .ring.r2{border-color:rgba(210,162,19,.4);animation-delay:1.8s}
+@keyframes agpRing{0%{transform:scale(.72);opacity:0}25%{opacity:1}100%{transform:scale(1.18);opacity:0}}
+@media (prefers-reduced-motion: reduce){ .held-merk .ring{animation:none;opacity:.25} }
+h1{font-size:clamp(24px,3.2vw,34px);line-height:1.1;margin:0;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--pink-text)}
+.duiding{color:var(--ink-2);font-size:14.5px;margin:0 0 18px;max-width:66ch}
+h2{font-size:15px;margin:0 0 10px;letter-spacing:-.005em}
+.eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+
+.kaartvlak{
+  background:var(--paper-kaart);border:1px solid var(--line);border-radius:var(--rond);
+  padding:16px;box-shadow:var(--schaduw-zacht);
+}
+.rooster{display:grid;gap:14px;align-items:start}
+@media(min-width:900px){
+  .rooster.twee{grid-template-columns:1fr 1fr}
+  .rooster.drie{grid-template-columns:repeat(3,1fr)}
+}
+
+/* KPI-tegels */
+.tegels{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:0 0 16px}
+.tegel{
+  position:relative;overflow:hidden;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--rond-klein);
+  padding:13px 14px 12px;box-shadow:var(--schaduw-zacht);
+  transition:transform .22s ease, box-shadow .22s ease;
+  animation:opkomst .5s both;
+}
+.tegel{animation:none}
+.tegel.intro{animation:opkomst .5s both}
+.tegel:hover{transform:translateY(-3px);box-shadow:var(--schaduw-til)}
+/* zolang de tijdbalk speelt, groeien staven en tegels niet telkens opnieuw aan */
+body.speelt .staafgroei,body.speelt .tegel{animation:none}
+button.tegel{appearance:none;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+button.tegel::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--pink);
+  transform:scaleX(0);transform-origin:left;transition:transform .22s ease
+}
+button.tegel[aria-expanded="true"]{box-shadow:var(--schaduw-til)}
+button.tegel[aria-expanded="true"]::after{transform:scaleX(1)}
+.tegeluitleg{margin:0 0 14px;animation:opkomst .24s ease both;position:relative}
+.tegeluitleg .sluit{position:absolute;top:10px;right:12px;border:0;background:none;font-size:19px;line-height:1;cursor:pointer;color:var(--ink-dim)}
+.tegel .k{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
+.tegel .v{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:clamp(24px,3.4vw,30px);line-height:1.15;margin-top:3px;letter-spacing:-.02em}
+.tegel .v.tekst{font-size:19px;line-height:1.3;letter-spacing:0}
+.tegel .n{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.tegel .vonk{position:absolute;right:10px;bottom:8px;opacity:.6}
+.delta{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;padding:2px 7px;border-radius:999px}
+.delta.op{background:rgba(210,162,19,.16);color:var(--pink-text)}
+.delta.neer{background:rgba(138,129,119,.16);color:var(--ink-2)}
+.delta.vlak,.delta.neutraal{background:rgba(26,23,18,.07);color:var(--ink-2)}
+
+/* ================================================================
+   Kaart
+   ================================================================ */
+.kaarthouder{position:relative;border-radius:var(--rond);overflow:hidden;border:1px solid var(--line);box-shadow:var(--schaduw-zacht);background:#e9e3d7}
+#kaart{position:relative;height:clamp(330px,52vh,540px);cursor:grab;touch-action:none;overflow:hidden}  /* de tegels moeten binnen het kaartvak blijven, anders lopen ze onder het paneel door */
+#kaart.sleept{cursor:grabbing}
+#tegels{position:absolute;inset:0}
+/* De tegels worden naar het familiepapier getrokken: minder kleur, warmer, iets
+   lichter. Zo blijft roze de enige kleur die de aandacht opeist. */
+#tegels img{position:absolute;width:256px;height:256px;user-select:none;-webkit-user-drag:none;filter:grayscale(.86) sepia(.34) saturate(.9) brightness(1.06) contrast(.9)}
+/* een dun waas papier over de tegels: de kaart zakt in de huid van de site,
+   waardoor roze de enige kleur is die nog roept */
+#kaart::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;background:rgba(245,241,232,.16)}
+#kaart::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;box-shadow:inset 0 0 70px rgba(72,56,38,.18)}
+#merken{position:absolute;inset:0;pointer-events:none;z-index:5}
+.merkstip{position:absolute;transform:translate(-50%,-50%);border-radius:50%;pointer-events:auto;cursor:pointer;
+  /* een viziertje zoals het merk: de rand is de vizierring, de gradientring
+     op 71-74% is de fijne binnenring (schaalt mee), en de vier streepjes op de
+     rand zijn de maatstreepjes. De vulling draagt het aantal via de maat. */
+  background:
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) top center/1.5px 15% no-repeat,
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) bottom center/1.5px 15% no-repeat,
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) left center/15% 1.5px no-repeat,
+    linear-gradient(rgba(122,92,16,.85),rgba(122,92,16,.85)) right center/15% 1.5px no-repeat,
+    radial-gradient(circle, rgba(236,196,90,.6) 0 32%, rgba(210,162,19,.4) 32% 66%, rgba(210,162,19,.16) 66% 71%, rgba(122,92,16,.38) 71% 74%, rgba(210,162,19,.14) 74%);
+  border:1.5px solid rgba(122,92,16,.85);
+  box-shadow:0 2px 10px -2px rgba(122,92,16,.55);
+  /* de maat verandert vloeiend als de tijdbalk loopt; de plek niet, die volgt
+     het slepen van de kaart zonder vertraging */
+  transition:width .55s cubic-bezier(.32,.72,0,1), height .55s cubic-bezier(.32,.72,0,1),
+    transform .18s ease, box-shadow .18s ease, opacity .25s ease, background .3s ease, border-color .3s ease}
+.merkstip:hover{transform:translate(-50%,-50%) scale(1.08)}
+/* wijst de muis in de lijst een camera aan, dan komt haar stip naar voren */
+.merkstip.wijst{transform:translate(-50%,-50%) scale(1.22);box-shadow:0 0 0 3px var(--paper-2),0 4px 14px -2px rgba(122,92,16,.7);z-index:7}
+.merkstip.leeg{background:rgba(26,23,18,.05);border:1.5px dashed rgba(26,23,18,.42);box-shadow:none}
+.merkstip.actief{box-shadow:0 0 0 3px var(--paper-2), 0 0 0 5px var(--pink-text), 0 6px 18px -4px rgba(122,92,16,.6);z-index:6}
+/* Kies je één camera, dan wijkt de rest naar de achtergrond. Ze blijft wel
+   staan en blijft aanklikbaar: zo zie je waar de gekozen camera ligt. */
+.merkstip.gedimd{opacity:.22;box-shadow:none}
+.merkstip.gedimd:hover{opacity:.55}
+.rang li.onbekend{cursor:default;color:var(--ink-dim)}
+.rang li.onbekend:hover{background:none}
+.rang li.gedimd{opacity:.4}
+.rang li.gedimd:hover{opacity:.85}
+.stipnaam{position:absolute;transform:translate(-50%,0);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;
+  color:var(--ink);background:rgba(255,253,247,.86);padding:1px 5px;border-radius:5px;white-space:nowrap;pointer-events:none}
+
+/* Het kaartje van een gekozen camera: klein, standaard linksonder, en te
+   verslepen aan zijn kop. Zo blijft de stad zichtbaar in plaats van dat het
+   kaartje er middenop komt te liggen. */
+.merkkaart{
+  position:absolute;z-index:12;background:var(--paper-2);border:1px solid var(--line);
+  border-radius:var(--rond-klein);padding:0 0 10px;width:216px;
+  box-shadow:var(--schaduw-til);font-size:13px;pointer-events:auto;
+  animation:opkomst .18s ease both
+}
+.merkkaart .greep{
+  display:flex;align-items:center;gap:8px;padding:8px 10px 7px;cursor:grab;
+  border-bottom:1px solid var(--line);border-radius:var(--rond-klein) var(--rond-klein) 0 0;
+  background:var(--paper-kaart);touch-action:none
+}
+.merkkaart .greep:active{cursor:grabbing}
+.merkkaart .greep .punten{width:12px;height:12px;flex:0 0 12px;opacity:.5;
+  background-image:radial-gradient(currentColor 1px, transparent 1px);background-size:4px 4px}
+.merkkaart .inhoud{padding:9px 12px 0}
+.merkkaart .nu-waarde{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:19px;line-height:1.2}
+.merkkaart .nu-noot{font-size:11.5px;color:var(--ink-dim);margin-bottom:8px}
+.merkkaart h4{margin:0;font-size:13.5px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.merkkaart .reeks{display:grid;grid-template-columns:auto 1fr auto;gap:3px 8px;align-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;color:var(--ink-2)}
+.merkkaart .reeks i{display:block;height:4px;border-radius:2px;background:var(--pink);opacity:.55}
+.merkkaart .reeks .nu{color:var(--pink-text)}
+.merkkaart .reeks .nu i{opacity:1}
+.merkkaart .bronregel{font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.4}
+.merkkaart .naartoe{
+  margin-top:9px;width:100%;border:1px solid var(--line);background:var(--paper);cursor:pointer;
+  border-radius:8px;padding:6px 8px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;color:var(--ink-2)
+}
+.merkkaart .naartoe:hover{border-color:var(--pink);color:var(--pink-text)}
+.merkkaart .sluit{border:0;background:none;font-size:17px;line-height:1;cursor:pointer;color:var(--ink-dim);padding:0 2px}
+
+.kaartknoppen{position:absolute;left:12px;bottom:14px;z-index:8;display:flex;flex-direction:column;gap:7px}
+.kaartknoppen button{
+  width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);
+  font-size:17px;line-height:1;cursor:pointer;color:var(--ink);box-shadow:var(--schaduw-zacht);
+  transition:transform .18s ease,border-color .18s ease,color .18s ease}
+.kaartknoppen button:hover{transform:translateY(-2px);border-color:var(--pink);color:var(--pink-text)}
+.attributie{position:absolute;right:0;bottom:0;z-index:8;background:rgba(245,241,232,.88);font-size:10.5px;padding:3px 8px;border-top-left-radius:8px;color:var(--ink-dim)}
+.attributie a{color:var(--ink-2)}
+.kaartlegende{position:absolute;left:12px;top:12px;z-index:8;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px)}
+.kaartlegende .chip{background:rgba(255,253,247,.9);border-color:var(--line)}
+
+/* Zwevend paneel met de rangschikking, alleen op brede schermen */
+.kaartpaneel{
+  position:absolute;right:12px;top:12px;z-index:9;width:304px;max-height:calc(100% - 84px);
+  display:flex;flex-direction:column;
+  background:rgba(255,253,247,.955);border:1px solid var(--line);border-radius:var(--rond-klein);
+  box-shadow:var(--schaduw-til);overflow:hidden
+}
+.kaartpaneel .kop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 13px 9px;border-bottom:1px solid var(--line)}
+.kaartpaneel .kop b,.kaartpaneel .kop .eyebrow{white-space:nowrap}
+.kaartpaneel::after{content:'';position:absolute;left:0;right:0;bottom:0;height:26px;pointer-events:none;background:linear-gradient(rgba(255,253,247,0),rgba(255,253,247,.95))}
+.kaartpaneel .kop b{font-size:13.5px}
+.kaartpaneel .kop .eyebrow{margin-right:auto}
+.kaartpaneel .kop .klap{
+  margin-left:6px;border:1px solid var(--line);background:var(--paper);cursor:pointer;
+  border-radius:999px;padding:4px 10px;font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:11px;color:var(--ink-2);white-space:nowrap
+}
+.kaartpaneel .kop .klap:hover{border-color:var(--pink);color:var(--pink-text)}
+/* Uitgeklapt gaat de lijst onder de kaart staan, in kolommen: dan zie je alle
+   camera's in één oogopslag in plaats van te scrollen in een smal paneel. */
+.kaartpaneel.uit{position:static;width:auto;max-height:none;margin:14px 0 0;box-shadow:var(--schaduw-zacht)}
+.kaartpaneel.uit::after{display:none}
+.kaartpaneel.uit .rang{max-height:none;display:block;padding:6px 14px 14px}
+/* Ranglijst: alle camera's onder elkaar, elke balk vanaf dezelfde lijn en op
+   dezelfde schaal. Zo lees je de verhouding tussen twee camera's in één blik. */
+.rang.ranglijst li{
+  grid-template-columns:minmax(140px,1.15fr) 80px minmax(150px,3fr) 88px 74px;
+  gap:0 14px;padding:9px 8px;border-bottom:1px solid var(--line);border-radius:0
+}
+.rang.ranglijst li:hover{background:var(--pink-soft)}
+.rang.ranglijst .spoor{display:block;height:14px;border-radius:7px;background:var(--paper-3);overflow:hidden}
+.rang.ranglijst .staaf{display:block;height:100%;width:auto;border-radius:7px;opacity:1;background:var(--pink);transition:width .45s cubic-bezier(.32,.72,0,1)}
+.rang.ranglijst .n{text-align:right}
+.rang.ranglijst .vonkvak{display:block;line-height:0}
+.rang.ranglijst .vonkvak svg{position:static;opacity:.85}
+.rang.ranglijst .delta{justify-self:start;font-size:11px;padding:2px 6px}
+.rang.ranglijst .ranglijstkop{
+  border-bottom:1px solid var(--line-2);padding-bottom:6px;cursor:default;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-dim)
+}
+.rang.ranglijst .ranglijstkop:hover{background:none}
+.rang.ranglijst .schaalkop{display:flex;justify-content:space-between}
+.rang.ranglijst .vonkkop{text-align:center}
+.rang.ranglijst .voet{display:block;grid-column:1/-1;border-bottom:0}
+@media(max-width:820px){
+  .rang.ranglijst li{grid-template-columns:minmax(120px,1fr) minmax(90px,2fr) 76px}
+  .rang.ranglijst .vonkvak,.rang.ranglijst .vonkkop,.rang.ranglijst .delta{display:none}
+}
+.rang{list-style:none;margin:0;padding:6px 6px 10px;overflow:auto}
+.rang li{display:grid;grid-template-columns:1fr auto;gap:3px 10px;align-items:center;padding:7px 8px;border-radius:9px;cursor:pointer;transition:background .16s ease}
+.rang li:hover{background:var(--pink-soft)}
+.rang li.actief{background:var(--pink-soft-2)}
+.rang li.wijst{background:var(--pink-soft)}
+.rang li.uit{opacity:.5}
+.rang .naam{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rang .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px}
+.rang .staaf{grid-column:1/-1;height:4px;border-radius:2px;background:var(--pink);opacity:.7;transition:width .4s cubic-bezier(.32,.72,0,1)}
+.rang .voet{display:block;cursor:default;padding:10px 8px 2px;font-size:11.5px;color:var(--ink-dim);line-height:1.45}
+.rang .voet:hover{background:none}
+@media(max-width:1023px){
+  .kaartpaneel{position:static;width:auto;max-height:none;margin-top:14px;box-shadow:var(--schaduw-zacht)}
+  .rang{max-height:340px}
+}
+
+/* ================================================================
+   In het nieuws: een krantenvoorpagina. Naamplaat gecentreerd tussen
+   krantlijnen, een datumregel, de opening naast een nieuwskolom met een
+   verticale haarlijn, en daaronder de blokjes in kolommen met kolomlijnen.
+   ================================================================ */
+.krantkop{text-align:center;margin-top:18px}
+.naamplaat{
+  font-weight:850;font-size:clamp(34px,5.2vw,56px);letter-spacing:-.035em;line-height:1.04;
+  padding:8px 0 12px
+}
+.dateline{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-top:1px solid var(--line-2);border-bottom:2px solid var(--ink);
+  padding:7px 2px;margin-bottom:0;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-2)
+}
+.krant-boven{display:grid;grid-template-columns:minmax(0,1fr);padding:20px 0 22px;border-bottom:2px solid var(--ink)}
+@media(min-width:880px){ .krant-boven{grid-template-columns:minmax(0,2.05fr) minmax(0,1fr)} }
+.krant-lead{display:block;text-decoration:none;color:inherit}
+@media(min-width:880px){ .krant-lead{padding-right:28px;border-right:1px solid var(--line-2)} }
+.krant-lead h3{
+  font-size:clamp(27px,3.5vw,42px);line-height:1.1;letter-spacing:-.022em;font-weight:800;
+  margin:8px 0 12px;transition:color .16s ease
+}
+.krant-lead:hover h3{color:var(--pink-text)}
+.krant-lead .excerpt{color:var(--ink-2);font-size:16px;line-height:1.62;margin:0 0 14px}
+.krant-lead img,.krant-lead .beeldloos{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;display:block}
+.krant-kicker{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-dim)
+}
+.krant-kicker b{color:var(--pink-text);font-weight:600}
+.krant-rail{margin-top:22px}
+@media(min-width:880px){ .krant-rail{padding-left:28px;margin-top:0} }
+.krant-rail .railkop{
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:6px
+}
+.krant-rail a{display:block;text-decoration:none;color:inherit;padding:13px 0;border-bottom:1px solid var(--line)}
+.krant-rail a:last-child{border-bottom:0}
+.krant-rail h3{font-size:16.5px;line-height:1.28;letter-spacing:-.01em;margin:4px 0 0;transition:color .16s ease}
+.krant-rail a:hover h3{color:var(--pink-text)}
+.krant-onder{
+  column-width:300px;column-gap:34px;column-rule:1px solid var(--line-2);
+  padding:20px 0 6px
+}
+.krant-onder a{
+  display:block;text-decoration:none;color:inherit;break-inside:avoid;
+  padding:0 0 16px;margin-bottom:16px;border-bottom:1px solid var(--line)
+}
+.krant-onder img,.krant-onder .beeldloos{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:6px;margin-bottom:8px;display:block}
+.krant-onder h3{font-size:17.5px;line-height:1.25;letter-spacing:-.012em;margin:5px 0 6px;transition:color .16s ease}
+.krant-onder a:hover h3{color:var(--pink-text)}
+.krant-onder .excerpt{
+  color:var(--ink-2);font-size:13.5px;line-height:1.55;margin:0;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden
+}
+.krant-voet{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;border-top:2px solid var(--ink);padding-top:12px}
+.krant-voet .stand{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-dim);margin:0}
+
+/* ================================================================
+   Tijdbalk: de kaart door de tijd
+   ================================================================ */
+.tijdbalk{
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--rond);
+  padding:12px 16px 8px;margin:0 0 12px;box-shadow:var(--schaduw-zacht)
+}
+.tijdkop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+/* De jaartallen zitten ín de tijdbalk, als ankers onder de schuif: één plek waar
+   je de tijd kiest, in plaats van een aparte jaarknoppenrij bovenaan. */
+/* De jaartallen zijn knoppen en moeten er ook zo uitzien. Ze zitten samen in
+   één verzonken rail, net als de keuze "per jaar / per maand" erboven: zo leest
+   het als één bediening. De gekozen knop ligt als een roze pil bovenop de rail. */
+.jaarmerken{
+  display:flex;gap:2px;margin-top:10px;padding:3px;border-radius:999px;
+  background:var(--paper-3);border:1px solid var(--line);
+  box-shadow:inset 0 1px 2px rgba(72,56,38,.08)
+}
+.jaarmerken button{
+  position:relative;flex:1 1 0;min-width:0;appearance:none;cursor:pointer;padding:8px 4px;
+  border:0;border-radius:999px;background:transparent;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;color:var(--ink-2);
+  transition:color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease
+}
+.jaarmerken button:hover{color:var(--pink-text);background:var(--paper-2)}
+.jaarmerken button[aria-pressed="true"]{
+  color:#fff;background:var(--pink-text);font-weight:600;
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset, var(--schaduw-roze);
+  transform:translateY(-.5px)
+}
+.jaarmerken button[aria-pressed="true"]:hover{background:var(--pink-deep)}
+.speel{
+  width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--pink-text);color:#fff;font-size:15px;line-height:1;
+  box-shadow:var(--schaduw-roze);transition:transform .18s ease,background .18s ease
+}
+.speel:hover{transform:scale(1.06);background:var(--pink-deep)}
+.speel.loopt{background:var(--ink)}
+/* Herhalen: dezelfde pilstaal als de moduskiezer, aan = gevuld in de leestint */
+.herhaal{width:34px;height:34px;flex:0 0 34px;border-radius:50%;border:1px solid var(--line-2);background:var(--paper-2);
+  color:var(--ink-2);font-size:17px;line-height:1;cursor:pointer;transition:background .18s ease,color .18s ease,transform .18s ease}
+.herhaal:hover{transform:scale(1.06);border-color:var(--pink)}
+.herhaal[aria-pressed="true"]{background:var(--pink-text);border-color:var(--pink-text);color:#fff}
+.schuif{min-width:200px}
+.schuif input[type=range]{
+  width:100%;appearance:none;background:transparent;margin:0;height:22px;cursor:pointer
+}
+.schuif input[type=range]{--vul:100%}
+.schuif input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:3px;border:1px solid var(--line);
+  background:linear-gradient(90deg,var(--pink-text) var(--vul),var(--paper-3) var(--vul))}
+.schuif input[type=range]::-webkit-slider-thumb{appearance:none;width:17px;height:17px;margin-top:-7px;border-radius:50%;
+  background:var(--pink-text);border:2px solid var(--paper-2);box-shadow:var(--schaduw-zacht)}
+.schuif input[type=range]::-moz-range-track{height:5px;border-radius:3px;border:1px solid var(--line);
+  background:linear-gradient(90deg,var(--pink-text) var(--vul),var(--paper-3) var(--vul))}
+.schuif input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--pink-text);border:2px solid var(--paper-2)}
+.stand{display:flex;gap:10px;align-items:baseline;font-family:'JetBrains Mono',ui-monospace,monospace;margin-right:auto}
+/* de moduskiezer blijft rechts staan, ook als de stand-tekst verborgen is */
+#tijdbalk .moduskiezer{margin-left:auto}
+.stand b{
+  font-size:15px;background:var(--pink-text);color:#fff;padding:3px 11px;border-radius:999px;
+  box-shadow:var(--schaduw-roze)
+}
+.stand span{font-size:11.5px;color:var(--ink-dim)}
+.moduskiezer{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--paper)}
+.moduskiezer button{
+  appearance:none;border:0;background:none;cursor:pointer;border-radius:999px;padding:6px 13px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--ink-2)
+}
+.moduskiezer button[aria-pressed="true"]{background:var(--pink-text);color:#fff}
+.moduskiezer button:disabled{opacity:.4;cursor:not-allowed}
+
+/* ================================================================
+   Heatmap en detail per camera
+   ================================================================ */
+.blokkop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.blokkop h2{margin:0}
+.heat{display:grid;gap:0;overflow-x:auto;border-radius:10px}
+.heat .rij{display:grid;grid-template-columns:52px repeat(12,minmax(26px,1fr)) 66px;gap:0;align-items:center}
+.heat .rij + .rij .cel{border-top:1px solid rgba(255,253,247,.85)}
+.heat .cel + .cel{border-left:1px solid rgba(255,253,247,.85)}
+.heat .rij:nth-child(2) .cel:first-of-type{border-top-left-radius:8px}
+.heat .rij:nth-child(2) .cel:last-of-type{border-top-right-radius:8px}
+.heat .rij:last-child .cel:first-of-type{border-bottom-left-radius:8px}
+.heat .rij:last-child .cel:last-of-type{border-bottom-right-radius:8px}
+.heat .jaar,.heat .som{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--ink-2)}
+/* elk jaartal draagt dezelfde maat als de roze pil, zodat er niets verschuift
+   als de selectie wisselt: enkel de kleur verandert */
+.heat .jaar{justify-self:start;padding:2px 8px;border-radius:999px}
+.heat .klikbaar{cursor:pointer;transition:color .16s ease}
+.heat .klikbaar:hover{color:var(--pink-text)}
+.heat .rij:hover .cel[data-waarde]{filter:brightness(.97)}
+.heat .som{text-align:right;padding-left:10px}
+.heat .maandkop{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;color:var(--ink-dim);text-align:center;padding-bottom:4px}
+.heatknoppen{display:flex;gap:8px;flex-wrap:wrap}
+.heat .cel{
+  height:34px;background:var(--paper-3);cursor:default;transition:filter .14s ease;
+  display:grid;place-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px
+}
+.heat .cel .cijfer{mix-blend-mode:multiply;color:rgba(26,23,18,.72)}
+@media(max-width:860px){ .heat .cel .cijfer{display:none} }
+.heat .cel[data-waarde]{cursor:pointer}
+.heat .cel[data-waarde]:hover{filter:brightness(.92)}
+/* Waar de tijdbalk staat: geen kader rond de cel (dat verhakkelt het raster),
+   maar een roze jaarlabel en een streepje onder de maandkop. */
+.heat .cel.nu::after{content:'';position:absolute;left:6px;right:6px;bottom:3px;height:2px;border-radius:2px;background:var(--ink)}
+.heat .cel{position:relative}
+.heat .rij.nu .jaar{color:#fff;background:var(--pink-text)}
+.heat .rij.nu .som{color:var(--ink)}
+/* Het gekozen jaar staat vooraan, de andere jaren treden een stap terug. Ze
+   blijven leesbaar en komen bij hover weer helemaal op, want vergelijken is
+   juist waar deze tabel voor dient. */
+.heat .rij.zacht .cel{opacity:.5}
+.heat .rij.zacht .jaar,.heat .rij.zacht .som{opacity:.6}
+.heat .rij.zacht:hover .cel,.heat .rij.zacht:hover .jaar,.heat .rij.zacht:hover .som{opacity:1}
+.heat .cel,.heat .jaar,.heat .som{transition:opacity .22s ease}
+.heat .cel.leeg{background:var(--paper-3);color:var(--ink-dim)}   /* geen cijfers: effen, geen arcering */
+.heatschaal{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--ink-2)}
+.heatschaal .balk{width:140px;height:10px;border-radius:5px;background:linear-gradient(90deg,#f9f1dc,var(--pink))}
+
+.detail{margin-top:14px;animation:opkomst .26s ease both;position:relative}
+.detail .sluit{position:absolute;top:10px;right:12px;border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:var(--ink-dim)}
+.detail:not([hidden]){animation:opkomst .25s ease both}
+.detail .lijnen{position:relative}
+.detail .lijnlegende{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12.5px;color:var(--ink-2)}
+.detail .lijnlegende span{display:inline-flex;align-items:center;gap:6px}
+.detail .lijnlegende i{width:16px;height:3px;border-radius:2px;display:inline-block}
+
+/* ================================================================
+   Grafieken
+   ================================================================ */
+.grafiek{position:relative}
+/* De tekening staat op ware grootte in het vak. Geen width:100%: als het vak
+   breder blijkt dan bij het tekenen, zou de browser de hele tekening oprekken
+   en groeit de tekst mee. Bij een maatverandering wordt hertekend. */
+.grafiek svg,.detail .lijnen svg{display:block;max-width:100%;height:auto;overflow:visible}
+.grafiek .vak{fill:transparent;cursor:pointer}
+.grafiek .staafje{transition:opacity .18s ease}
+.grafiek.hoveren .staafje{opacity:.35}
+.grafiek.hoveren .staafje.aan{opacity:1}
+.grafiek text,.detail .lijnen text{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;fill:var(--ink-dim)}
+.grafiek .waarde,.detail .lijnen .waarde{fill:var(--ink-2)}
+.detail .lijnen .raster{stroke:var(--line);stroke-dasharray:2 4}
+.grafiek .raster{stroke:var(--line);stroke-dasharray:2 4}
+.tip{
+  position:absolute;z-index:20;pointer-events:none;opacity:0;transform:translate(-50%,-115%);
+  background:var(--ink);color:var(--paper);border-radius:9px;padding:7px 10px;font-size:12px;
+  white-space:nowrap;box-shadow:var(--schaduw-til);transition:opacity .14s ease
+}
+.tip.aan{opacity:1}
+.tip b{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+.staafgroei{transform-origin:center bottom;animation:groei .55s cubic-bezier(.32,.72,0,1) both}
+@keyframes groei{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+.verdeling{display:flex;height:24px;border-radius:6px;overflow:hidden;background:var(--paper-3)}
+.verdeling span{display:block;box-sizing:border-box;border-right:2px solid var(--paper-2);overflow:hidden;white-space:nowrap;text-align:center;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:500;line-height:24px;transition:width .5s cubic-bezier(.32,.72,0,1)}
+.verdeling span:last-child{border-right:0}
+.legende{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin:10px 0 0}
+.legende span{display:inline-flex;align-items:center;gap:6px}
+.legende i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.legende i.omlijnd{background:var(--paper-2);border:1.5px solid var(--ink);box-sizing:border-box}
+.legende i.streepje{width:2px;height:13px;background:var(--ink-dim);border-radius:1px}
+.halter-jaar{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;fill:var(--ink-2)}
+.halter-deel{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;fill:var(--ink)}
+.halter-noot{font-size:10.5px;fill:var(--ink-dim)}
+.legende b{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500}
+
+/* Lijstjes met balk (feitcodes, geldposten) */
+.balklijst{list-style:none;margin:0;padding:0}
+.balklijst li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.balklijst li:last-child{border-bottom:0}
+.balklijst .om{font-size:14px}
+.balklijst .co{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:var(--ink-dim)}
+.balklijst .n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13.5px;align-self:center}
+.balklijst .staaf{grid-column:1/-1;height:5px;border-radius:3px;background:var(--pink);opacity:.75;transition:width .5s cubic-bezier(.32,.72,0,1)}
+
+table{border-collapse:collapse;width:100%;font-size:14px}
+.tabelwikkel{overflow-x:auto}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);font-weight:500}
+td.n,th.n{text-align:right;font-family:'JetBrains Mono',ui-monospace,monospace}
+tbody tr{transition:background .16s ease}
+tbody tr:hover{background:var(--pink-soft)}
+
+/* De verantwoording is een donkere band over de volle breedte van het scherm,
+   zoals de inkt-eilanden van de familiesites; de tekst blijft binnen de
+   leesbreedte. Het vorige papier-op-papier las niet als een band. */
+.ver-band{
+  width:100%;margin-top:30px;padding:22px 0 40px;
+  background:var(--paper-2);color:var(--ink-2);
+  border-top:1px solid var(--line);
+  font-size:12.5px;position:relative;z-index:2
+}
+.ver-band b{color:var(--ink)}
+.ver-band a{color:var(--pink-text)}
+.ver-band p{color:var(--ink-2)}
+.ver-band p{margin:0 0 8px}
+body[data-view="nieuws"] .ver-band{display:none}
+/* Het colofon: hetzelfde systeem als op Denk mee en Lees mee, met het vizier
+   als merkteken en de sitenaam in mono. */
+.colofon{--co-r:1.5rem;--co-teken:calc(var(--co-r)*2);--co-kap:.41rem;
+  background:var(--paper);border-top:1px solid var(--line);
+  padding-block:calc(var(--co-r)*2) calc(var(--co-r)*3);position:relative;z-index:2}
+.co-shell{max-width:1180px;margin-inline:auto;padding-inline:clamp(1.1rem,4vw,3rem);display:flex;align-items:flex-start;gap:var(--co-r)}
+.co-mark{flex:none;display:block;width:var(--co-teken);height:var(--co-teken);margin-top:var(--co-kap);border-radius:50%;transition:box-shadow .16s}
+.co-mark svg{display:block;width:100%;height:100%}
+.co-mark:hover{box-shadow:0 0 0 4px var(--pink-soft)}
+.co-mark:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+.co-body{max-width:33rem}
+.co-zin{margin:0;font-size:.95rem;line-height:var(--co-r);color:var(--ink-2);text-wrap:pretty}
+.co-zin strong{font-weight:600;color:var(--ink)}
+.co-zin .co-naam{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:.96em;letter-spacing:-.015em;color:var(--ink);white-space:nowrap}
+.co-zin .co-naam em{font-style:italic;color:var(--pink-text)}
+.co-fam{margin:var(--co-r) 0 0;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.66rem;line-height:var(--co-r);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim)}
+/* geen globale ankerreset in dit sjabloon: zonder text-decoration:none krijgt
+   een link hier de browser-onderstreping bovenop de eigen borderlijn */
+.co-fam a{color:var(--pink-text);border-bottom:1px solid var(--pink);text-decoration:none}
+.co-fam a:hover{color:var(--pink-deep);border-bottom-color:var(--pink-deep)}
+/* De verantwoording staat open, als kadertjes zoals op Denk mee: strakke
+   hoeken, haarlijn in de app-tint, en één accentkader voor het voorbehoud dat
+   de lezer het minst mag missen. */
+.ver-kop{display:flex;align-items:baseline;gap:12px;padding:10px 0 14px}
+.ver-kop .kop{font-size:14px;color:var(--ink);font-weight:600}
+.ver-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
+@media(max-width:780px){ .ver-grid{grid-template-columns:1fr} }
+.ver-kader{background:var(--paper);border:1px solid rgba(133,104,19,.22);box-shadow:var(--schaduw-zacht);padding:1.25rem 1.35rem 1.1rem}
+.ver-kader h3{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1rem;font-weight:500;letter-spacing:-.005em;color:var(--ink);margin:0 0 .7rem}
+.ver-kader p{font-size:.9rem;line-height:1.6;color:var(--ink-2);margin:0 0 8px}
+.ver-kader p:last-child{margin-bottom:0}
+.ver-kader ul{margin:0;padding-left:1.1rem;font-size:.9rem;line-height:1.6;color:var(--ink-2)}
+.ver-kader li{margin:0 0 6px}
+.ver-kader li:last-child{margin-bottom:0}
+.ver-kader p a{color:var(--pink-text);border-bottom:1px solid var(--pink-text);text-decoration:none}
+.ver-kader p a:hover{color:var(--pink-deep);border-bottom-color:var(--pink-deep)}
+.ver-accent{background:var(--pink-text);border-color:var(--pink-text)}
+.ver-accent h3,.ver-accent p{color:#fff}
+.ver-accent p a{color:#fff;border-bottom-color:#fff}
+#meldingen:empty{display:none}
+.ver-slot{margin:16px 0 0;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--ink-dim)}
+
+/* terug-naar-boven zoals op Lees mee en het portaal: rond en glazig, half
+   doorzichtig tot je hem aanwijst */
+.terug{
+  position:fixed;right:1.1rem;bottom:1.5rem;width:40px;height:40px;z-index:90;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line-2);border-radius:50%;
+  background:rgba(245,241,232,.5);backdrop-filter:blur(9px) saturate(140%);-webkit-backdrop-filter:blur(9px) saturate(140%);
+  color:var(--ink);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.05rem;line-height:1;cursor:pointer;
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease,border-color .18s,color .18s
+}
+.terug.zichtbaar{opacity:.72;transform:none;pointer-events:auto}
+.terug.zichtbaar:hover,.terug.zichtbaar:focus-visible{opacity:1;border-color:var(--pink);color:var(--pink-text)}
+@media(max-width:719px){ .terug{bottom:calc(84px + env(safe-area-inset-bottom))} }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  html{scroll-behavior:auto}
+}
+/* Mobiele overrides staan bewust ALS LAATSTE in de stylesheet: bij gelijke
+   specificiteit wint de laatste regel, en dit blok stond ooit vóór de basisregels
+   van .tegels, waardoor het dood was (ontdekt 04/09/2026). */
+@media(max-width:600px){
+  .tegels{grid-template-columns:repeat(2,1fr)}
+  .tegels .tegel:first-child{grid-column:1/-1}
+  .jaarmerken{gap:0;padding:2px}
+  .jaarmerken button{font-size:11px;padding:7px 2px}
+  .stand b{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="appbalk" id="appbalk">
+  <div class="balk-in">
+    <a class="brand" href="https://asgaupaust.be/" aria-label="As Gau Paust, naar het portaal"><img class="brand-mug" src="beelden/mug.png" alt="" aria-hidden="true" width="512" height="512">As Gau <em>Paust</em></a>
+    <span class="balk-ruimte" aria-hidden="true"></span>
+    <button class="menuknop" id="menuknop" aria-label="Menu" aria-expanded="false" aria-controls="menuvlak" onclick="menu()"><span></span><span></span><span></span></button>
+  </div>
+</div>
+
+<div class="menuvlak" id="menuvlak" hidden onclick="if(event.target===this)menu(false)">
+  <div class="menukaart">
+    <!-- De menukop spiegelt de bovenbalk: zelfde brand op dezelfde plek, zoals
+         op de deelsites. Alleen het sluitkruis komt erbij. -->
+    <div class="menu-kop">
+      <a class="brand" href="https://asgaupaust.be/" aria-label="As Gau Paust, naar het portaal"><img class="brand-mug" src="beelden/mug.png" alt="" aria-hidden="true" width="512" height="512">As Gau <em>Paust</em></a>
+      <button class="menu-sluit" onclick="menu(false)" aria-label="Sluit menu">&times;</button>
+    </div>
+    <nav class="menu-lijst" aria-label="Onderdelen">
+      <a href="#camera" onclick="event.preventDefault();toonView('camera')">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="1.7"/><path d="M12 1.9v3.3M12 18.8v3.3M1.9 12h3.3M18.8 12h3.3" stroke-linecap="round"/></svg></span>
+        <span class="menu-naam">ANPR</span><span class="menu-tel" id="tab-camera"></span></a>
+      <a href="#gas" onclick="event.preventDefault();toonView('gas')">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></span>
+        <span class="menu-naam">Parkeren</span><span class="menu-tel" id="tab-gas"></span></a>
+      <a href="#geld" onclick="event.preventDefault();toonView('geld')">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M15.4 8.9a4 4 0 1 0 0 6.2" stroke-linecap="round"/><path d="M7.9 10.9h6.3M7.9 13.1h6.3" stroke-linecap="round"/></svg></span>
+        <span class="menu-naam">Planning en rekening</span><span class="menu-tel" id="tab-geld"></span></a>
+      <a href="#nieuws" onclick="event.preventDefault();toonView('nieuws')">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h6M7 12h10M7 16h10M16 8h1"/></svg></span>
+        <span class="menu-naam">In het nieuws <span class="menu-periode" id="menu-periode"></span></span><span class="menu-tel" id="tab-gazet"></span></a>
+      <a href="#verantwoording" onclick="naarVerantwoording(event)">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6h.01"/></svg></span>
+        <span class="menu-naam">Verantwoording</span></a>
+      <a href="techniek.html">
+        <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/><circle cx="17.5" cy="16" r="3"/><path d="M19.7 18.2 22 20.5"/></svg></span>
+        <span class="menu-naam">Hoe het werkt</span></a>
+    </nav>
+  </div>
+</div>
+
+
+
+<!-- Statusstrook, weg te halen na de lancering. De knop wijst naar het contactvenster van
+     het portaal: dit dashboard heeft er zelf geen, en zo staat het adres hier nergens in de
+     broncode. -->
+<div class="status-strook"><div class="ss-in">
+  <b>Nog niet gelanceerd</b>
+  <span>Dit dashboard is nog in volle voorbereiding: we testen nog of alle cijfers kloppen.
+    Kom je hier toevallig terecht, dan is je feedback nu al welkom.
+    <a class="ss-cta" href="https://asgaupaust.be/#contact">Laat het ons weten</a></span>
+</div></div>
+
+<div class="wrap">
+
+  <!-- ============ camera's ============ -->
+  <section class="weergave aan" id="view-camera" role="tabpanel">
+    <div class="held">
+      <div>
+        <p class="eyebrow held-eyebrow"><span class="puls"></span>ANPR</p>
+        <!-- De sitenaam als grote kop, zoals op de deelsites; de vangst telt
+             eronder live mee met de tijdbalk. -->
+        <h1 class="heldkop"><span class="kader-in-kop">GAS</span> mee met Mechelen</h1>
+        <p class="held-cijfer"><b id="held-getal"></b> <em>voorbij het verbod</em><br>
+          <span class="held-periode" id="held-periode"></span></p>
+        <p class="duiding">Camera's aan de autoluwe zones lezen nummerplaten en stellen vast wie het verkeersbord C3 negeert.
+        Dat loopt als GAS 4 naar de sanctionerend ambtenaar. Het cameranet groeide fors (van 22 naar
+        36 camera's sinds eind 2022), dus de sprong in de cijfers is ook een sprong in het aantal camera's. Elke camera is een viziertje op de kaart; de oppervlakte ervan volgt het aantal vaststellingen,
+        en een gestippelde ring betekent nul, meestal omdat de camera toen afstond. Eén vaste schaal, dus jaren en maanden
+        laten zich vergelijken.</p>
+      </div>
+      <button class="held-merk" type="button" aria-label="Open het menu" aria-controls="menuvlak" onclick="menu(true)">
+        <span class="ring"></span><span class="ring r2"></span>
+        <svg viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="15.2" fill="none" stroke="var(--pink)" stroke-width="1" opacity=".85"/>
+        <circle cx="20" cy="20" r="11.4" fill="none" stroke="var(--pink)" stroke-width=".8" opacity=".22"/>
+        <path d="M20 2.4v3.4M20 34.2v3.4M2.4 20h3.4M34.2 20h3.4" stroke="var(--pink-deep)" stroke-width="1" stroke-linecap="round"/>
+        <path d="M14.9 17.6l1.7-2.7a2 2 0 0 1 1.7-.95h3.4a2 2 0 0 1 1.7.95l1.7 2.7z" fill="var(--pink)"/>
+        <rect x="12" y="17.2" width="16" height="5.8" rx="2.6" fill="var(--pink)"/>
+        <path d="M16.7 16.8l1.05-1.7a1.3 1.3 0 0 1 1.1-.6h2.3a1.3 1.3 0 0 1 1.1.6l1.05 1.7z" fill="var(--pink-deep)"/>
+        <circle cx="15.7" cy="23" r="1.9" fill="var(--pink-deep)"/>
+        <circle cx="24.3" cy="23" r="1.9" fill="var(--pink-deep)"/>
+        <circle cx="15.7" cy="23" r=".7" fill="var(--paper-2)"/>
+        <circle cx="24.3" cy="23" r=".7" fill="var(--paper-2)"/>
+        </svg>
+      </button>
+    </div>
+
+    <h2 class="stil">De cijfers van het gekozen jaar</h2>
+    <div class="tegels" id="anpr-tegels"></div>
+    <div class="kaartvlak tegeluitleg" id="tegel-uitleg" hidden></div>
+
+    <div class="tijdbalk" id="tijdbalk">
+      <div class="tijdkop">
+        <button type="button" class="speel" id="speel" aria-label="Afspelen">▶</button>
+        <button type="button" class="herhaal" id="herhaal" aria-pressed="false" aria-label="Herhalen" title="Herhalen: aan het einde opnieuw beginnen">⟳</button>
+        <div class="stand"><b id="stand-label"></b><span id="stand-noot"></span></div>
+        <div class="moduskiezer" role="group" aria-label="Tijdsprong">
+          <button type="button" data-modus="jaar" aria-pressed="true">per jaar</button>
+          <button type="button" data-modus="maand" aria-pressed="false">per maand</button>
+        </div>
+      </div>
+      <div class="schuif">
+        <input type="range" id="schuif" min="0" max="0" value="0" step="1" aria-label="Tijdstip">
+        <div class="jaarmerken" id="jaarmerken" role="group" aria-label="Kies een jaar"></div>
+      </div>
+    </div>
+
+    <div class="kaarthouder">
+      <h2 class="stil">De camera's op de kaart</h2>
+      <div id="kaart">
+        <div id="tegels"></div>
+        <div id="merken"></div>
+        <div class="kaartlegende">
+          <span class="chip" id="kaartchip"></span>
+        </div>
+        <div class="kaartknoppen">
+          <button type="button" id="zoomin" title="Inzoomen" aria-label="Inzoomen">+</button>
+          <button type="button" id="zoomuit" title="Uitzoomen" aria-label="Uitzoomen">&minus;</button>
+          <button type="button" id="zoompas" title="Alles tonen" aria-label="Alles tonen">&#9678;</button>
+        </div>
+        <div class="attributie">Kaartgegevens &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-bijdragers, ODbL</div>
+      </div>
+      <div class="kaartpaneel" id="kaartpaneel">
+        <div class="kop">
+          <b>Per camera</b> <span class="eyebrow" id="cam-tel"></span>
+          <button type="button" class="klap" id="sorteerknop" hidden title="Sorteervolgorde">op aantal</button>
+          <button type="button" class="klap" id="klapknop" aria-expanded="false"
+            title="Alle camera's onder elkaar">alles tonen</button>
+        </div>
+        <ul class="rang" id="cameralijst"></ul>
+      </div>
+    </div>
+
+    <div class="kaartvlak detail" id="camera-detail" hidden></div>
+
+    <div class="kaartvlak" style="margin-top:14px">
+      <div class="blokkop">
+        <div>
+          <div class="eyebrow" id="heat-eyebrow">Alle camera's samen</div>
+          <h2 id="heat-titel">Maand per maand</h2>
+        </div>
+        <div class="heatknoppen">
+          <div class="moduskiezer" id="heat-keuze" hidden>
+            <button type="button" data-bron="alle" aria-pressed="true">alle camera's</button>
+            <button type="button" data-bron="camera" aria-pressed="false">deze camera</button>
+          </div>
+          <div class="moduskiezer" id="heat-schaal" title="Waarmee de kleur vergelijkt">
+            <button type="button" data-schaal="alles" aria-pressed="true">over alle jaren</button>
+            <button type="button" data-schaal="jaar" aria-pressed="false">binnen elk jaar</button>
+          </div>
+        </div>
+      </div>
+      <div id="heatmap"></div>
+    </div>
+
+  </section>
+
+  <!-- ============ geld ============ -->
+  <!-- ============ andere GAS ============ -->
+  <section class="weergave" id="view-gas" role="tabpanel">
+    <div class="titelrij">
+      <h1 class="heldkop-klein">GAS is meer dan <em>de autoluwe zones</em></h1>
+    </div>
+    <p class="duiding">GASAM behandelt ook de parkeerboetes die vaststellers op straat uitschrijven, de
+    overlastdossiers, en sinds 2021 de lichte snelheidsovertredingen. De parkeercijfers komen uit de jaarverslagen.
+    Voor overlast en snelheid tonen we wat de stad erop boekte.</p>
+
+    <div class="kaartvlak">
+      <div class="eyebrow">Parkeren en stilstaan &middot; <span id="gas-jaarlabel"></span></div>
+      <h2 style="font-size:19px;margin:2px 0 10px">Fout geparkeerd, vastgesteld op straat</h2>
+      <div class="tegels" id="gas-tegels"></div>
+      <div class="rooster twee">
+        <div><h2>Per jaar</h2><div class="grafiek" id="gas-jaren"></div></div>
+        <div><h2>Per maand in <span id="gas-maandjaar"></span></h2><div class="grafiek" id="gas-maanden"></div></div>
+      </div>
+      <div style="margin-top:14px"><h2>Wat er met de dossiers gebeurde</h2><div id="gas-afhandeling"></div></div>
+      <div style="margin-top:14px"><h2>Waarvoor precies</h2><div id="gas-inbreuken"></div></div>
+    </div>
+
+    <div class="kaartvlak" style="margin-top:14px">
+      <div class="eyebrow">Overlast en snelheid</div>
+      <h2 style="font-size:19px;margin:2px 0 10px">Wat de andere GAS-soorten opbrengen</h2>
+      <p class="duiding" style="margin:0 0 12px">Uit de jaarrekeningen van de stad: wat er per jaar geboekt werd op
+      GAS-overlast en op GAS 5, de lichte snelheidsovertredingen die er in 2021 bij kwamen. Aantallen dossiers publiceert
+      GASAM hiervoor niet per jaar op stadsniveau; de bedragen wel.</p>
+      <!-- Twee schalen: overlast brengt tienduizenden op, snelheid miljoenen;
+           op één schaal verdween de overlastreeks. Elk zijn eigen kader, en het
+           bedrag bovenaan zegt meteen hoe verschillend de schalen zijn. -->
+      <div class="duo-vakken">
+        <div>
+          <div class="eyebrow">GAS-overlast <span class="stil">in euro per jaar, eigen schaal</span></div>
+          <div class="grafiek" id="gas-ander-overlast"></div>
+        </div>
+        <div>
+          <div class="eyebrow">GAS 5, snelheid <span class="stil">in euro per jaar, eigen schaal</span></div>
+          <div class="grafiek" id="gas-ander-snelheid"></div>
+        </div>
+      </div>
+      <p class="noot">Let op de schalen: overlast staat in tienduizenden euro, snelheid in miljoenen.</p>
+    </div>
+  </section>
+
+  <!-- ============ in het nieuws ============ -->
+  <section class="weergave" id="view-nieuws" role="tabpanel">
+    <div id="gazet"></div>
+  </section>
+
+  <section class="weergave" id="view-geld" role="tabpanel">
+    <div class="titelrij">
+      <h1 class="heldkop-klein">Wat de stad plande, <em>wat er binnenkwam</em></h1>
+    </div>
+    <p class="duiding">De stad raamt vooraf in het meerjarenplan wat een actie mag opbrengen. Dat is de planning, in
+    de jaarrekening de initiële kredieten; wat er werkelijk binnenkwam staat in de kolom jaarrekening. De planning slaat
+    op de <strong>hele handhavingsactie</strong>: de boetes op parkeren en het autoluw gebied, sinds 2021 die op
+    snelheid, de administratiekosten die de dienst aanrekent, en het werk dat Mechelen voor de andere GAS-gemeenten
+    doet. Het meerjarenplan raamt ook per rekening, maar de jaarrekening rapporteert enkel dit ene totaal. De
+    parkeeropbrengsten zitten er niet in: die staan op vier andere acties. Hoe planning en rekening zich verhouden,
+    en waaruit het bedrag bestaat, staat hieronder.</p>
+
+    <div class="tegels" id="geld-tegels"></div>
+    <div class="kaartvlak" id="budget-actie"></div>
+    <div class="kaartvlak" id="budget-soorten" style="margin-top:14px"></div>
+    <div class="kaartvlak" id="budget-uitgaven" style="margin-top:14px"></div>
+  </section>
+
+</div>
+
+<div class="ver-band">
+  <div class="wrap">
+    <!-- De verantwoording als open kadertjes; op de nieuwspagina blijft deze
+         band weg, daar sluit de krant zichzelf af. -->
+    <div class="ver-kop" id="verantwoording">
+      <span class="eyebrow">Verantwoording</span>
+    </div>
+    <div class="ver-grid">
+      <article class="ver-kader">
+        <h3>Bronnen</h3>
+        <p>De cijfers komen uit de jaarverslagen van GASAM, sinds 2022 GAS Rivierenland. We kregen ze via
+        een openbaarheidsverzoek en lezen alleen het hoofdstuk over Mechelen. Verwerkt: 2012 en 2015 tot
+        en met 2024. De verslagen 2013 en 2014 bestaan niet; 2025 is nog niet beschikbaar.</p>
+        <ul>
+          <li>Het geld: de jaarrekeningen en meerjarenplannen van stad en OCMW Mechelen.</li>
+          <li>De kaart: OpenStreetMap (ODbL). Een camera staat op het punt dat vrijwilligers daar intekenden,
+          anders op de kruising of doorgang uit het autoluwreglement van de stad, anders op het midden van
+          de straat volgens het Vlaams Adressenregister. Klik een stip aan en ze zegt welke van de drie.</li>
+          <li>Het nieuws: de artikels in het dossier <a href="https://leesmee.asgaupaust.be/#/dossier/gas-autoluw"
+          target="_blank" rel="noopener">GAS &amp; de autoluwe zone</a> op Lees mee.</li>
+        </ul>
+      </article>
+      <!-- Dit kader draagt het accent: hoe we lezen en waarom de jaren niet zomaar
+           te vergelijken zijn, is wat een lezer het minst mag missen. -->
+      <article class="ver-kader ver-accent">
+        <h3>Lezen met voorbehoud</h3>
+        <p>Veel cijfers staan in de verslagen alleen als grafiek. We lezen ze machinaal uit de pdf en
+        tellen ze na tegen het jaartotaal dat het verslag zelf noemt. Grafieken die als beeld in de pdf
+        zitten, hebben we overgetypt en op dezelfde manier nageteld.</p>
+        <p>Vergelijk de jaren met zorg. Sinds eind 2022 hangen er camera's bij op de vesten en in de wijk
+        Caputsteen-Nekkerspoel, sinds 2023 tellen ook de knips en verkeersstops mee, en sinds 2024 stuurt
+        de stad op enkele plekken eerst een waarschuwing. Die waarschuwingen tellen hier niet mee: dit
+        zijn de boetedossiers.</p>
+        <p id="meldingen"></p>
+      </article>
+    </div>
+  </div>
+</div>
+
+<footer class="colofon">
+  <div class="co-shell">
+    <a class="co-mark" href="#camera" aria-label="GAS mee met Mechelen, naar het begin" onclick="event.preventDefault();toonView('camera')">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="15.2" fill="none" stroke="var(--pink)" stroke-width="1" opacity=".85"/>
+        <circle cx="20" cy="20" r="11.4" fill="none" stroke="var(--pink)" stroke-width=".8" opacity=".22"/>
+        <path d="M20 2.4v3.4M20 34.2v3.4M2.4 20h3.4M34.2 20h3.4" stroke="var(--pink-deep)" stroke-width="1" stroke-linecap="round"/>
+        <path d="M14.9 17.6l1.7-2.7a2 2 0 0 1 1.7-.95h3.4a2 2 0 0 1 1.7.95l1.7 2.7z" fill="var(--pink)"/>
+        <rect x="12" y="17.2" width="16" height="5.8" rx="2.6" fill="var(--pink)"/>
+        <path d="M16.7 16.8l1.05-1.7a1.3 1.3 0 0 1 1.1-.6h2.3a1.3 1.3 0 0 1 1.1.6l1.05 1.7z" fill="var(--pink-deep)"/>
+        <circle cx="15.7" cy="23" r="1.9" fill="var(--pink-deep)"/>
+        <circle cx="24.3" cy="23" r="1.9" fill="var(--pink-deep)"/>
+        <circle cx="15.7" cy="23" r=".7" fill="var(--paper-2)"/>
+        <circle cx="24.3" cy="23" r=".7" fill="var(--paper-2)"/>
+      </svg>
+    </a>
+    <div class="co-body">
+      <p class="co-zin"><strong class="co-naam">GAS mee <em>met Mechelen</em></strong>, een experiment van <strong>As Gau Paust</strong>.
+      Zo zie je wat de camera's aan de autoluwe zones vaststellen, en wat de stad aan GAS plant en int.</p>
+      <p class="co-fam">Onderdeel van <a href="https://asgaupaust.be">asgaupaust.be</a> &middot; <a href="https://asgaupaust.be/privacy/">Privacy</a> &middot; <a href="techniek.html">Hoe het werkt</a></p>
+    </div>
+  </div>
+</footer>
+
+<nav class="onderbalk" role="tablist" aria-label="Onderdelen">
+  <button role="tab" data-view="camera" aria-selected="true">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="1.7"/><path d="M12 1.9v3.3M12 18.8v3.3M1.9 12h3.3M18.8 12h3.3" stroke-linecap="round"/></svg>ANPR</button>
+  <button role="tab" data-view="gas" aria-selected="false">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg>Parkeren</button>
+  <button role="tab" data-view="geld" aria-selected="false">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M15.4 8.9a4 4 0 1 0 0 6.2" stroke-linecap="round"/><path d="M7.9 10.9h6.3M7.9 13.1h6.3" stroke-linecap="round"/></svg>Geld</button>
+  <button role="tab" data-view="nieuws" aria-selected="false">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h6M7 12h10M7 16h10M16 8h1"/></svg>Nieuws</button>
+  <a class="portaalknop" href="https://asgaupaust.be/" aria-label="Naar het portaal As Gau Paust">
+    <img src="beelden/mug.png" alt="" width="512" height="512">Portaal</a>
+</nav>
+
+<button class="terug" id="terug" title="Terug naar boven" aria-label="Terug naar boven">&uarr;</button>
+
+<script>
+/* DATA_HIER */
+
+/* Dit bestand is het sjabloon: de cijfers worden er pas bij het bouwen in
+   gegoten (build.py schrijft dist/index.html). Wie template.html zelf
+   opent, kreeg vroeger een pagina die niets deed. Nu zegt ze wat er scheelt. */
+if (typeof D === "undefined") {
+  document.body.innerHTML =
+    '<div style="max-width:44rem;margin:18vh auto;padding:0 24px;font-family:system-ui,sans-serif;line-height:1.6">' +
+    '<p style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6a6153">Sjabloon zonder cijfers</p>' +
+    '<h1 style="font-size:28px;line-height:1.2;margin:6px 0 12px">Je hebt template.html geopend</h1>' +
+    '<p style="color:#514a40">De cijfers zitten niet in dit bestand: ze worden er bij het bouwen in gegoten. ' +
+    'Draai <code>python build.py</code> en open daarna <b>dist/index.html</b>.</p></div>';
+  throw new Error("template.html geopend zonder data; open dist/index.html");
+}
+
+/* ================================================================
+   Basis
+   ================================================================ */
+const MAANDEN = ["jan","feb","maa","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+const jaren = Object.keys(D.gasam.jaren).filter(j => D.gasam.jaren[j].autoluw).sort();
+let gekozen = jaren[jaren.length - 1];
+let view = "camera";
+
+/* De tijdlijn onder de kaart. In "jaar" loopt ze over alle jaargangen; in
+   "maand" over elke maand van de jaargangen die een maandtabel per camera
+   hebben. Dat zijn er vier (2015 tot en met 2018): vanaf 2019 publiceert GASAM
+   enkel nog jaartotalen per camera, en dan verzinnen we geen maanden. */
+const maandMatrix = jaar => {
+  const blok = D.gasam.jaren[jaar];
+  return (blok && blok.autoluw && blok.autoluw.per_camera_maand) || null;
+};
+const maandJaren = jaren.filter(maandMatrix);
+let modus = "jaar";
+let stapNr = 0;
+/* volle maandnamen voor de stap-labels (kop, speelknop, kaartje); de korte
+   MAANDEN blijven voor de heatmap- en grafiekkoppen */
+/* KLEURSYSTEEM (27/08/2026), in alle grafieken gelijk:
+     goud (--app)      de hoofdmaat: ANPR-dossiers, geen verweer, rekening, geboekt GAS 4
+     groen             verweer gegrond, boete geschrapt
+     inkt              verweer verworpen
+     warm grijs        sepot; in het geldluik de restcategorie GAS-overlast
+     leisteen          GAS 5, snelheid (nergens anders)
+     licht grijs       na bijsturing (eindkredieten), de tussenstap
+     omlijnd           een referentie waar iets uit voortkomt: planning, raming, verweer ingediend
+     roest             beroep bij de rechter (enkel kleur, geen textuur)
+   Delta-pijltjes oordelen niet: omhoog in zacht goud, omlaag in neutraal grijs. */
+/* Eén palet voor de afhandeling van de dossiers, overal hetzelfde: goud voor
+   de grote massa zonder verweer, groen voor een geschrapte boete, inkt voor een
+   verworpen verweer, warm grijs voor een sepot, en roest voor het beroep.
+   Vroeger lagen twee okers naast elkaar en was de balk onleesbaar (27/08). */
+const AFHANDELING_KLEUR = {
+  initieel: {vlak: "var(--app)", tekst: "var(--ink)"},
+  gunstig: {vlak: "var(--groen)", tekst: "#fff"},
+  ongunstig: {vlak: "var(--ink)", tekst: "var(--paper)"},
+  sepot: {vlak: "var(--steen)", tekst: "#fff"},
+  beroep: {vlak: "var(--roest)", tekst: "#fff"}
+};
+const MAANDEN_VOL = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
+let speler = null, herhaal = false, rustte = false;
+
+function stappen() {
+  if (modus === "maand") {
+    const uit = [];
+    maandJaren.forEach(j => MAANDEN.forEach((m, i) =>
+      uit.push({jaar: j, maand: i, label: MAANDEN_VOL[i] + " " + j, noot: "maand"})));
+    return uit;
+  }
+  return jaren.map(j => ({jaar: j, maand: null, label: j, noot: "hele jaar"}));
+}
+const huidigeStap = () => stappen()[Math.min(stapNr, stappen().length - 1)];
+
+function waardeVoor(naam, stap) {
+  if (!stap) return null;
+  if (stap.maand === null) return cameraTelling(naam, stap.jaar);
+  const matrix = maandMatrix(stap.jaar);
+  if (!matrix || !matrix[naam]) return null;
+  return matrix[naam][stap.maand];
+}
+const waardeNu = naam => waardeVoor(naam, huidigeStap());
+/* Heeft deze camera ergens maandcijfers? Zo niet, dan heeft een heatmap per
+   camera geen zin en blijft hij op alle camera's samen staan. */
+const heeftMaanden = naam => maandJaren.some(j => (maandMatrix(j) || {})[naam]);
+
+/* Eén vaste bolschaal per modus: anders lijkt elk jaar even druk en zegt de
+   beweging van de bollen niets. */
+function schaalTop() {
+  if (modus === "maand") {
+    let top = 1;
+    maandJaren.forEach(j => Object.values(maandMatrix(j)).forEach(reeks =>
+      reeks.forEach(w => { if (w > top) top = w; })));
+    return top;
+  }
+  let top = 1;
+  jaren.forEach(j => Object.keys(D.cameras.cameras).forEach(naam => {
+    const w = cameraTelling(naam, j);
+    if (w && w > top) top = w;
+  }));
+  return top;
+}
+
+const getal = n => (n === null || n === undefined) ? "" : n.toLocaleString("nl-BE");
+const procent = n => (n === null || n === undefined) ? "" : n.toLocaleString("nl-BE", {maximumFractionDigits: 1}) + "%";
+const euro = n => (n === null || n === undefined) ? "" : "€ " + Math.round(n).toLocaleString("nl-BE");
+const euroKort = n => {
+  if (n === null || n === undefined) return "";
+  if (Math.abs(n) >= 1e6) return "€ " + (n / 1e6).toLocaleString("nl-BE", {maximumFractionDigits: 2}) + " mln";
+  if (Math.abs(n) >= 1e3) return "€ " + Math.round(n / 1e3).toLocaleString("nl-BE") + "k";
+  return euro(n);
+};
+const el = (tag, klasse, tekst) => { const e = document.createElement(tag); if (klasse) e.className = klasse; if (tekst !== undefined) e.textContent = tekst; return e; };
+
+/* ================================================================
+   Grafiek: staven met hover. Eén functie voor jaren en maanden.
+   De onzichtbare vakken vangen de muis, zodat je niet exact op een
+   smalle staaf hoeft te mikken.
+   ================================================================ */
+function staafgrafiek(doel, waarden, labels, opties = {}) {
+  /* De viewBox krijgt de echte breedte van het vak. Anders rekt de browser de
+     tekening uit tot de kaartbreedte en groeien de labels mee, wat in een breed
+     blok meteen zichtbaar is. */
+  const breed = Math.max(320, Math.round(doel.clientWidth || 560));
+  const hoog = opties.hoog || 190;
+  const marge = {links: 6, rechts: 6, boven: 26, onder: 24};
+  /* Percentages krijgen een vaste schaal van 0 tot 100 (opties.top). Op hun eigen
+     maximum geschaald werd 85% een volle staaf, terwijl 88,6% in een andere
+     grafiek maar 88,6% van de breedte kreeg: dan lijkt het grotere getal kleiner. */
+  const top = opties.top || Math.max(...waarden, 1);
+  const vak = (breed - marge.links - marge.rechts) / waarden.length;
+  const grond = hoog - marge.onder;
+  const kleur = opties.kleur || "var(--pink)";
+  const eenheid = opties.eenheid || (n => getal(n));
+  /* twee cijfers blijven staan zonder muis: het gekozen jaar en de hoogste
+     staaf. De rest verschijnt bij hover, anders wordt het een cijferbrij. */
+  const tonen = opties.toonAlle
+    ? new Set(waarden.map((_, i) => i))
+    : new Set([waarden.indexOf(Math.max(...waarden))]);
+  if (opties.markeer !== undefined) tonen.add(opties.markeer);
+
+  let svg = `<svg width="${breed}" height="${hoog}" viewBox="0 0 ${breed} ${hoog}" role="img" aria-label="${opties.omschrijving || ""}">`;
+  [0.5, 1].forEach(deel => {
+    const y = grond - (grond - marge.boven) * deel;
+    svg += `<line class="raster" x1="${marge.links}" y1="${y.toFixed(1)}" x2="${breed - marge.rechts}" y2="${y.toFixed(1)}"/>`;
+    if (opties.top) svg += `<text x="${marge.links + 2}" y="${(y - 4).toFixed(1)}">${eenheid(Math.round(top * deel))}</text>`;
+  });
+  waarden.forEach((w, i) => {
+    const h = Math.max((grond - marge.boven) * (w / top), 1.5);
+    const x = marge.links + i * vak + vak * 0.19;
+    const b = vak * 0.62;
+    const y = grond - h;
+    const uit = opties.markeer !== undefined && i === opties.markeer;
+    svg += `<rect class="staafje staafgroei${uit ? " uit" : ""}" data-i="${i}" x="${x.toFixed(1)}" y="${y.toFixed(1)}"
+      width="${b.toFixed(1)}" height="${h.toFixed(1)}" rx="2.5" fill="${kleur}" opacity="${uit ? 1 : .5}"
+      style="animation-delay:${(i * 28)}ms"/>`;
+    if (tonen.has(i)) {
+      svg += `<text class="waarde" x="${(x + b / 2).toFixed(1)}" y="${(y - 7).toFixed(1)}" text-anchor="middle"
+        style="font-weight:${uit ? 600 : 400}">${eenheid(w)}</text>`;
+    }
+    svg += `<text x="${(x + b / 2).toFixed(1)}" y="${hoog - 8}" text-anchor="middle">${labels[i]}</text>`;
+  });
+  svg += `<line x1="${marge.links}" y1="${grond}" x2="${breed - marge.rechts}" y2="${grond}" stroke="var(--line-2)" stroke-width="1"/>`;
+  waarden.forEach((w, i) => {
+    svg += `<rect class="vak" data-i="${i}" x="${(marge.links + i * vak).toFixed(1)}" y="0" width="${vak.toFixed(1)}" height="${hoog}"/>`;
+  });
+  svg += `</svg><div class="tip" id="${doel.id}-tip"></div>`;
+  doel.innerHTML = svg;
+
+  const tip = doel.querySelector(".tip");
+  const svgEl = doel.querySelector("svg");
+  doel.querySelectorAll(".vak").forEach(vakje => {
+    const i = +vakje.dataset.i;
+    const toon = () => {
+      doel.classList.add("hoveren");
+      doel.querySelectorAll(".staafje").forEach(s => s.classList.toggle("aan", +s.dataset.i === i));
+      const doos = svgEl.getBoundingClientRect(), eigen = doel.getBoundingClientRect();
+      const schaal = doos.width / breed;
+      tip.innerHTML = `${labels[i]} <b>${eenheid(waarden[i])}</b>`;
+      tip.style.left = ((marge.links + i * vak + vak / 2) * schaal) + "px";
+      tip.style.top = (doos.top - eigen.top + (grond - (grond - marge.boven) * (waarden[i] / top))) + "px";
+      tip.classList.add("aan");
+    };
+    vakje.addEventListener("mouseenter", toon);
+    vakje.addEventListener("touchstart", toon, {passive: true});
+  });
+  const weg = () => { doel.classList.remove("hoveren"); tip.classList.remove("aan"); };
+  doel.addEventListener("mouseleave", weg);
+  doel.addEventListener("touchend", weg);
+}
+
+/* Halters: planning tegenover rekening, per jaar één regel.
+ *
+ * Drie staven naast elkaar lieten je de VERHOUDING raden: je zag drie hoogtes en
+ * moest zelf uitrekenen hoeveel er van de planning terechtkwam. Een halter zet
+ * planning en rekening op één lijn, zodat het gat de boodschap is, en zet het
+ * percentage er als tekst bij. De open bol is de planning (dezelfde omlijnde vorm
+ * die elders in dit dashboard "referentie" betekent), de volle bol de rekening.
+ * Het streepje op de lijn is de bijsturing, en het staat er alleen als de raad
+ * het krediet in de loop van het jaar veranderde.
+ */
+function halters(doel, rijen, opties = {}) {
+  const breed = Math.max(300, Math.round(doel.clientWidth || 720));
+  const smal = breed < 480;
+  const regel = opties.regelhoogte || 38;
+  const marge = {links: smal ? 44 : 54, rechts: smal ? 50 : 128, boven: 16, onder: 24};
+  const hoog = marge.boven + rijen.length * regel + marge.onder;
+  const top = Math.max(1, ...rijen.flatMap(r => [r.planning, r.eind, r.rekening]));
+  const x = w => marge.links + (breed - marge.links - marge.rechts) * (Math.max(w, 0) / top);
+  let svg = `<svg width="${breed}" height="${hoog}" viewBox="0 0 ${breed} ${hoog}" role="img"
+    aria-label="${opties.aria || "Per jaar de planning en wat er werkelijk binnenkwam"}">`;
+  /* twee hairlines als maatlat, verder niets: het gat tussen de bollen is het verhaal */
+  [0.5, 1].forEach(deel => {
+    const xx = x(top * deel);
+    svg += `<line class="raster" x1="${xx.toFixed(1)}" y1="${marge.boven - 6}" x2="${xx.toFixed(1)}" y2="${hoog - marge.onder + 2}"/>`;
+    svg += `<text x="${xx.toFixed(1)}" y="${hoog - 8}" text-anchor="middle">${euroKort(Math.round(top * deel))}</text>`;
+  });
+  rijen.forEach((r, i) => {
+    const y = marge.boven + i * regel + regel / 2;
+    const xp = x(r.planning), xr = x(r.rekening);
+    const deel = r.planning ? r.rekening / r.planning : null;
+    const percent = deel === null ? "" : Math.round(deel * 100) + "%";
+    svg += `<text class="halter-jaar" x="6" y="${(y + 4).toFixed(1)}">${r.label}</text>`;
+    /* De lijn spant over alle drie de waarden. Anders zweeft het streepje van de
+       eindkredieten los naast de halter zodra de raad hoger bijstuurde dan wat er
+       uiteindelijk binnenkwam, zoals in 2023. */
+    const heeftEind = r.eind && Math.abs(r.eind - r.planning) > 0.5;
+    const punten = heeftEind ? [xp, xr, x(r.eind)] : [xp, xr];
+    svg += `<line x1="${Math.min(...punten).toFixed(1)}" y1="${y.toFixed(1)}" x2="${Math.max(...punten).toFixed(1)}" y2="${y.toFixed(1)}"
+      stroke="var(--line-2)" stroke-width="3" stroke-linecap="round"/>`;
+    if (heeftEind) {
+      svg += `<line x1="${x(r.eind).toFixed(1)}" y1="${(y - 6).toFixed(1)}" x2="${x(r.eind).toFixed(1)}" y2="${(y + 6).toFixed(1)}"
+        stroke="var(--ink-dim)" stroke-width="1.5"><title>${r.label} eindkrediet: ${euro(r.eind)}</title></line>`;
+    }
+    svg += `<circle cx="${xp.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="1.5">
+      <title>${r.label} planning: ${euro(r.planning)}</title></circle>`;
+    svg += `<circle cx="${xr.toFixed(1)}" cy="${y.toFixed(1)}" r="6.5" fill="var(--app)" stroke="var(--paper-kaart)" stroke-width="2">
+      <title>${r.label} rekening: ${euro(r.rekening)}</title></circle>`;
+    /* het getal dat de vraag beantwoordt: hoeveel van de planning kwam er binnen */
+    /* Op een smal scherm zou "van de planning" bijna de halve breedte opeten. Daar
+       blijft alleen het percentage staan; de uitleg staat al boven de grafiek. */
+    svg += `<text class="halter-deel" x="${breed - marge.rechts + (smal ? 6 : 12)}" y="${(y + 4).toFixed(1)}">${percent}${
+      smal ? "" : `<tspan class="halter-noot" dx="5">van de planning</tspan>`}</text>`;
+  });
+  doel.innerHTML = svg + "</svg>";
+}
+
+/* Samenstelling: waaruit het jaarbedrag van de actie bestaat, op één schaal.
+ *
+ * De actie is één begrotingslijn met álle ontvangsten van de handhavingsdienst.
+ * De stad splitst die lijn nergens uit per soort, dus wat we kunnen benoemen komt
+ * uit de rekeningnummers in de jaarrekening. Wat overblijft krijgt een eigen,
+ * grijs segment: liever een eerlijk gat dan een taart die toevallig rond raakt.
+ */
+function samenstelling(doel, rijen, opties = {}) {
+  const breed = Math.max(300, Math.round(doel.clientWidth || 720));
+  const smal = breed < 480;
+  const regel = opties.regelhoogte || 34;
+  const marge = {links: smal ? 44 : 54, rechts: smal ? 66 : 96, boven: 10, onder: 24};
+  const hoog = marge.boven + rijen.length * regel + marge.onder;
+  const top = Math.max(1, ...rijen.map(r => r.delen.reduce((s, d) => s + Math.max(d.waarde, 0), 0)));
+  const vol = breed - marge.links - marge.rechts;
+  let svg = `<svg width="${breed}" height="${hoog}" viewBox="0 0 ${breed} ${hoog}" role="img"
+    aria-label="Per jaar waaruit de ontvangsten van de actie bestaan">`;
+  [0.5, 1].forEach(deel => {
+    const xx = marge.links + vol * deel;
+    svg += `<line class="raster" x1="${xx.toFixed(1)}" y1="${marge.boven - 4}" x2="${xx.toFixed(1)}" y2="${hoog - marge.onder + 2}"/>`;
+    svg += `<text x="${xx.toFixed(1)}" y="${hoog - 8}" text-anchor="middle">${euroKort(Math.round(top * deel))}</text>`;
+  });
+  rijen.forEach((r, i) => {
+    const y = marge.boven + i * regel + 6;
+    const h = regel - 14;
+    let x = marge.links;
+    const totaal = r.delen.reduce((s, d) => s + Math.max(d.waarde, 0), 0);
+    svg += `<text class="halter-jaar" x="6" y="${(y + h - 3).toFixed(1)}">${r.label}</text>`;
+    r.delen.forEach((d, k) => {
+      const w = vol * (Math.max(d.waarde, 0) / top);
+      if (w <= 0) return;
+      /* 2px papier tussen de segmenten in plaats van een randlijn eromheen */
+      const zichtbaar = Math.max(w - 2, 0.5);
+      svg += `<rect class="staafgroei" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${zichtbaar.toFixed(1)}" height="${h}"
+        rx="2.5" fill="${d.kleur}" style="animation-delay:${(i * 40 + k * 12)}ms">
+        <title>${r.label} ${d.naam}: ${euro(d.waarde)} (${procent(Math.round(1000 * d.waarde / (totaal || 1)) / 10)})</title></rect>`;
+      x += w;
+    });
+    svg += `<text class="halter-deel" x="${marge.links + vol + (smal ? 6 : 12)}" y="${(y + h - 3).toFixed(1)}">${euroKort(totaal)}</text>`;
+  });
+  doel.innerHTML = svg + "</svg>";
+}
+
+/* Duostaven: planning naast rekening */
+function duostaven(doel, rijen, opties = {}) {
+  const breed = Math.max(360, Math.round(doel.clientWidth || 720));
+  const hoog = opties.hoog || 240;
+  /* standaard staan hier euro's, maar dezelfde grafiek dient ook voor aantallen */
+  const kort = opties.eenheid || euroKort;
+  const vol = opties.eenheid || euro;
+  const marge = {links: 6, rechts: 6, boven: 20, onder: 26};
+  let top = 1;
+  rijen.forEach(r => r.reeksen.forEach(s => { if (s.waarde > top) top = s.waarde; }));
+  const vak = (breed - marge.links - marge.rechts) / rijen.length;
+  const grond = hoog - marge.onder;
+  let svg = `<svg width="${breed}" height="${hoog}" viewBox="0 0 ${breed} ${hoog}" role="img">`;
+  [0.5, 1].forEach(deel => {
+    const y = grond - (grond - marge.boven) * deel;
+    svg += `<line class="raster" x1="${marge.links}" y1="${y.toFixed(1)}" x2="${breed - marge.rechts}" y2="${y.toFixed(1)}"/>`;
+    /* een maatstreepje links, zodat de hoogte van een staaf iets betekent */
+    svg += `<text x="${marge.links + 2}" y="${(y - 5).toFixed(1)}">${kort(Math.round(top * deel))}</text>`;
+  });
+  rijen.forEach((rij, i) => {
+    const n = rij.reeksen.length;
+    const b = (vak * 0.7) / n;
+    rij.reeksen.forEach((s, k) => {
+      const h = Math.max((grond - marge.boven) * (Math.max(s.waarde, 0) / top), s.waarde ? 1.5 : 0);
+      const x = marge.links + i * vak + vak * 0.15 + k * b;
+      svg += `<rect class="staafgroei" x="${x.toFixed(1)}" y="${(grond - h).toFixed(1)}" width="${(b - 2.5).toFixed(1)}"
+        height="${h.toFixed(1)}" rx="2.5" ${s.kleur === "omlijnd" ? 'fill="var(--paper-2)" stroke="var(--ink)" stroke-width="1.5"' : `fill="${s.kleur}"`} style="animation-delay:${(i * 40 + k * 12)}ms">
+        <title>${rij.label} ${s.naam}: ${vol(s.waarde)}</title></rect>`;
+    });
+    svg += `<text x="${(marge.links + i * vak + vak / 2).toFixed(1)}" y="${hoog - 8}" text-anchor="middle">${rij.label}</text>`;
+  });
+  svg += `<line x1="${marge.links}" y1="${grond}" x2="${breed - marge.rechts}" y2="${grond}" stroke="var(--line-2)" stroke-width="1"/></svg>`;
+  doel.innerHTML = svg;
+}
+
+function vonk(waarden, opties = {}) {
+  /* klein lijntje in een tegel: de reeks over de jaren heen */
+  const breed = 74, hoog = 24;
+  const top = Math.max(...waarden, 1), laag = Math.min(...waarden, 0);
+  const punten = waarden.map((w, i) => {
+    const x = (breed / Math.max(waarden.length - 1, 1)) * i;
+    const y = hoog - (hoog - 3) * ((w - laag) / Math.max(top - laag, 1)) - 1.5;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const laatste = punten.split(" ").pop().split(",");
+  return `<svg class="vonk" width="${breed}" height="${hoog}" viewBox="0 0 ${breed} ${hoog}" aria-hidden="true">
+    <polyline points="${punten}" fill="none" stroke="var(--pink)" stroke-width="1.6" stroke-linejoin="round" opacity="${opties.opacity || .55}"/>
+    <circle cx="${laatste[0]}" cy="${laatste[1]}" r="2.4" fill="var(--pink-text)"/></svg>`;
+}
+
+function verdeling(doel, delen) {
+  const totaal = delen.reduce((s, d) => s + d.waarde, 0) || 1;
+  const balk = el("div", "verdeling");
+  balk.setAttribute("role", "img");
+  balk.setAttribute("aria-label", delen.map(d => `${d.naam} ${getal(d.waarde)}`).join(", "));
+  delen.forEach(d => {
+    const stuk = el("span");
+    const aandeel = 100 * d.waarde / totaal;
+    stuk.style.background = d.kleur;
+    stuk.style.width = aandeel + "%";
+    stuk.title = `${d.naam}: ${getal(d.waarde)} (${procent(Math.round(aandeel * 10) / 10)})`;
+    /* het percentage in het segment zelf zodra het daar leesbaar in past */
+    if (aandeel >= 7) { stuk.textContent = procent(Math.round(aandeel)); stuk.style.color = d.tekst || "#fff"; }
+    balk.appendChild(stuk);
+  });
+  const legende = el("div", "legende");
+  delen.forEach(d => {
+    const span = el("span");
+    const i = el("i"); i.style.background = d.kleur;
+    span.appendChild(i);
+    span.appendChild(document.createTextNode(d.naam + " "));
+    span.appendChild(el("b", null, getal(d.waarde)));
+    span.appendChild(el("span", null, " " + procent(Math.round(1000 * d.waarde / totaal) / 10)))
+      .style.color = "var(--ink-dim)";
+    legende.appendChild(span);
+  });
+  doel.innerHTML = "";
+  doel.appendChild(balk);
+  doel.appendChild(legende);
+}
+
+/* Onthoudt per tegel welk cijfer er stond, zodat een jaarwissel van het oude
+   naar het nieuwe getal telt in plaats van te knipperen. */
+const vorigeWaarden = {};
+
+function telNaar(node, sleutel, naar, opmaak) {
+  const van = vorigeWaarden[sleutel];
+  vorigeWaarden[sleutel] = naar;
+  node.textContent = opmaak(naar);        /* de eindstand staat er meteen */
+  if (van === undefined || van === naar) return;
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const begin = performance.now(), duur = 460;
+  const stap = nu => {
+    const deel = Math.min((nu - begin) / duur, 1);
+    const zacht = 1 - Math.pow(1 - deel, 3);
+    node.textContent = opmaak(Math.round(van + (naar - van) * zacht));
+    if (deel < 1) requestAnimationFrame(stap); else node.textContent = opmaak(naar);
+  };
+  requestAnimationFrame(stap);
+}
+
+let tegelsGetoond = false;   /* de opkomst-animatie speelt één keer, niet bij elke hertekening */
+
+function tegel(kop, waarde, noot, extra = {}) {
+  const doos = el(extra.sleutel ? "button" : "div", "tegel" + (tegelsGetoond ? "" : " intro"));
+  if (extra.sleutel) {
+    doos.type = "button";
+    doos.dataset.sleutel = extra.sleutel;
+    doos.setAttribute("aria-expanded", openTegel === extra.sleutel ? "true" : "false");
+    doos.addEventListener("click", () => {
+      openTegel = openTegel === extra.sleutel ? null : extra.sleutel;
+      tekenOnderdeel("autoluw", "anpr");
+      if (openTegel) document.getElementById("tegel-uitleg").scrollIntoView({block: "nearest", behavior: "smooth"});
+    });
+  }
+  if (!tegelsGetoond) doos.style.animationDelay = (extra.volgorde || 0) * 45 + "ms";
+  doos.appendChild(el("div", "k", kop));
+  const cijfer = el("div", "v" + (extra.tekstwaarde ? " tekst" : ""));
+  if (extra.telSleutel !== undefined && typeof extra.telWaarde === "number") {
+    telNaar(cijfer, extra.telSleutel, extra.telWaarde, extra.opmaak || getal);
+  } else {
+    cijfer.textContent = waarde;
+  }
+  doos.appendChild(cijfer);
+  if (noot) {
+    const n = el("div", "n");
+    n.innerHTML = noot;
+    doos.appendChild(n);
+  }
+  if (extra.vonk) doos.insertAdjacentHTML("beforeend", extra.vonk);
+  return doos;
+}
+
+/* ================================================================
+   De kaart
+   ================================================================ */
+const kaart = {z: 15, lon: 4.4800, lat: 51.0270, breed: 0, hoog: 0, actief: null, tegelmap: new Map(), gepast: false};
+
+const naarWereld = (lon, lat, z) => {
+  const n = 256 * Math.pow(2, z);
+  const s = Math.sin(lat * Math.PI / 180);
+  return [(lon + 180) / 360 * n, (0.5 - Math.log((1 + s) / (1 - s)) / (4 * Math.PI)) * n];
+};
+const naarGraden = (x, y, z) => {
+  const n = 256 * Math.pow(2, z);
+  return [x / n * 360 - 180, Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n))) * 180 / Math.PI];
+};
+
+function tekenKaart() {
+  const doos = document.getElementById("kaart");
+  kaart.breed = doos.clientWidth; kaart.hoog = doos.clientHeight;
+  if (!kaart.breed) return;
+  const [cx, cy] = naarWereld(kaart.lon, kaart.lat, kaart.z);
+  const links = cx - kaart.breed / 2, boven = cy - kaart.hoog / 2;
+  const laag = document.getElementById("tegels");
+  const max = Math.pow(2, kaart.z);
+  const nodig = new Set();
+
+  for (let tx = Math.floor(links / 256); tx <= Math.floor((links + kaart.breed) / 256); tx++) {
+    for (let ty = Math.floor(boven / 256); ty <= Math.floor((boven + kaart.hoog) / 256); ty++) {
+      if (ty < 0 || ty >= max) continue;
+      const wx = ((tx % max) + max) % max;
+      const sleutel = `${kaart.z}/${wx}/${ty}`;
+      nodig.add(sleutel);
+      let img = kaart.tegelmap.get(sleutel);
+      if (!img) {
+        img = new Image();
+        img.alt = "";
+        /* Beleefd tegenover de tegelserver van OpenStreetMap: enkel wat in beeld
+           komt, niets vooruit inladen, en de browser mag cachen. Zie de
+           tegelgebruiksregels; voor publicatie hoort hier een eigen of betaalde
+           tegelbron. */
+        img.decoding = "async";
+        img.referrerPolicy = "strict-origin-when-cross-origin";
+        const bron = `https://tile.openstreetmap.org/${kaart.z}/${wx}/${ty}.png`;
+        /* de tegelserver laat er af en toe eentje vallen; één rustige herkansing
+           voorkomt een wit gat in de kaart */
+        img.addEventListener("error", () => {
+          if (img.dataset.herkans) return;
+          img.dataset.herkans = "1";
+          setTimeout(() => { img.src = bron + "?h=1"; }, 700);
+        });
+        img.src = bron;
+        laag.appendChild(img);
+        kaart.tegelmap.set(sleutel, img);
+      }
+      img.style.left = (tx * 256 - links) + "px";
+      img.style.top = (ty * 256 - boven) + "px";
+    }
+  }
+  for (const [sleutel, img] of kaart.tegelmap) {
+    if (!nodig.has(sleutel)) { img.remove(); kaart.tegelmap.delete(sleutel); }
+  }
+  tekenMerken(links, boven);
+}
+
+function cameraTelling(naam, jaar) {
+  const blok = D.gasam.jaren[jaar];
+  const per = blok && blok.autoluw && blok.autoluw.per_camera;
+  return per && per[naam] !== undefined ? per[naam] : null;
+}
+
+function tekenMerken(links, boven) {
+  /* De stippen blijven bestaan tussen twee tekeningen: ze krijgen alleen een
+     nieuwe plek en maat. Zo kan de maat vloeiend overgaan als de tijdbalk loopt,
+     in plaats van dat elke stap een verse, springende stip oplevert. Alleen de
+     naamlabels en het kaartje worden elke keer opnieuw gezet. */
+  const laag = document.getElementById("merken");
+  laag.querySelectorAll(".stipnaam, .merkkaart").forEach(x => x.remove());
+  kaart.stippen = kaart.stippen || {};
+  const top = schaalTop();
+  const stap = huidigeStap();
+  Object.entries(D.cameras.cameras).forEach(([naam, rij]) => {
+    if (!rij.positie) return;
+    let stip = kaart.stippen[naam];
+    if (!stip) {
+      stip = el("div", "merkstip");
+      stip.addEventListener("click", e => { e.stopPropagation(); kies(kaart.actief === naam ? null : naam); });
+      stip.addEventListener("mouseenter", () => wijsRij(naam));
+      stip.addEventListener("mouseleave", () => wijsRij(null));
+      laag.appendChild(stip);
+      kaart.stippen[naam] = stip;
+    }
+    const [x, y] = naarWereld(rij.positie[0], rij.positie[1], kaart.z);
+    const px = x - links, py = y - boven;
+    const inBeeld = !(px < -80 || py < -80 || px > kaart.breed + 80 || py > kaart.hoog + 80);
+    stip.style.display = inBeeld ? "" : "none";
+    if (!inBeeld) return;
+    const n = waardeVoor(naam, stap);
+    /* De OPPERVLAKTE van de bol volgt het aantal, dus de straal de wortel ervan.
+       Een vaste sokkel bij de straal (zoals 7 + ...) blaast kleine camera's op:
+       141 vaststellingen kreeg zo bijna evenveel vlak als 784. */
+    /* Herijkt 27/08/2026 bij de komst van 2022-2024: de top van de vaste schaal
+       verdrievoudigde (7.289 naar 23.997), dus met R=30 klemde een derde van de
+       camera's op de zichtbaarheidsvloer en oogden 24 en 702 vaststellingen
+       even groot. R=40 met vloer 2,5 houdt de vloer voor de echte minusculen. */
+    const straal = n ? Math.max(2.5, 40 * Math.sqrt(n / top)) : 5;
+    stip.className = "merkstip" + (n ? "" : " leeg")
+      + (kaart.actief === naam ? " actief" : (kaart.actief ? " gedimd" : ""))
+      + (kaart.aangewezen === naam ? " wijst" : "");
+    stip.style.left = px + "px"; stip.style.top = py + "px";
+    stip.style.width = stip.style.height = (straal * 2) + "px";
+    stip.title = naam + " (" + stap.label + "): "
+      + (n === null ? "geen camera" : getal(n) + " vaststellingen");
+
+    if (kaart.z >= 16 && n) {
+      const naampje = el("div", "stipnaam", naam);
+      naampje.style.left = px + "px";
+      naampje.style.top = (py + straal + 3) + "px";
+      laag.appendChild(naampje);
+    }
+  });
+
+  /* Het kaartje hoort niet in de lus: staat de gekozen camera buiten beeld, dan
+     wordt haar stip niet getekend en zou het kaartje meteen verdwijnen. */
+  if (kaart.actief) {
+    const rij = D.cameras.cameras[kaart.actief];
+    let inBeeld = false;
+    if (rij && rij.positie) {
+      const [x, y] = naarWereld(rij.positie[0], rij.positie[1], kaart.z);
+      inBeeld = x - links > 0 && y - boven > 0 && x - links < kaart.breed && y - boven < kaart.hoog;
+    }
+    plaatsMerkkaart(laag.appendChild(merkkaart(kaart.actief, rij || {}, inBeeld)));
+  }
+}
+
+/* Muis op een stip: de bijhorende regel in de lijst licht op, en omgekeerd. */
+function wijsRij(naam) {
+  document.querySelectorAll("#cameralijst li.wijst").forEach(x => x.classList.remove("wijst"));
+  if (!naam) return;
+  const rij = document.querySelector('#cameralijst li[data-naam="' + CSS.escape(naam) + '"]');
+  if (rij) rij.classList.add("wijst");
+}
+
+function merkkaart(naam, rij, inBeeld) {
+  /* Compact kaartje: wat deze camera nú telt, met de reeks over de jaren. Het
+     hele verhaal staat onder de kaart, dus dit hoeft niet groot te zijn. */
+  const doos = el("div", "merkkaart");
+  const greep = el("div", "greep");
+  greep.appendChild(el("span", "punten"));
+  greep.appendChild(el("h4", null, naam));
+  const sluit = el("button", "sluit", "×");
+  sluit.setAttribute("aria-label", "Sluiten");
+  sluit.addEventListener("click", e => { e.stopPropagation(); kies(null); });
+  greep.appendChild(sluit);
+  doos.appendChild(greep);
+
+  const inhoud = el("div", "inhoud");
+  const stap = huidigeStap();
+  const nu = waardeVoor(naam, stap);
+  inhoud.appendChild(el("div", "nu-waarde", nu === null ? "geen camera" : getal(nu)));
+  inhoud.appendChild(el("div", "nu-noot", stap.label + (nu === null ? "" : ", vaststellingen")));
+
+  const top = Math.max(...jaren.map(j => cameraTelling(naam, j) || 0), 1);
+  const reeks = el("div", "reeks");
+  /* antichronologisch, zoals de heatmap: het recentste jaar bovenaan */
+  [...jaren].reverse().forEach(j => {
+    const n = cameraTelling(naam, j);
+    const isNu = j === gekozen;
+    reeks.appendChild(el("span", isNu ? "nu" : null, j));
+    const staafhouder = el("span", isNu ? "nu" : null);
+    const staaf = el("i");
+    staaf.style.width = Math.max(2, 100 * (n || 0) / top) + "%";
+    staafhouder.appendChild(staaf);
+    reeks.appendChild(staafhouder);
+    reeks.appendChild(el("span", isNu ? "nu" : null, n === null ? "geen" : getal(n)));
+  });
+  inhoud.appendChild(reeks);
+  if (inBeeld === false && rij.positie) {
+    const knop = el("button", "naartoe", "toon op de kaart");
+    knop.type = "button";
+    knop.addEventListener("click", e => {
+      e.stopPropagation();
+      kaart.lon = rij.positie[0];
+      kaart.lat = rij.positie[1];
+      tekenKaart();
+    });
+    inhoud.appendChild(knop);
+  }
+  inhoud.appendChild(el("div", "bronregel", rij.positie_bron || ""));
+  doos.appendChild(inhoud);
+
+  doos.addEventListener("click", e => e.stopPropagation());
+  sleepbaar(doos, greep);
+  return doos;
+}
+
+/* Het kaartje onthoudt waar je het neerzet, zodat het bij elke hertekening op
+   dezelfde plek blijft staan. */
+function sleepbaar(doos, greep) {
+  let bezig = false, startX = 0, startY = 0, beginLinks = 0, beginBoven = 0;
+  greep.addEventListener("pointerdown", e => {
+    if (e.target.closest(".sluit")) return;
+    bezig = true;
+    startX = e.clientX; startY = e.clientY;
+    beginLinks = parseFloat(doos.style.left) || 0;
+    beginBoven = parseFloat(doos.style.top) || 0;
+    greep.setPointerCapture(e.pointerId);
+    e.stopPropagation();
+  });
+  greep.addEventListener("pointermove", e => {
+    if (!bezig) return;
+    e.stopPropagation();
+    const klem = (waarde, min, max) => Math.max(min, Math.min(max, waarde));
+    const links = klem(beginLinks + (e.clientX - startX), 8, Math.max(8, kaart.breed - doos.offsetWidth - 8));
+    const boven = klem(beginBoven + (e.clientY - startY), 8, Math.max(8, kaart.hoog - doos.offsetHeight - 8));
+    doos.style.left = links + "px";
+    doos.style.top = boven + "px";
+    kaart.kaartjePlek = [links, boven];
+  });
+  const stop = e => { if (bezig) { bezig = false; e.stopPropagation(); } };
+  greep.addEventListener("pointerup", stop);
+  greep.addEventListener("pointercancel", stop);
+}
+
+function plaatsMerkkaart(doos) {
+  /* Standaard linksonder, boven de kaartknoppen: daar dekt het niets af van de
+     binnenstad. Heb je het zelf verschoven, dan blijft het staan waar je het zette. */
+  const hoogte = doos.offsetHeight || 190;
+  const plek = kaart.kaartjePlek || [58, Math.max(8, kaart.hoog - hoogte - 14)];
+  doos.style.left = Math.min(plek[0], Math.max(8, kaart.breed - doos.offsetWidth - 8)) + "px";
+  doos.style.top = Math.min(plek[1], Math.max(8, kaart.hoog - hoogte - 8)) + "px";
+  doos.style.visibility = "visible";
+}
+
+function pasKaartOpMerken() {
+  const actieve = Object.entries(D.cameras.cameras)
+    .filter(([naam, rij]) => rij.positie && cameraTelling(naam, gekozen))
+    .map(([, rij]) => rij.positie);
+  const punten = actieve.length >= 3
+    ? actieve
+    : Object.values(D.cameras.cameras).filter(r => r.positie).map(r => r.positie);
+  if (!punten.length) return;
+  const doos = document.getElementById("kaart");
+  /* Zolang het kaartvak nog geen afmeting heeft (verborgen tabblad, venster dat
+     nog moet openen) valt er niets te passen. Een paar keer opnieuw proberen, en
+     verder rekenen we op de waarnemer in start(): die tekent zodra het vak er
+     staat. Eindeloos blijven proberen zou een timer laten rondtollen. */
+  if (doos.clientWidth < 60 || doos.clientHeight < 60) {
+    if (pasKaartOpMerken.pogingen === undefined) pasKaartOpMerken.pogingen = 0;
+    if (pasKaartOpMerken.pogingen++ < 20) setTimeout(pasKaartOpMerken, 80);
+    return;
+  }
+  pasKaartOpMerken.pogingen = 0;
+
+  /* Het beeld volgt de dichte kern, niet de uitschieters: we passen op het
+     middelste deel van de punten. Wie de verre camera's wil zien, zoomt uit. */
+  const percentiel = (waarden, deel) => {
+    const gesorteerd = [...waarden].sort((a, b) => a - b);
+    return gesorteerd[Math.min(gesorteerd.length - 1, Math.max(0, Math.round(deel * (gesorteerd.length - 1))))];
+  };
+  const lons = punten.map(p => p[0]), lats = punten.map(p => p[1]);
+  const lonMin = percentiel(lons, 0.1), lonMax = percentiel(lons, 0.9);
+  const latMin = percentiel(lats, 0.1), latMax = percentiel(lats, 0.9);
+  kaart.lon = (lonMin + lonMax) / 2;
+  kaart.lat = (latMin + latMax) / 2;
+  kaart.z = 12;
+  const ruimte = doos.clientWidth > 1000 ? 320 : 120;   /* het zwevende paneel dekt rechts een stuk af */
+  for (let z = 17; z >= 10; z--) {
+    const hoeken = [[lonMin, latMin], [lonMax, latMax]].map(p => naarWereld(p[0], p[1], z));
+    if (Math.abs(hoeken[1][0] - hoeken[0][0]) < doos.clientWidth - ruimte &&
+        Math.abs(hoeken[1][1] - hoeken[0][1]) < doos.clientHeight - 110) { kaart.z = z; break; }
+  }
+  kaart.gepast = true;
+  tekenKaart();
+}
+
+function kaartBediening() {
+  const doos = document.getElementById("kaart");
+  let sleept = false, bewogen = false, vorigeX = 0, vorigeY = 0;
+  doos.addEventListener("pointerdown", e => {
+    /* Ook de stips uitsluiten: setPointerCapture op de doos zou de click naar
+       de doos retargeten, waardoor een echte muisklik op een bol de stip-handler
+       nooit bereikte (en de doos-click de selectie zelfs loste). Een marker is
+       om te klikken; slepen begint op de kaart zelf. */
+    if (e.target.closest(".merkstip") || e.target.closest(".merkkaart") || e.target.closest(".kaartknoppen")) return;
+    sleept = true; bewogen = false; vorigeX = e.clientX; vorigeY = e.clientY;
+    doos.classList.add("sleept"); doos.setPointerCapture(e.pointerId);
+  });
+  doos.addEventListener("pointermove", e => {
+    if (!sleept) return;
+    if (Math.abs(e.clientX - vorigeX) + Math.abs(e.clientY - vorigeY) > 2) bewogen = true;
+    const [cx, cy] = naarWereld(kaart.lon, kaart.lat, kaart.z);
+    const [lon, lat] = naarGraden(cx - (e.clientX - vorigeX), cy - (e.clientY - vorigeY), kaart.z);
+    kaart.lon = lon; kaart.lat = lat;
+    vorigeX = e.clientX; vorigeY = e.clientY;
+    tekenKaart();
+  });
+  const stop = () => { sleept = false; doos.classList.remove("sleept"); };
+  doos.addEventListener("pointerup", stop);
+  doos.addEventListener("pointercancel", stop);
+  doos.addEventListener("click", e => {
+    if (bewogen || e.target.closest(".merkstip") || e.target.closest(".merkkaart") || e.target.closest(".kaartknoppen")) return;
+    if (kaart.actief) kies(null);
+  });
+  doos.addEventListener("wheel", e => { e.preventDefault(); zoom(e.deltaY < 0 ? 1 : -1); }, {passive: false});
+  doos.addEventListener("dblclick", () => zoom(1));
+  document.getElementById("zoomin").addEventListener("click", () => zoom(1));
+  document.getElementById("zoomuit").addEventListener("click", () => zoom(-1));
+  document.getElementById("zoompas").addEventListener("click", pasKaartOpMerken);
+  window.addEventListener("resize", tekenKaart);
+}
+function zoom(stap) {
+  kaart.z = Math.min(18, Math.max(11, kaart.z + stap));
+  tekenKaart();
+}
+
+/* Eén plaats waar de gekozen camera verandert, zodat kaart en lijst nooit
+   uit elkaar lopen. */
+function kies(naam) {
+  /* Kiezen verplaatst de kaart niet. Een sprong bij elke klik maakt het beeld
+     onrustig en je verliest waar je was; wil je naar de camera toe, dan doe je
+     dat zelf met de knop in het kaartje. */
+  const anders = kaart.actief !== naam;
+  kaart.actief = naam;
+  if (naam) {
+    if (anders) heatBron = heeftMaanden(naam) ? "camera" : "alle";   /* de heatmap volgt de keuze, als er maanden zijn */
+  } else {
+    heatBron = "alle";                      /* uitgezet: alles komt weer terug */
+  }
+  tekenKaart();
+  tekenCameralijst();
+  tekenDetail();
+  tekenHeatmap();
+  tekenOnderdeel("autoluw", "anpr");   /* een open tegelgrafiek volgt de keuze */
+  /* Het detailblok staat onder de kaart: bij een nieuwe keuze hoort het in
+     beeld te komen, anders lijkt de klik niets te doen. 'nearest' beweegt zo
+     min mogelijk, dus de kaart blijft zoveel mogelijk staan. */
+  if (naam && anders) {
+    const detail = document.getElementById("camera-detail");
+    if (detail && !detail.hidden) {
+      const r = detail.getBoundingClientRect();
+      if (r.top > innerHeight - 160 || r.bottom < 120) detail.scrollIntoView({block: "nearest", behavior: "smooth"});
+    }
+  }
+}
+
+/* ================================================================
+   Blokken
+   ================================================================ */
+let sortering = "aantal";
+
+function cameraRijen() {
+  const rijen = Object.keys(D.cameras.cameras).map(naam => ({naam, n: waardeNu(naam)}));
+  /* 2015 en 2016 tellen vaststellingen onder "onbekend" (niet aan een camera
+     toegewezen in het verslag): die horen in de lijst, anders telt de lijst
+     zichtbaar niet op tot het jaartotaal. Geen stip, geen keuze. */
+  const blokNu = D.gasam.jaren[gekozen] && D.gasam.jaren[gekozen].autoluw;
+  if (blokNu && blokNu.per_camera && blokNu.per_camera.onbekend) rijen.push({naam: "onbekend", n: blokNu.per_camera.onbekend});
+  if (sortering === "naam") rijen.sort((a, b) => a.naam.localeCompare(b.naam));
+  else rijen.sort((a, b) => (b.n || -1) - (a.n || -1) || a.naam.localeCompare(b.naam));
+  return rijen;
+}
+
+function tekenCameralijst() {
+  const paneel = document.getElementById("kaartpaneel");
+  const uitgeklapt = paneel.classList.contains("uit");
+  const lijst = document.getElementById("cameralijst");
+  lijst.innerHTML = "";
+  lijst.classList.toggle("ranglijst", uitgeklapt);
+
+  const rijen = cameraRijen();
+  const top = Math.max(...rijen.map(r => r.n || 0), 1);
+  const totaal = rijen.reduce((som, r) => som + (r.n || 0), 0);
+  const vorigJaar = jaren[jaren.indexOf(gekozen) - 1];
+  const actief = rijen.filter(r => r.n).length;
+
+  /* Uitgeklapt wordt het een ranglijst: alle camera's onder elkaar, elke balk
+     vanaf dezelfde lijn en op dezelfde schaal. Naast elkaar in kolommen kun je
+     twee balken niet vergelijken, want ze beginnen dan op een andere plek. */
+  if (uitgeklapt) {
+    const kop = el("li", "ranglijstkop");
+    kop.appendChild(el("span", "naam", "camera"));
+    kop.appendChild(el("span", "vonkkop", "2015 tot 2021"));
+    const schaal = el("span", "schaalkop");
+    schaal.innerHTML = `<span>0</span><span>${getal(top)}</span>`;
+    kop.appendChild(schaal);
+    kop.appendChild(el("span", "n", huidigeStap().label));
+    lijst.appendChild(kop);
+  }
+
+  rijen.forEach(r => {
+    const li = el("li", (r.naam === "onbekend" ? "onbekend " : "") + (r.n ? "" : "uit ")
+      + (kaart.actief === r.naam ? "actief" : (kaart.actief ? "gedimd" : "")));
+    li.dataset.naam = r.naam;
+    li.appendChild(el("span", "naam", r.naam === "onbekend" ? "camera onbekend in het verslag" : r.naam));
+
+    if (uitgeklapt) {
+      const reeks = jaren.map(j => cameraTelling(r.naam, j) || 0);
+      const vonkvak = el("span", "vonkvak");
+      vonkvak.innerHTML = vonk(reeks, {opacity: .8});
+      li.appendChild(vonkvak);
+
+      const spoor = el("span", "spoor");
+      const staaf = el("span", "staaf");
+      staaf.style.width = (100 * (r.n || 0) / top) + "%";
+      spoor.appendChild(staaf);
+      li.appendChild(spoor);
+
+      const cijfer = el("span", "n", r.n === null ? "geen camera" : getal(r.n));
+      li.appendChild(cijfer);
+
+      if (r.n && modus === "jaar" && vorigJaar) {
+        const eerder = cameraTelling(r.naam, vorigJaar);
+        const chip = el("span", "delta " + (eerder === null ? "vlak" : (r.n > eerder ? "op" : r.n < eerder ? "neer" : "vlak")));
+        chip.textContent = eerder === null || eerder === 0
+          ? "nieuw"
+          : (r.n > eerder ? "↑" : r.n < eerder ? "↓" : "→") + " " + Math.abs(Math.round(100 * (r.n - eerder) / eerder)) + "%";
+        chip.title = "tegenover " + vorigJaar;
+        li.appendChild(chip);
+      } else {
+        li.appendChild(el("span"));
+      }
+      li.title = r.n && totaal ? procent(Math.round(1000 * r.n / totaal) / 10) + " van alle vaststellingen in " + huidigeStap().label : "";
+    } else {
+      li.appendChild(el("span", "n", r.n === null ? "geen camera" : getal(r.n)));
+      const staaf = el("span", "staaf");
+      staaf.style.width = (100 * (r.n || 0) / top) + "%";
+      li.appendChild(staaf);
+    }
+
+    if (r.naam !== "onbekend") {
+      li.addEventListener("click", () => kies(kaart.actief === r.naam ? null : r.naam));
+      /* met de muis over een regel licht de bijhorende stip op de kaart op */
+      li.addEventListener("mouseenter", () => wijsAan(r.naam));
+      li.addEventListener("mouseleave", () => wijsAan(null));
+    }
+    lijst.appendChild(li);
+  });
+
+  const stap = huidigeStap();
+  const onbekend = waardeVoor("onbekend", stap);
+  if (onbekend) {
+    const li = el("li", "uit");
+    li.style.cursor = "default";
+    li.appendChild(el("span", "naam", "niet aan een camera toegewezen"));
+    if (uitgeklapt) { li.appendChild(el("span")); li.appendChild(el("span")); }
+    li.appendChild(el("span", "n", getal(onbekend)));
+    if (uitgeklapt) li.appendChild(el("span"));
+    lijst.appendChild(li);
+  }
+  const voet = el("li", "voet");
+  voet.textContent = modus === "maand"
+    ? "Maandcijfers per camera bestaan voor 2015 tot en met 2018. Klik een camera voor haar maandverloop."
+    : "Klik een camera voor haar maandverloop over de jaren heen.";
+  lijst.appendChild(voet);
+
+  document.getElementById("cam-tel").textContent = actief + " actief";
+  document.getElementById("kaartchip").textContent = actief + " camera's actief, " + stap.label;
+  /* wie op een bol klikt, ziet de bijhorende straat ook in de lijst staan */
+  const actieveRij = lijst.querySelector("li.actief");
+  if (actieveRij) actieveRij.scrollIntoView({block: "nearest"});
+  const sorteerknop = document.getElementById("sorteerknop");
+  if (sorteerknop) {
+    sorteerknop.hidden = !uitgeklapt;
+    sorteerknop.textContent = sortering === "aantal" ? "op aantal" : "op naam";
+  }
+}
+
+/* De stip op de kaart die bij de aangewezen regel hoort. */
+function wijsAan(naam) {
+  kaart.aangewezen = naam;
+  document.querySelectorAll(".merkstip.wijst").forEach(x => x.classList.remove("wijst"));
+  if (!naam) return;
+  const stip = (kaart.stippen || {})[naam];
+  if (stip) stip.classList.add("wijst");
+}
+
+let openTegel = null;
+
+/* Wat er onder de tegels verschijnt hangt af van welke tegel je opendeed. Zo
+   staat er niet permanent een rij grafieken op de pagina waar je niets aan hebt,
+   en hoort elk cijfer bij zijn eigen uitleg. Is er een camera gekozen, dan gaat
+   de grafiek over die camera. */
+function tekenTegeluitleg(blok, reeks, afh, verweer, woon) {
+  const doel = document.getElementById("tegel-uitleg");
+  if (!openTegel) { doel.hidden = true; doel.innerHTML = ""; return; }
+  doel.hidden = false;
+
+  const camera = kaart.actief;
+  const cameraJaren = camera ? jaren.map(j => cameraTelling(camera, j) || 0) : null;
+  const cameraMaanden = camera ? (maandMatrix(gekozen) || {})[camera] : null;
+
+  const koppen = {
+    jaren: [camera ? "Vaststellingen per jaar: " + camera : "Vaststellingen per jaar",
+      camera ? "Enkel deze camera. Klik een staaf om naar dat jaar te springen; klik de camera los voor alle camera's samen."
+             : "Elk jaarverslag telt de vaststellingen van dat jaar. Klik een staaf om naar dat jaar te springen."],
+    maanden: [cameraMaanden ? "Per maand in " + gekozen + ": " + camera : "Per maand in " + gekozen,
+      cameraMaanden ? "Enkel deze camera." : "Alle camera's samen. De heatmap eronder zet alle jaren onder elkaar."],
+    afhandeling: ["Wat er met de dossiers gebeurde",
+      "Tegen een deel van de boetes wordt verweer ingediend; een deel daarvan wordt gegrond bevonden en de boete geschrapt."],
+    verweerreeks: ["Verweer en uitkomst per jaar", "Uit de tabellen die het jaarverslag van " + gekozen + " zelf publiceert."],
+    woonplaats: ["Woonplaats van de overtreders", "Zoals elk jaarverslag het zelf noteert."]
+  };
+  const kop = koppen[openTegel] || ["", ""];
+  doel.innerHTML = `<h2>${kop[0]}</h2>
+    <p class="duiding" style="margin:0 0 12px">${kop[1]}</p>
+    <div class="grafiek" id="uitleg-vak"></div>`;
+  const vak = document.getElementById("uitleg-vak");
+
+  if (openTegel === "jaren") {
+    staafgrafiek(vak, cameraJaren || reeks, jaren,
+      {markeer: jaren.indexOf(gekozen), hoog: 210, omschrijving: "vaststellingen per jaar"});
+    vak.querySelectorAll(".vak").forEach(v =>
+      v.addEventListener("click", () => zetStap(stapVanJaar(jaren[+v.dataset.i]))));
+    vak.style.cursor = "pointer";
+    return;
+  }
+  if (openTegel === "maanden") {
+    const maandreeks = cameraMaanden || blok.per_maand;
+    if (maandreeks) {
+      staafgrafiek(vak, maandreeks, MAANDEN, {
+        hoog: 210,
+        markeer: huidigeStap().maand === null ? undefined : huidigeStap().maand,
+        omschrijving: "vaststellingen per maand"
+      });
+      vak.querySelectorAll(".vak").forEach(v =>
+        v.addEventListener("click", () => springNaar(gekozen, +v.dataset.i)));
+      vak.style.cursor = "pointer";
+    } else {
+      vak.innerHTML = "<p>Geen maandcijfers in dit verslag.</p>";
+    }
+    return;
+  }
+  if (openTegel === "afhandeling") {
+    const namen = {initieel: "geen verweer", gunstig: "verweer gegrond", ongunstig: "verweer verworpen", sepot: "geseponeerd", beroep: "beroep bij de rechter"};
+    const delen = ["initieel", "gunstig", "ongunstig", "sepot", "beroep"]
+      .filter(k => afh[k]).map(k => ({naam: namen[k], waarde: afh[k], kleur: AFHANDELING_KLEUR[k].vlak, tekst: AFHANDELING_KLEUR[k].tekst}));
+    if (delen.length) verdeling(vak, delen);
+    else vak.innerHTML = "<p>Geen cijfers over de afhandeling in dit verslag.</p>";
+    return;
+  }
+  if (openTegel === "verweerreeks") {
+    /* De verslagen publiceren zelf een tabel met verweer, gunstig en ongunstig
+       per jaar. Die is completer dan wat we per jaargang los kunnen aflezen. */
+    const tabellen = (D.gasam.jaren[gekozen].autoluw || {}).afhandeling_per_jaar || {};
+    const jaartallen = Object.keys(tabellen.verweer || {}).sort();
+    if (!jaartallen.length) {
+      vak.innerHTML = "<p>Dit verslag geeft geen reeks per jaar; het cijfer hierboven geldt voor " + gekozen + ".</p>";
+      return;
+    }
+    duostaven(vak, jaartallen.map(j => ({label: j, reeksen: [
+      {naam: "verweer", waarde: (tabellen.verweer || {})[j] || 0, kleur: "omlijnd"},
+      {naam: "gegrond", waarde: (tabellen.gunstig || {})[j] || 0, kleur: "var(--groen)"},
+      {naam: "verworpen", waarde: (tabellen.ongunstig || {})[j] || 0, kleur: "var(--ink)"}
+    ]})), {hoog: 210, eenheid: getal});
+    vak.insertAdjacentHTML("beforeend", `<div class="legende">
+      <span><i class="omlijnd"></i>verweer ingediend</span>
+      <span><i style="background:var(--groen)"></i>gegrond, boete geschrapt</span>
+      <span><i style="background:var(--ink)"></i>verworpen</span></div>`);
+    return;
+  }
+  if (openTegel === "woonplaats") {
+    const reeksNiet = jaren.map(j => {
+      const w = (D.gasam.jaren[j].autoluw || {}).woonplaats || {};
+      return w.niet_inwoners_procent === undefined ? 0 : w.niet_inwoners_procent;
+    });
+    staafgrafiek(vak, reeksNiet, jaren, {
+      markeer: jaren.indexOf(gekozen), hoog: 200, top: 100, toonAlle: true,
+      eenheid: n => procent(n), omschrijving: "aandeel niet-inwoners per jaar"
+    });
+    vak.insertAdjacentHTML("beforeend",
+      `<p class="duiding" style="margin:8px 0 0">Aandeel van de overtreders dat niet in Mechelen woont, ` +
+      `zoals elk jaarverslag het zelf noteert. Vier op de vijf boetes gaan naar iemand van buiten de stad.</p>`);
+    return;
+  }
+}
+
+/* ================================================================
+   Detail van één camera: het maandverloop, jaar over jaar
+   ================================================================ */
+function lijngrafiek(reeksen, opties = {}) {
+  /* reeksen: [{naam, kleur, waarden:[12], dik}] */
+  const breed = Math.max(360, Math.round(opties.breed || 640));
+  const hoog = opties.hoog || 230;
+  const marge = {links: 34, rechts: 10, boven: 16, onder: 24};
+  let top = 1;
+  reeksen.forEach(r => r.waarden.forEach(w => { if (w !== null && w > top) top = w; }));
+  const stap = (breed - marge.links - marge.rechts) / 11;
+  const grond = hoog - marge.onder;
+  const y = w => grond - (grond - marge.boven) * (w / top);
+
+  let svg = `<svg width="${breed}" height="${hoog}" viewBox="0 0 ${breed} ${hoog}" role="img">`;
+  [0, 0.5, 1].forEach(deel => {
+    const yy = grond - (grond - marge.boven) * deel;
+    svg += `<line class="raster" x1="${marge.links}" y1="${yy.toFixed(1)}" x2="${breed - marge.rechts}" y2="${yy.toFixed(1)}"/>`;
+    svg += `<text x="2" y="${(yy + 3.5).toFixed(1)}">${getal(Math.round(top * deel))}</text>`;
+  });
+  MAANDEN.forEach((m, i) => {
+    svg += `<text x="${(marge.links + i * stap).toFixed(1)}" y="${hoog - 7}" text-anchor="middle">${m}</text>`;
+  });
+  reeksen.forEach(reeks => {
+    const punten = reeks.waarden
+      .map((w, i) => (w === null ? null : `${(marge.links + i * stap).toFixed(1)},${y(w).toFixed(1)}`))
+      .filter(Boolean).join(" ");
+    if (!punten) return;
+    svg += `<polyline points="${punten}" fill="none" stroke="${reeks.kleur}" stroke-width="${reeks.dik ? 2.6 : 1.6}"
+      stroke-linejoin="round" stroke-linecap="round" opacity="${reeks.dik ? 1 : .75}"/>`;
+    reeks.waarden.forEach((w, i) => {
+      if (w === null) return;
+      svg += `<circle cx="${(marge.links + i * stap).toFixed(1)}" cy="${y(w).toFixed(1)}" r="${reeks.dik ? 3.4 : 2.4}"
+        fill="${reeks.kleur}"><title>${reeks.naam}, ${MAANDEN[i]}: ${getal(w)}</title></circle>`;
+    });
+  });
+  return svg + "</svg>";
+}
+
+/* De kleur van een jaar in de lijngrafiek: hoe recenter, hoe dieper roze. */
+function jaarkleur(jaar, lijst) {
+  const i = lijst.indexOf(jaar);
+  const deel = lijst.length > 1 ? i / (lijst.length - 1) : 1;
+  const licht = 78 - 38 * deel;                       /* 78% naar 40% */
+  return `hsl(43 ${Math.round(60 + 30 * deel)}% ${Math.round(licht - 2)}%)`;
+}
+
+function tekenDetail() {
+  const doel = document.getElementById("camera-detail");
+  const naam = kaart.actief;
+  if (!naam) { doel.hidden = true; doel.innerHTML = ""; return; }
+
+  const rij = D.cameras.cameras[naam] || {};
+  const metMaanden = maandJaren.filter(j => (maandMatrix(j) || {})[naam]);
+  const jaartotalen = jaren.map(j => cameraTelling(naam, j) || 0);
+
+  doel.hidden = false;
+  doel.innerHTML = `<button class="sluit" aria-label="Sluiten">×</button>
+    <div class="eyebrow">Camera</div>
+    <h2 style="font-size:19px;margin:0 0 2px">${naam}</h2>
+    <p class="duiding" style="margin:0 0 14px">
+      ${metMaanden.length
+        ? "Maand per maand, elk jaar een lijn. Zo zie je of het om een seizoen gaat of om een camera die aan- of uitging."
+        : "Voor deze camera publiceert het jaarverslag geen maandcijfers; enkel het jaartotaal."}
+      ${rij.positie_bron ? " Positie: " + rij.positie_bron + "." : ""}
+    </p>
+    <div class="lijnen" id="detail-lijnen"></div>
+    <div class="lijnlegende" id="detail-legende"></div>
+    <div class="grafiek" id="detail-jaren" style="margin-top:14px"></div>`;
+
+  doel.querySelector(".sluit").addEventListener("click", () => kies(null, false));
+
+  const lijnvak = document.getElementById("detail-lijnen");
+  const legende = document.getElementById("detail-legende");
+  if (metMaanden.length) {
+    lijnvak.innerHTML = lijngrafiek(metMaanden.map(j => ({
+      naam: j,
+      kleur: jaarkleur(j, metMaanden),
+      waarden: maandMatrix(j)[naam],
+      dik: j === gekozen
+    })), {breed: lijnvak.clientWidth, hoog: 240});
+    legende.innerHTML = metMaanden.map(j =>
+      `<span><i style="background:${jaarkleur(j, metMaanden)}"></i>${j}</span>`).join("")
+      + `<span style="color:var(--ink-dim)">maandcijfers per camera bestaan voor 2015 tot en met 2018</span>`;
+  } else {
+    lijnvak.innerHTML = "";
+    legende.innerHTML = `<span style="color:var(--ink-dim)">Vanaf 2019 geeft GASAM enkel nog jaartotalen per camera.</span>`;
+  }
+  staafgrafiek(document.getElementById("detail-jaren"), jaartotalen, jaren,
+    {markeer: jaren.indexOf(gekozen), hoog: 150, omschrijving: "jaartotalen van deze camera"});
+}
+
+/* ================================================================
+   Heatmap: jaren tegenover maanden
+   ================================================================ */
+let heatBron = "alle";
+let heatSchaal = "alles";      /* "alles" = kleur over alle jaren, "jaar" = binnen elk jaar */
+/* Staat de heatmap scherp op het gekozen jaar (de andere jaren treden terug),
+   of even helder over alle jaren? Klik het gekozen jaar nog eens en het laat
+   los; elke nieuwe keuze in de tijd zet het weer scherp. */
+let heatFocus = true;
+
+function heatKleur(deel) {
+  /* Van bijna papier naar vol roze, bijna recht evenredig. Een sterkere kromming
+     maakte alles even donker, en dan valt het verschil tussen een rustige en een
+     drukke maand juist weg. */
+  const van = [249, 241, 220], naar = [210, 162, 19];
+  const mix = van.map((v, i) => Math.round(v + (naar[i] - v) * Math.pow(deel, 0.9)));
+  return `rgb(${mix.join(",")})`;
+}
+
+function tekenHeatmap() {
+  const doel = document.getElementById("heatmap");
+  const keuze = document.getElementById("heat-keuze");
+  const camera = kaart.actief;
+  keuze.hidden = !camera;
+  const metMaanden = camera && heeftMaanden(camera);
+  if (!camera || !metMaanden) heatBron = "alle";
+  keuze.querySelectorAll("button").forEach(k => {
+    k.setAttribute("aria-pressed", k.dataset.bron === heatBron ? "true" : "false");
+    if (k.dataset.bron === "camera") {
+      k.disabled = !metMaanden;
+      k.title = metMaanden ? "" : "Voor deze camera publiceert het verslag geen maandcijfers";
+    }
+  });
+  document.querySelectorAll("#heat-schaal button").forEach(k =>
+    k.setAttribute("aria-pressed", k.dataset.schaal === heatSchaal ? "true" : "false"));
+
+  const perCamera = heatBron === "camera" && camera;
+  /* Nieuwste jaar bovenaan: je leest van boven naar beneden terug in de tijd. */
+  const jaarlijst = (perCamera ? maandJaren : jaren).slice().reverse();
+  const rijen = jaarlijst.map(j => ({
+    jaar: j,
+    waarden: perCamera
+      ? ((maandMatrix(j) || {})[camera] || null)
+      : (D.gasam.jaren[j].autoluw.per_maand || null)
+  }));
+
+  document.getElementById("heat-eyebrow").textContent = perCamera ? "Camera " + camera : "Alle camera's samen";
+  document.getElementById("heat-titel").textContent = "Maand per maand";
+
+  let top = 1;
+  rijen.forEach(r => (r.waarden || []).forEach(w => { if (w > top) top = w; }));
+
+  const kop = el("div", "rij");
+  kop.appendChild(el("span", "jaar", ""));
+  MAANDEN.forEach((m, i) => {
+    const maandknop = el("span", "maandkop klikbaar", m);
+    maandknop.title = m + " " + gekozen;
+    maandknop.addEventListener("click", () => springNaar(gekozen, i));
+    kop.appendChild(maandknop);
+  });
+  kop.appendChild(el("span", "som", "jaar"));
+
+  const wikkel = el("div", "heat");
+  wikkel.appendChild(kop);
+  const stapNu = huidigeStap();
+  rijen.forEach(r => {
+    /* Het gekozen jaar staat vooraan, de andere jaren treden een stap terug;
+       losgelaten staan alle jaren even helder. */
+    const isNu = heatFocus && r.jaar === gekozen;
+    const lijn = el("div", "rij" + (isNu ? " nu" : (heatFocus ? " zacht" : "")));
+    /* Ook de randen van de tabel zijn knoppen: het jaartal en het jaartotaal
+       zetten de tijdbalk op dat jaar, een cel op die maand. Het gekozen jaar nog
+       eens aanklikken laat het los, zodat je alle jaren weer naast elkaar ziet. */
+    const kiesJaar = () => {
+      if (isNu) {
+        /* loslaten is terug naar de beginstand: het recentste jaar, met alle
+           jaren even helder zodat je ze naast elkaar leest */
+        heatFocus = false;
+        if (modus !== "jaar") { modus = "jaar"; document.querySelectorAll("#tijdbalk .moduskiezer button").forEach(k => k.setAttribute("aria-pressed", k.dataset.modus === modus ? "true" : "false")); bouwJaarmerken(); }
+        zetStap(stapVanJaar(jaren[jaren.length - 1]), false, true);
+      } else {
+        springNaar(r.jaar, null);
+      }
+    };
+    const jaarknop = el("span", "jaar klikbaar", r.jaar);
+    jaarknop.title = isNu ? "Laat " + r.jaar + " los" : "Toon " + r.jaar;
+    jaarknop.addEventListener("click", kiesJaar);
+    lijn.appendChild(jaarknop);
+
+    /* Bij "binnen elk jaar" vergelijkt de kleur met de drukste maand van díe rij:
+       zo zie je het seizoen, ook in een jaar dat in totaal rustiger was. */
+    const rijtop = Math.max(...(r.waarden || [1]), 1);
+    MAANDEN.forEach((m, i) => {
+      const cel = el("span", "cel");
+      const w = r.waarden ? r.waarden[i] : null;
+      if (w === null || w === undefined) {
+        cel.classList.add("leeg");
+        cel.title = m + " " + r.jaar + ": geen cijfers";
+      } else {
+        cel.style.background = heatKleur(w / (heatSchaal === "jaar" ? rijtop : top));
+        cel.dataset.waarde = w;
+        cel.title = m + " " + r.jaar + ": " + getal(w) + " vaststellingen. Klik om de tijdbalk hierheen te zetten.";
+        cel.appendChild(el("span", "cijfer", getal(w)));
+        cel.addEventListener("click", () => springNaar(r.jaar, i));
+      }
+      /* enkel de maand waar de tijdbalk staat krijgt een streepje; in de stand
+         "per jaar" is het roze jaarlabel al genoeg */
+      if (isNu && stapNu.maand === i) cel.classList.add("nu");
+      lijn.appendChild(cel);
+    });
+    const som = r.waarden ? r.waarden.reduce((s, w) => s + w, 0) : null;
+    const somknop = el("span", "som klikbaar", som === null ? "geen" : getal(som));
+    somknop.title = isNu ? "Laat " + r.jaar + " los" : "Toon " + r.jaar;
+    somknop.addEventListener("click", kiesJaar);
+    lijn.appendChild(somknop);
+    wikkel.appendChild(lijn);
+  });
+
+  doel.innerHTML = "";
+  doel.appendChild(wikkel);
+  const schaal = el("div", "heatschaal");
+  schaal.innerHTML = heatSchaal === "jaar"
+    ? `<span>rustigste maand</span><span class="balk"></span><span>drukste maand van dat jaar</span>`
+    : `<span>0</span><span class="balk"></span><span>${getal(top)} in één maand</span>`;
+  if (perCamera) {
+    schaal.innerHTML += `<span style="color:var(--ink-dim)">enkel de jaren met een maandtabel per camera</span>`;
+  }
+  doel.appendChild(schaal);
+}
+
+function springNaar(jaar, maand) {
+  /* Klik op een cel van de heatmap: de tijdbalk gaat naar die maand als er
+     maandcijfers per camera bestaan, en anders naar dat hele jaar. */
+  if (maand !== null && maandJaren.includes(jaar)) {
+    if (modus !== "maand") zetModus("maand");
+    const lijst = stappen();
+    zetStap(lijst.findIndex(stap => stap.jaar === jaar && stap.maand === maand));
+  } else {
+    if (modus !== "jaar") zetModus("jaar");
+    zetStap(stapVanJaar(jaar));
+  }
+  tekenHeatmap();
+}
+
+function reeksVanJaren(soort) {
+  return jaren.map(j => {
+    const blok = D.gasam.jaren[j][soort];
+    return blok && blok.totaal ? blok.totaal : 0;
+  });
+}
+
+function tekenOnderdeel(soort, voorvoegsel) {
+  const blok = D.gasam.jaren[gekozen][soort];
+  const tegels = document.getElementById(voorvoegsel + "-tegels");
+  tegels.innerHTML = "";
+  if (!blok) { tegels.appendChild(el("p", null, "Dit jaarverslag bevat dit onderdeel niet.")); return; }
+
+  const reeks = reeksVanJaren(soort);
+  const vorig = jaren[jaren.indexOf(gekozen) - 1];
+  const vorigTotaal = vorig && D.gasam.jaren[vorig][soort] ? D.gasam.jaren[vorig][soort].totaal : null;
+  const verschil = vorigTotaal ? Math.round(100 * (blok.totaal - vorigTotaal) / vorigTotaal) : null;
+  const woon = blok.woonplaats || {};
+  /* Sinds 2023 publiceert het verslag de afhandeling van het lopende jaar enkel
+     nog in de meerjarentabel: val daar per veld op terug, jaar voor jaar. */
+  const perJaar = blok.afhandeling_per_jaar || {};
+  const afh = Object.assign({}, blok.afhandeling);
+  for (const veld of ["verweer", "gunstig", "ongunstig", "beroep"]) {
+    if (afh[veld] === undefined && (perJaar[veld] || {})[gekozen] !== undefined) afh[veld] = perJaar[veld][gekozen];
+  }
+  const verweer = afh.verweer || ((afh.gunstig || 0) + (afh.ongunstig || 0));
+
+  const deltaChip = verschil === null ? "" :
+    `<span class="delta ${verschil > 0 ? "op" : verschil < 0 ? "neer" : "vlak"}">${verschil > 0 ? "↑" : verschil < 0 ? "↓" : "→"} ${Math.abs(verschil)}%</span> tegenover ${vorig}`;
+
+  const lijst = [
+    ["Vaststellingen", getal(blok.totaal), deltaChip,
+      {vonk: vonk(reeks), telSleutel: voorvoegsel + "-totaal", telWaarde: blok.totaal, sleutel: "jaren"}],
+    ["Drukste maand", blok.per_maand ? MAANDEN[blok.per_maand.indexOf(Math.max(...blok.per_maand))] : "",
+      blok.per_maand ? getal(Math.max(...blok.per_maand)) + " vaststellingen" : "",
+      {tekstwaarde: true, sleutel: blok.per_maand ? "maanden" : null}],
+    ["Verweer ingediend", getal(verweer), blok.totaal ? procent(Math.round(1000 * verweer / blok.totaal) / 10) + " van de dossiers" : "",
+      {telSleutel: voorvoegsel + "-verweer", telWaarde: verweer, sleutel: "afhandeling"}],
+    ["Boete geschrapt", getal(afh.gunstig), afh.gunstig && verweer ? procent(Math.round(100 * afh.gunstig / verweer)) + " van de verweren" : "",
+      afh.gunstig ? {telSleutel: voorvoegsel + "-gunstig", telWaarde: afh.gunstig, sleutel: "verweerreeks"} : {}],
+    ["Van buiten Mechelen", woon.niet_inwoners_procent !== undefined ? procent(woon.niet_inwoners_procent) : "",
+      woon.inwoners_procent !== undefined ? "Mechelaars: " + procent(woon.inwoners_procent) : "", {sleutel: "woonplaats"}]
+  ];
+  lijst.forEach(([k, v, n, extra], i) => {
+    if (v === "" || v === null) return;
+    tegels.appendChild(tegel(k, v, n, Object.assign({volgorde: i}, extra)));
+  });
+  tegelsGetoond = true;
+
+  tekenTegeluitleg(blok, reeks, afh, verweer, woon);
+  if (voorvoegsel === "anpr") document.getElementById("tab-camera").textContent = getal(blok.totaal);
+}
+
+function tekenGeld() {
+  const actie = D.budget.acties["AC000039"];
+  const budgetjaren = Object.keys(actie.jaren).sort();
+  const laatste = budgetjaren[budgetjaren.length - 1];
+  const laatsteRij = actie.jaren[laatste].exploitatie.ontvangsten;
+  const gat = laatsteRij.jaarrekening - laatsteRij.initiele_kredieten;
+  const reeksRekening = budgetjaren.map(j => actie.jaren[j].exploitatie.ontvangsten.jaarrekening);
+  /* Het aantal jaren onder de planning hangt af van welke planning je neemt: tegenover de
+     oorspronkelijke raming zijn het er vijf, tegenover het bijgestuurde krediet zes. Daarom
+     staat dat niet meer als tegel, maar in de duiding, met beide getallen erbij. */
+  const onderPlan = budgetjaren.filter(j => {
+    const o = actie.jaren[j].exploitatie.ontvangsten;
+    return o.jaarrekening < o.initiele_kredieten;
+  }).length;
+  const onderEind = budgetjaren.filter(j => {
+    const o = actie.jaren[j].exploitatie.ontvangsten;
+    return o.jaarrekening < o.eindkredieten;
+  }).length;
+  const eigenUit = (actie.jaren[laatste].exploitatie.uitgaven || {}).jaarrekening || 0;
+
+  const tegels = document.getElementById("geld-tegels");
+  tegels.innerHTML = "";
+  tegels.appendChild(tegel("Ontvangsten van de actie " + laatste, euroKort(laatsteRij.jaarrekening),
+    `<span class="delta neutraal">${gat >= 0 ? "↑" : "↓"} ${euroKort(Math.abs(gat))}</span> tegenover de planning`,
+    {volgorde: 0, vonk: vonk(reeksRekening)}));
+  const deelLaatste = laatsteRij.initiele_kredieten
+    ? Math.round(100 * laatsteRij.jaarrekening / laatsteRij.initiele_kredieten) : null;
+  if (deelLaatste !== null) {
+    tegels.appendChild(tegel("Van de planning binnengehaald", deelLaatste + "%",
+      "in " + laatste + ", op een raming van " + euroKort(laatsteRij.initiele_kredieten), {volgorde: 1}));
+  }
+  if (eigenUit) {
+    tegels.appendChild(tegel("Wat de dienst zelf kost", euroKort(eigenUit),
+      "eigen uitgaven van de handhavingsactie in " + laatste + ", los van de ontvangsten hierboven",
+      {volgorde: 2}));
+  }
+
+  const soorten = D.budget.opbrengsten;
+  const laatsteTabel = Object.keys(soorten).filter(b => b.startsWith("jaarrekening")).sort().pop();
+  const tabel = laatsteTabel ? soorten[laatsteTabel] : {};
+  /* Alleen rekeningnummers die volgens het meerjarenplan onder deze actie hangen.
+     De parkeeropbrengsten (7020600) en de belasting op ontbrekende parkeerplaatsen
+     (7373000) staan daar op andere acties en horen hier dus niet thuis. */
+  const gas4 = {}, snelheid = {}, raming = {};
+  ["7390020", "7390030", "7390050"].forEach(ark => {
+    Object.entries((tabel[ark] || {}).rekening || {}).forEach(([j, v]) => { gas4[j] = (gas4[j] || 0) + v; });
+  });
+  Object.entries((tabel["7390040"] || {}).rekening || {}).forEach(([j, v]) => { snelheid[j] = v; });
+  const administratie = (tabel["7318100"] || {}).rekening || {};
+  const overlast = (tabel["7390010"] || {}).rekening || {};
+  Object.entries(soorten).forEach(([bron, tab]) => {
+    if (bron.startsWith("jaarrekening")) return;
+    Object.entries((tab["7390050"] || {}).raming || {}).forEach(([j, v]) => { if (raming[j] === undefined) raming[j] = v; });
+  });
+  const gas4Laatste = gas4[laatste];
+  if (gas4Laatste) {
+    tegels.appendChild(tegel("Waarvan GAS 4", euroKort(gas4Laatste),
+      "autoluw en parkeren samen in " + laatste + ", los van de snelheidsboetes", {volgorde: 3}));
+  }
+
+  const doel = document.getElementById("budget-actie");
+  doel.innerHTML = `<div class="eyebrow">Actie AC000039</div>
+    <h2>Planning tegenover <em>rekening</em></h2>
+    <p class="duiding" style="margin:0 0 12px">Elke regel is één jaar. De open bol is wat de stad vooraf raamde, de
+    volle bol wat er werkelijk binnenkwam, en het streepje op de lijn is het krediet zoals het er bij de afsluiting
+    stond. Rechts staat hoeveel procent van de oorspronkelijke raming het geworden is. Neem je in plaats daarvan dat
+    bijgestuurde krediet, dan bleef de rekening in ${onderEind} van de ${budgetjaren.length} jaren eronder, tegen
+    ${onderPlan} van de ${budgetjaren.length} nu. Het verschil zit in 2023: dat jaar ging over de oorspronkelijke
+    raming, maar bleef onder het krediet dat er bij de afsluiting stond.</p>
+    <div class="grafiek" id="budget-grafiek"></div>
+    <div class="legende">
+      <span><i class="omlijnd"></i>planning (initiële kredieten)</span>
+      <span><i style="background:var(--app)"></i>rekening</span>
+      <span><i class="streepje"></i>eindkredieten</span>
+    </div>
+    <div class="tabelwikkel" id="budget-tabel"></div>`;
+  halters(document.getElementById("budget-grafiek"), budgetjaren.map(j => {
+    const o = actie.jaren[j].exploitatie.ontvangsten;
+    return {label: j, planning: o.initiele_kredieten, eind: o.eindkredieten, rekening: o.jaarrekening};
+  }));
+
+  let html = "<table style='margin-top:14px'><thead><tr><th>Jaar</th><th class='n'>Planning</th><th class='n'>Eindkredieten</th><th class='n'>Rekening</th><th class='n'>Van de planning</th></tr></thead><tbody>";
+  budgetjaren.forEach(j => {
+    const o = actie.jaren[j].exploitatie.ontvangsten;
+    const v = o.jaarrekening - o.initiele_kredieten;
+    const deel = o.initiele_kredieten ? Math.round(100 * o.jaarrekening / o.initiele_kredieten) : 0;
+    html += `<tr><td class="mono">${j}</td><td class="n">${euro(o.initiele_kredieten)}</td>
+      <td class="n">${euro(o.eindkredieten)}</td><td class="n">${euro(o.jaarrekening)}</td>
+      <td class="n">${deel}% <span class="delta neutraal">${v >= 0 ? "+" : "-"}${euroKort(Math.abs(v))}</span></td></tr>`;
+  });
+  document.getElementById("budget-tabel").innerHTML = html + "</tbody></table>";
+
+  /* Waaruit het jaarbedrag bestaat. De stad splitst de actie nergens uit per soort,
+     dus we tonen wat de rekeningnummers wél benoemen en geven de rest een eigen,
+     grijs segment. Zo telt de staaf altijd op tot het bedrag van de actie.
+     Dat grijs is geen zwart gat: de jaarrekening 2024 (blz. 12) noemt de dienstverlening
+     voor andere gemeenten, gerecupereerde deurwaarderskosten en verzendingskosten, en de
+     bijlage bij de jaarrekening 2025 (blz. 151) zet er bedragen op. We rekenen die niet
+     per jaar door: die bijlage meldt alleen materiële verschillen, dus de reeks zou
+     onvolledig zijn en we vullen geen gat met een schatting. */
+  /* Het grijze segment uitleggen met cijfers die uit de data komen, niet uit een
+     vaste zin: administratiekosten en overlastboetes staan per jaar in de tabel, en
+     wat daarna overblijft is het werk voor de andere gemeenten. */
+  const restLaatste = laatsteRij.jaarrekening - (gas4[laatste] || 0) - (snelheid[laatste] || 0);
+  const admLaatste = administratie[laatste] || 0, ovlLaatste = overlast[laatste] || 0;
+  const benoemd = [];
+  if (admLaatste) benoemd.push(euroKort(admLaatste) + " uit administratiekosten op de dossiers");
+  if (ovlLaatste) benoemd.push(euroKort(ovlLaatste) + " uit overlastboetes");
+  const grijsNoot = restLaatste <= 0 ? "" :
+    "Van het grijze deel in " + laatste + " komt " +
+    (benoemd.length ? benoemd.join(" en ") + ", en de resterende " + euroKort(restLaatste - admLaatste - ovlLaatste) + " " : "") +
+    "vooral van de gemeenten waarvoor Mechelen de dossiers behandelt, plus een federale subsidie.";
+
+  const soortdoel = document.getElementById("budget-soorten");
+  soortdoel.innerHTML = `<div class="eyebrow">Samenstelling</div>
+    <h2>Waaruit dat bedrag <em>bestaat</em></h2>
+    <p class="duiding" style="margin:0 0 12px">De boetes op parkeren en het autoluw gebied en die op snelheid staan
+    elk op hun eigen rekening, dus die twee tekenen we apart. De overige ontvangsten van de actie staan verspreid over
+    negen andere rekeningen; die vatten we samen in het grijs en rekenen we hieronder voor. Elke staaf telt op tot het
+    bedrag van de actie.</p>
+    <div class="grafiek" id="soorten-grafiek"></div>
+    <div class="legende">
+      <span><i style="background:var(--app)"></i>GAS 4: autoluw en parkeren</span>
+      <span><i style="background:var(--leisteen)"></i>GAS 5: snelheid</span>
+      <span><i style="background:var(--steen-2)"></i>overige ontvangsten van de actie</span>
+    </div>
+    <p class="duiding" style="margin:12px 0 0">In 2021 begon de stad autoluw en parkeren samen op één rekening te
+    boeken, naast de twee oude. Vanaf 2022 gebruikt ze alleen nog die ene, en dan vallen de twee niet meer uit elkaar
+    te halen. De snelheidsboetes kwamen er in 2021 bij. ${grijsNoot}</p>`;
+  samenstelling(document.getElementById("soorten-grafiek"), budgetjaren.map(j => {
+    const totaal = actie.jaren[j].exploitatie.ontvangsten.jaarrekening;
+    const g4 = gas4[j] || 0, sn = snelheid[j] || 0;
+    return {label: j, delen: [
+      {naam: "GAS 4: autoluw en parkeren", waarde: g4, kleur: "var(--app)"},
+      {naam: "GAS 5: snelheid", waarde: sn, kleur: "var(--leisteen)"},
+      {naam: "overige ontvangsten van de actie",
+       waarde: Math.max(totaal - g4 - sn, 0), kleur: "var(--steen-2)"}
+    ]};
+  }));
+
+  const uitgaven = D.budget.acties["AC000034"];
+  const uitJaren = Object.keys(uitgaven.jaren).sort();
+  const uitdoel = document.getElementById("budget-uitgaven");
+  uitdoel.innerHTML = `<div class="eyebrow">Actie AC000034</div>
+    <h2>En wat de stad <em>uitgeeft</em> aan parkings en het autoluw gebied</h2>
+    <p class="duiding" style="margin:0 0 12px">Dit is de actie waarin de stad deelsystemen, buurtparkings,
+    infrastructuur en het autoluw gebied samenneemt. Ze staat los van de handhavingsactie hierboven. Werking en
+    investeringen staan apart, want het zijn twee soorten kredieten: een investeringskrediet loopt over meerdere jaren
+    door, een werkingskrediet niet. Opgeteld heffen ze elkaar op, en dan lijkt een jaar te kloppen terwijl geen van
+    beide klopte.</p>
+    <div class="eyebrow" style="margin:2px 0 4px">Werking</div>
+    <div class="grafiek" id="uitgaven-werking"></div>
+    <div class="eyebrow" style="margin:14px 0 4px">Investeringen</div>
+    <div class="grafiek" id="uitgaven-invest"></div>
+    <div class="legende">
+      <span><i class="omlijnd"></i>planning</span>
+      <span><i style="background:var(--app)"></i>rekening</span>
+      <span><i class="streepje"></i>eindkredieten</span>
+    </div>`;
+  const uitRij = (j, soort) => {
+    const k = (uitgaven.jaren[j][soort] || {}).uitgaven || {};
+    return {label: j, planning: k.initiele_kredieten || 0, eind: k.eindkredieten || 0,
+            rekening: k.jaarrekening || 0};
+  };
+  halters(document.getElementById("uitgaven-werking"), uitJaren.map(j => uitRij(j, "exploitatie")),
+    {aria: "Werkingsuitgaven per jaar: planning tegenover rekening"});
+  halters(document.getElementById("uitgaven-invest"),
+    uitJaren.filter(j => uitgaven.jaren[j].investeringen).map(j => uitRij(j, "investeringen")),
+    {aria: "Investeringsuitgaven per jaar: planning tegenover rekening"});
+
+  document.getElementById("tab-geld").textContent = euroKort(laatsteRij.jaarrekening);
+}
+
+/* ================================================================
+   Sturing: jaren, tabbladen
+   ================================================================ */
+function bouwJaarmerken() {
+  /* De jaartallen staan als ankers onder de schuif. Elk jaar krijgt evenveel
+     ruimte, ook in de stand "per maand": daar staat één jaar gelijk aan twaalf
+     stappen, dus de vakken blijven even breed en het merkteken blijft kloppen. */
+  const rij = document.getElementById("jaarmerken");
+  rij.innerHTML = "";
+  const zichtbaar = modus === "maand" ? maandJaren : jaren;
+  zichtbaar.forEach(j => {
+    const knop = el("button", null, j);
+    knop.type = "button";
+    knop.title = "Jaarverslag " + j;
+    knop.setAttribute("aria-pressed", j === gekozen ? "true" : "false");
+    knop.addEventListener("click", () => zetStap(stapVanJaar(j)));
+    rij.appendChild(knop);
+  });
+}
+
+function merkJaar() {
+  document.querySelectorAll("#jaarmerken button").forEach(k =>
+    k.setAttribute("aria-pressed", k.textContent === gekozen ? "true" : "false"));
+}
+
+/* Toetsenbord (audit 27/08/2026): stippen, heatmapcellen en lijstrijen zijn
+   klikbaar maar geen knoppen. Eén waarnemer maakt ze focusbaar, geeft ze de
+   knoprol en hun titel als naam, en Enter of spatie klikt ze, langs hetzelfde
+   kies()-pad als de muis. */
+(function () {
+  const doelen = "#kaart .merkstip, .heat .klikbaar, .heat .cel, .rang li[data-naam]:not(.onbekend)";
+  const zet = () => document.querySelectorAll(doelen).forEach(e => {
+    if (!e.hasAttribute("tabindex")) { e.tabIndex = 0; e.setAttribute("role", "button"); }
+    if (e.title && e.getAttribute("aria-label") !== e.title) e.setAttribute("aria-label", e.title);
+  });
+  new MutationObserver(zet).observe(document.body, {childList: true, subtree: true});
+  zet();
+  document.addEventListener("keydown", e => {
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches(doelen)) {
+      e.preventDefault();
+      e.target.click();
+    }
+  });
+})();
+
+function menu(open) {
+  const vlak = document.getElementById("menuvlak"), knop = document.getElementById("menuknop");
+  if (!vlak || !knop) return;
+  const nu = open === undefined ? vlak.hidden : open;
+  vlak.hidden = !nu;
+  knop.setAttribute("aria-expanded", String(nu));
+  document.body.classList.toggle("menu-open", nu);
+}
+
+function naarVerantwoording(e) {
+  /* Op de nieuwspagina staat de verantwoordingsband niet (de krant eindigt met
+     haar eigen voet): spring dan eerst terug naar de camerapagina. */
+  e.preventDefault();
+  menu(false);
+  if (document.body.dataset.view === "nieuws") toonView("camera");
+  requestAnimationFrame(() =>
+    document.getElementById("verantwoording").scrollIntoView({behavior: "smooth"}));
+}
+
+function toonView(naam) {
+  menu(false);
+  view = naam;
+  document.body.dataset.view = naam;
+  document.querySelectorAll(".weergave").forEach(sectie => sectie.classList.toggle("aan", sectie.id === "view-" + naam));
+  document.querySelectorAll("[role=tab]").forEach(t => t.setAttribute("aria-selected", t.dataset.view === naam ? "true" : "false"));
+  if (naam === "camera") {
+    if (!kaart.gepast) pasKaartOpMerken(); else tekenKaart();
+  }
+  /* Een grafiek die getekend werd terwijl haar weergave nog verborgen was, kon haar
+     vak niet meten en viel terug op een vaste breedte. Ze wordt dan in dat vak
+     platgedrukt, en op een telefoon zijn de labels nog maar een paar pixels hoog.
+     Nu de weergave zichtbaar is, meten we na en tekenen we alleen opnieuw als het
+     werkelijk scheef zit. */
+  const scheef = [...document.querySelectorAll(".weergave.aan .grafiek svg")].some(svg => {
+    const vak = svg.parentElement.clientWidth;
+    return vak > 0 && Math.abs(vak - (Number(svg.getAttribute("width")) || 0)) > 8;
+  });
+  if (scheef) { tekenAlles(); tekenGeld(); }
+  if (history.replaceState) history.replaceState(null, "", "#" + naam);
+  window.scrollTo({top: 0, behavior: "auto"});
+}
+
+/* De gazet: de artikels van het Lees mee-dossier als voorpagina. Eén keer
+   getekend bij de start; de inhoud verandert pas als haal_leesmee.py opnieuw
+   draait en er wordt gebouwd. */
+/* Voor artikels zonder beeld: een eigen figuur, de auto in het vizier als
+   bauhaus-compositie. Vlakke geometrie, harde randen, het familiepalet. */
+function bauhausBeeld() {
+  return `<svg class="beeldloos" viewBox="0 0 320 200" role="img" aria-label="">
+    <rect width="320" height="200" fill="#e9e2d4"/>
+    <path d="M0 200 L0 86 A114 114 0 0 1 114 200 Z" fill="#1a1712"/>
+    <polygon points="0,26 320,132 320,144 0,38" fill="#1a1712" opacity=".1"/>
+    <circle cx="63" cy="44" r="15" fill="#d2a213"/>
+    <circle cx="205" cy="94" r="64" fill="none" stroke="#1a1712" stroke-width="9"/>
+    <rect x="201" y="10" width="8" height="18" fill="#1a1712"/>
+    <rect x="201" y="160" width="8" height="18" fill="#1a1712"/>
+    <rect x="121" y="90" width="18" height="8" fill="#1a1712"/>
+    <rect x="271" y="90" width="18" height="8" fill="#1a1712"/>
+    <path d="M181 88 A24 24 0 0 1 229 88 Z" fill="#7a5c10"/>
+    <rect x="165" y="88" width="82" height="26" fill="#d2a213"/>
+    <circle cx="184" cy="118" r="11" fill="#1a1712"/>
+    <circle cx="228" cy="118" r="11" fill="#1a1712"/>
+    <circle cx="184" cy="118" r="4" fill="#f5f1e8"/>
+    <circle cx="228" cy="118" r="4" fill="#f5f1e8"/>
+  </svg>`;
+}
+
+function tekenGazet() {
+  const doel = document.getElementById("gazet");
+  const bron = D.leesmee;
+  if (!bron || !bron.artikels || !bron.artikels.length) {
+    doel.innerHTML = "<p class=\"duiding\" style=\"margin-top:24px\">De artikels zijn nog niet opgehaald. Draai haal_leesmee.py en bouw opnieuw.</p>";
+    document.getElementById("tab-gazet").textContent = "";
+    return;
+  }
+  const artikels = bron.artikels;
+  document.getElementById("tab-gazet").textContent = artikels.length + " artikels";
+  /* de periode van het dossier in het menu, uit dezelfde data als de krantkop */
+  document.getElementById("menu-periode").textContent = "(" + bron.dossier.jaar_van + "-" + bron.dossier.jaar_tot + ")";
+
+  const MAANDNAMEN = ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+  const datumVoluit = iso => {
+    const [j, m, d] = (iso || "").split("-").map(Number);
+    return d ? d + " " + MAANDNAMEN[m - 1] + " " + j : iso;
+  };
+
+  const kicker = (a, extra) =>
+    `<div class="krant-kicker">${extra || ""}${a.datum_disp || a.datum} &middot; ${a.leestijd} min lezen</div>`;
+
+  const opening = artikels[0];
+  const rail = artikels.slice(1, 5);
+  const rest = artikels.slice(5);
+
+  doel.innerHTML = `
+    <header class="krantkop">
+      <div class="naamplaat">In het nieuws</div>
+      <div class="dateline">
+        <span>Dossier: ${bron.dossier.naam.replace("&", "&amp;")}</span>
+        <span>${bron.dossier.jaar_van} tot ${bron.dossier.jaar_tot} &middot; ${artikels.length} artikels</span>
+        <span>Stand: ${datumVoluit(bron.opgehaald)}</span>
+      </div>
+    </header>
+
+    <div class="krant-boven">
+      <a class="krant-lead" href="${opening.url}" target="_blank" rel="noopener">
+        ${kicker(opening, "<b>Nieuwste artikel</b> &middot; ")}
+        <h3>${opening.titel}</h3>
+        <p class="excerpt">${opening.excerpt}</p>
+        ${opening.beeld ? `<img src="${opening.beeld}" alt="" loading="lazy">` : bauhausBeeld()}
+      </a>
+      <aside class="krant-rail">
+        <div class="railkop">Ook in het dossier</div>
+        ${rail.map(a => `<a href="${a.url}" target="_blank" rel="noopener">
+          ${kicker(a)}
+          <h3>${a.titel}</h3>
+        </a>`).join("")}
+      </aside>
+    </div>
+
+    <div class="krant-onder">
+      ${rest.map(a => `<a href="${a.url}" target="_blank" rel="noopener">
+        ${a.beeld ? `<img src="${a.beeld}" alt="" loading="lazy">` : bauhausBeeld()}
+        ${kicker(a)}
+        <h3>${a.titel}</h3>
+        <p class="excerpt">${a.excerpt}</p>
+      </a>`).join("")}
+    </div>
+
+    <div class="krant-voet">
+      <p class="leeslink"><a href="${bron.bron}" target="_blank" rel="noopener">Het volledige dossier op Lees mee</a>
+        <span aria-hidden="true">&nearr;</span></p>
+      <p class="stand">alle artikels verschenen eerder op As Gau Paust</p>
+    </div>`;
+}
+
+/* Het GAS-luik naast de camera's: de parkeerboetes uit dezelfde jaarverslagen,
+   en voor overlast en snelheid de bedragen uit de jaarrekeningen. */
+function tekenGas() {
+  const blok = D.gasam.jaren[gekozen] && D.gasam.jaren[gekozen].parkeren;
+  document.getElementById("gas-jaarlabel").textContent = gekozen;
+  document.getElementById("gas-maandjaar").textContent = gekozen;
+
+  const tegels = document.getElementById("gas-tegels");
+  tegels.innerHTML = "";
+  const reeks = jaren.map(j => (D.gasam.jaren[j].parkeren || {}).totaal || 0);
+
+  if (blok) {
+    const vorig = jaren[jaren.indexOf(gekozen) - 1];
+    const vorigTotaal = vorig && D.gasam.jaren[vorig].parkeren ? D.gasam.jaren[vorig].parkeren.totaal : null;
+    const verschil = vorigTotaal ? Math.round(100 * (blok.totaal - vorigTotaal) / vorigTotaal) : null;
+    /* zelfde terugval als bij de camera-tegels: sinds 2023 staat de afhandeling
+       van het lopende jaar enkel nog in de meerjarentabel */
+    const perJaar = blok.afhandeling_per_jaar || {};
+    const afh = Object.assign({}, blok.afhandeling);
+    for (const veld of ["verweer", "gunstig", "ongunstig", "beroep"]) {
+      if (afh[veld] === undefined && (perJaar[veld] || {})[gekozen] !== undefined) afh[veld] = perJaar[veld][gekozen];
+    }
+    const woon = blok.woonplaats || {};
+    const verweer = afh.verweer || ((afh.gunstig || 0) + (afh.ongunstig || 0));
+    const deltaChip = verschil === null ? "" :
+      `<span class="delta ${verschil > 0 ? "op" : verschil < 0 ? "neer" : "vlak"}">${verschil > 0 ? "↑" : verschil < 0 ? "↓" : "→"} ${Math.abs(verschil)}%</span> tegenover ${vorig}`;
+    [["Vaststellingen", getal(blok.totaal), deltaChip, {vonk: vonk(reeks), telSleutel: "gas-tot", telWaarde: blok.totaal}],
+     ["Verweer ingediend", getal(verweer), blok.totaal ? procent(Math.round(1000 * verweer / blok.totaal) / 10) + " van de dossiers" : "",
+       {telSleutel: "gas-verweer", telWaarde: verweer}],
+     ["Boete geschrapt", getal(afh.gunstig), afh.gunstig && verweer ? procent(Math.round(100 * afh.gunstig / verweer)) + " van de verweren" : "",
+       afh.gunstig ? {telSleutel: "gas-gunstig", telWaarde: afh.gunstig} : {}],
+     ["Mechelaars", woon.inwoners_procent !== undefined ? procent(woon.inwoners_procent) : "",
+       "hier is de overtreder wél meestal van eigen bodem", {}]
+    ].forEach(([k, v, n, extra], i) => {
+      if (v === "" || v === null) return;
+      tegels.appendChild(tegel(k, v, n, Object.assign({volgorde: i}, extra)));
+    });
+
+    staafgrafiek(document.getElementById("gas-jaren"), reeks, jaren,
+      {markeer: jaren.indexOf(gekozen), hoog: 190, omschrijving: "parkeervaststellingen per jaar"});
+    const maandvak = document.getElementById("gas-maanden");
+    if (blok.per_maand) staafgrafiek(maandvak, blok.per_maand, MAANDEN, {hoog: 190, omschrijving: "parkeervaststellingen per maand"});
+    else maandvak.innerHTML = "<p>Geen maandcijfers in dit verslag.</p>";
+
+    const namen = {initieel: "geen verweer", gunstig: "verweer gegrond", ongunstig: "verweer verworpen", sepot: "geseponeerd", beroep: "beroep bij de rechter"};
+    const delen = ["initieel", "gunstig", "ongunstig", "sepot", "beroep"]
+      .filter(k => afh[k]).map(k => ({naam: namen[k], waarde: afh[k], kleur: AFHANDELING_KLEUR[k].vlak, tekst: AFHANDELING_KLEUR[k].tekst}));
+    const afhvak = document.getElementById("gas-afhandeling");
+    if (delen.length) verdeling(afhvak, delen);
+    else afhvak.innerHTML = "<p>Geen cijfers over de afhandeling in dit verslag.</p>";
+
+    const top = blok.top_inbreuken || [];
+    const inbreukvak = document.getElementById("gas-inbreuken");
+    if (top.length) {
+      const grootste = Math.max(...top.map(r => r.aandeel_procent), 1);
+      inbreukvak.innerHTML = "";
+      const lijst = el("ul", "balklijst");
+      top.forEach(r => {
+        const li = el("li");
+        const om = el("span");
+        om.appendChild(el("span", "om", r.omschrijving || D.feitcodes[r.feitcode] || "overtreding " + r.feitcode));
+        om.appendChild(el("div", "co", "feitcode " + r.feitcode));
+        li.appendChild(om);
+        li.appendChild(el("span", "n", procent(r.aandeel_procent)));
+        const staaf = el("span", "staaf");
+        staaf.style.width = (100 * r.aandeel_procent / grootste) + "%";
+        li.appendChild(staaf);
+        lijst.appendChild(li);
+      });
+      inbreukvak.appendChild(lijst);
+    } else {
+      inbreukvak.innerHTML = "<p>Dit jaarverslag noemt geen top vijf.</p>";
+    }
+    document.getElementById("tab-gas").textContent = getal(blok.totaal);
+  } else {
+    tegels.innerHTML = "<p class=\"duiding\">Het jaarverslag " + gekozen + " bevat geen parkeerluik voor Mechelen.</p>";
+    ["gas-jaren", "gas-maanden", "gas-afhandeling", "gas-inbreuken"].forEach(id => document.getElementById(id).innerHTML = "");
+    document.getElementById("tab-gas").textContent = "";
+  }
+
+  /* overlast en snelheid: geboekte bedragen uit de recentste jaarrekening */
+  const bronnen = D.budget.opbrengsten || {};
+  const laatste = Object.keys(bronnen).filter(b => b.startsWith("jaarrekening")).sort().pop();
+  const tabel = laatste ? bronnen[laatste] : {};
+  const overlast = (tabel["7390010"] || {}).rekening || {};
+  const snelheid = (tabel["7390040"] || {}).rekening || {};
+  const geldJaren = [...new Set([...Object.keys(overlast), ...Object.keys(snelheid)])].sort();
+  if (geldJaren.length) {
+    duostaven(document.getElementById("gas-ander-overlast"), geldJaren.map(j => ({label: j, reeksen: [
+      {naam: "overlast", waarde: overlast[j] || 0, kleur: "var(--steen)"}]})), {hoog: 200});
+    duostaven(document.getElementById("gas-ander-snelheid"), geldJaren.map(j => ({label: j, reeksen: [
+      {naam: "snelheid", waarde: snelheid[j] || 0, kleur: "var(--leisteen)"}]})), {hoog: 200});
+  }
+}
+
+/* De kop telt live mee met de tijdbalk: het aantal in het inktkader, de
+   periode eronder. Zo is de titel zelf de vangst. */
+function tekenHeld() {
+  const stap = huidigeStap();
+  const blok = D.gasam.jaren[stap.jaar] && D.gasam.jaren[stap.jaar].autoluw;
+  let waarde = null;
+  if (blok) {
+    waarde = stap.maand === null ? blok.totaal
+      : (blok.per_maand ? blok.per_maand[stap.maand] : null);
+  }
+  const getalvak = document.getElementById("held-getal");
+  telNaar(getalvak, "held", waarde || 0, n => getal(n) + " keer");
+  document.getElementById("held-periode").textContent =
+    stap.maand === null ? "de autoluwe zones in, in " + stap.jaar
+                        : "de autoluwe zones in, in " + stap.label;
+}
+
+function tekenAlles() {
+  tekenOnderdeel("autoluw", "anpr");
+  tekenGas();
+  tekenHeld();
+  tekenCameralijst();
+  tekenDetail();
+  tekenHeatmap();
+  if (view === "camera") tekenKaart();
+}
+
+/* ================================================================
+   De speler: door de jaren of door de maanden
+   ================================================================ */
+function zetStap(nr, vanuitSpeler, behoudVergelijk) {
+  /* Een keuze in de tijd zet de heatmap weer scherp, behalve bij de terugsprong
+     na het loslaten: dan blijven alle jaren even helder staan. */
+  if (!behoudVergelijk) heatFocus = true;
+  const lijst = stappen();
+  stapNr = Math.max(0, Math.min(lijst.length - 1, nr));
+  const stap = lijst[stapNr];
+  const schuif = document.getElementById("schuif");
+  schuif.max = lijst.length - 1;
+  schuif.value = stapNr;
+  schuif.style.setProperty("--vul", (lijst.length > 1 ? 100 * stapNr / (lijst.length - 1) : 0) + "%");
+  /* Het jaar staat al in de jaarrail; naast de speelknop hoort het niet nog
+     eens. In de maandstand blijft enkel de maandnaam over (het jaar licht
+     dan in de rail op), in de jaarstand niets. */
+  const maandnaam = stap.maand === null ? "" : stap.label.replace(/\s*\d{4}$/, "");
+  document.getElementById("stand-label").textContent = maandnaam;
+  document.getElementById("stand-noot").textContent = "";
+  document.querySelector("#tijdbalk .stand").hidden = !maandnaam;
+
+  if (stap.jaar !== gekozen) {
+    gekozen = stap.jaar;
+    merkJaar();
+    tekenAlles();
+  } else {
+    tekenKaart();
+    tekenCameralijst();
+    tekenHeatmap();
+  }
+  tekenHeld();
+  if (!vanuitSpeler) stopSpeler();
+}
+
+function stapVanJaar(jaar) {
+  const lijst = stappen();
+  const i = lijst.findIndex(s => s.jaar === jaar);
+  return i < 0 ? 0 : i;
+}
+
+function stopSpeler() {
+  document.body.classList.remove("speelt");
+  rustte = false;
+  if (!speler) return;
+  clearInterval(speler);
+  speler = null;
+  const knop = document.getElementById("speel");
+  knop.textContent = "▶";
+  knop.classList.remove("loopt");
+  knop.setAttribute("aria-label", "Afspelen");
+}
+
+function startSpeler() {
+  stopSpeler();
+  document.body.classList.add("speelt");
+  const knop = document.getElementById("speel");
+  knop.textContent = "❚❚";
+  knop.classList.add("loopt");
+  knop.setAttribute("aria-label", "Pauzeren");
+  const tempo = modus === "maand" ? 420 : 900;
+  if (stapNr >= stappen().length - 1) stapNr = -1;   /* opnieuw vanaf het begin */
+  speler = setInterval(() => {
+    if (stapNr >= stappen().length - 1) {
+      if (!herhaal) { stopSpeler(); return; }
+      /* één tel blijven hangen op het laatste jaar, dan opnieuw van voren af */
+      if (!rustte) { rustte = true; return; }
+      rustte = false;
+      zetStap(0, true);
+      return;
+    }
+    zetStap(stapNr + 1, true);
+  }, tempo);
+}
+
+function zetModus(nieuw) {
+  if (nieuw === modus) return;
+  stopSpeler();
+  const jaarVanNu = gekozen;
+  modus = nieuw;
+  document.querySelectorAll("#tijdbalk .moduskiezer button").forEach(k =>
+    k.setAttribute("aria-pressed", k.dataset.modus === modus ? "true" : "false"));
+  bouwJaarmerken();
+  /* zo dicht mogelijk bij het jaar waar je stond blijven */
+  const lijst = stappen();
+  let i = lijst.findIndex(s => s.jaar === jaarVanNu);
+  if (i < 0) i = lijst.length - 1;
+  zetStap(i);
+}
+
+function start() {
+  bouwJaarmerken();
+  kaartBediening();
+
+  /* tijdbalk */
+  document.getElementById("speel").addEventListener("click", () => speler ? stopSpeler() : startSpeler());
+  document.getElementById("herhaal").addEventListener("click", e => {
+    herhaal = !herhaal;
+    e.currentTarget.setAttribute("aria-pressed", String(herhaal));
+  });
+  document.getElementById("schuif").addEventListener("input", e => zetStap(+e.target.value));
+  document.querySelectorAll("#tijdbalk .moduskiezer button").forEach(knop => {
+    if (knop.dataset.modus === "maand" && !maandJaren.length) knop.disabled = true;
+    knop.addEventListener("click", () => zetModus(knop.dataset.modus));
+  });
+  document.getElementById("heat-keuze").querySelectorAll("button").forEach(knop =>
+    knop.addEventListener("click", () => { heatBron = knop.dataset.bron; tekenHeatmap(); }));
+  document.querySelectorAll("#heat-schaal button").forEach(knop =>
+    knop.addEventListener("click", () => { heatSchaal = knop.dataset.schaal; tekenHeatmap(); }));
+  document.getElementById("sorteerknop").addEventListener("click", () => {
+    sortering = sortering === "aantal" ? "naam" : "aantal";
+    tekenCameralijst();
+  });
+  document.getElementById("klapknop").addEventListener("click", () => {
+    const paneel = document.getElementById("kaartpaneel");
+    const uit = paneel.classList.toggle("uit");
+    document.getElementById("klapknop").textContent = uit ? "inklappen" : "alles tonen";
+    document.getElementById("klapknop").setAttribute("aria-expanded", uit ? "true" : "false");
+    tekenCameralijst();
+    tekenKaart();
+  });
+  zetStap(stapVanJaar(gekozen));
+
+  tekenAlles();
+  tekenGeld();
+
+  /* De kaart kan pas getekend worden als haar vak een afmeting heeft. In een
+     paneel dat nog dicht staat, een tabblad op de achtergrond of een venster dat
+     nog moet openen is dat bij het laden niet zo, en dan bleef de kaart leeg.
+     Deze waarnemer tekent alsnog zodra het vak verschijnt of van maat verandert. */
+  const kaartvak = document.getElementById("kaart");
+  let getekendOp = 0;
+  const kijkNaarDeKaart = () => {
+    const breedte = kaartvak.clientWidth;
+    if (breedte < 60 || breedte === getekendOp) return;
+    getekendOp = breedte;
+    if (!kaart.gepast) pasKaartOpMerken(); else tekenKaart();
+  };
+  if (window.ResizeObserver) new ResizeObserver(kijkNaarDeKaart).observe(kaartvak);
+  /* Een waarnemer en requestAnimationFrame worden pas afgeleverd als de pagina
+     ook echt getekend wordt. Staat ze in een venster dat nog dicht is, dan
+     gebeurt dat niet en zou de kaart leeg blijven. Een gewone timer loopt wél
+     door, dus die houdt een tijdje de wacht tot het kaartvak zijn breedte heeft. */
+  let wachtbeurten = 0;
+  const wacht = setInterval(() => {
+    kijkNaarDeKaart();
+    if (++wachtbeurten > 90 || (getekendOp && wachtbeurten > 20)) clearInterval(wacht);
+  }, 700);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && view === "camera") {
+      if (!kaart.gepast) pasKaartOpMerken(); else tekenKaart();
+    }
+  });
+
+  document.querySelectorAll("[role=tab]").forEach(knop =>
+    knop.addEventListener("click", () => toonView(knop.dataset.view)));
+  const uitHash = (location.hash || "").replace("#", "");
+  tekenGazet();
+  toonView(["camera", "gas", "nieuws", "geld"].includes(uitHash) ? uitHash : "camera");
+
+  const meldingen = D.gasam.meldingen || [];
+  document.getElementById("meldingen").textContent = meldingen.length
+    ? "Opgemerkt bij het inlezen: " + meldingen.join(" / ") : "";
+
+  const terug = document.getElementById("terug");
+  terug.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
+  const balk = document.getElementById("appbalk");
+  window.addEventListener("scroll", () => {
+    balk.classList.toggle("gescrold", window.scrollY > 4);
+    terug.classList.toggle("zichtbaar", window.scrollY > 700);
+  }, {passive: true});
+
+  /* De grafieken zijn op maat van hun vak getekend, dus na een maatverandering
+     moeten ze opnieuw. Even wachten tot het slepen van de vensterrand stopt. */
+  let hertekenen = null;
+  const hertekenStraks = () => {
+    clearTimeout(hertekenen);
+    hertekenen = setTimeout(() => { tekenAlles(); tekenGeld(); }, 200);
+  };
+  window.addEventListener("resize", hertekenStraks);
+  /* Ook een venster dat pas later zijn breedte krijgt (een paneel dat opengaat)
+     moet de grafieken opnieuw op maat krijgen. */
+  if (window.ResizeObserver) {
+    let vorige = 0;
+    new ResizeObserver(() => {
+      const breedte = document.querySelector(".wrap").clientWidth;
+      if (Math.abs(breedte - vorige) < 8) return;
+      vorige = breedte;
+      hertekenStraks();
+    }).observe(document.querySelector(".wrap"));
+  }
+
+  document.addEventListener("keydown", e => {
+    if (e.target.closest("input,textarea,select")) return;
+    if (e.key === "ArrowLeft") zetStap(stapNr - 1);
+    if (e.key === "ArrowRight") zetStap(stapNr + 1);
+    if (e.key === " " && view === "camera") { e.preventDefault(); speler ? stopSpeler() : startSpeler(); }
+    if (e.key === "Escape") {
+      const vlak = document.getElementById("menuvlak");
+      if (vlak && !vlak.hidden) { menu(false); return; }
+      kies(null);
+    }
+  });
+}
+start();
+</script>
+</body>
+</html>

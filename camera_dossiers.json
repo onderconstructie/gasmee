@@ -1,0 +1,226 @@
+{
+ "_leesmij": "De figuren 'aantal dossiers per camera' staan in de jaarverslagen 2022, 2023 en 2024 (deels) als beeld in de pdf. Hier staan ze overgetypt, per figuur (blok) met het totaal dat de figuur zelf vermeldt. parse_gasam.py gebruikt dit bestand alleen als alles klopt: de som van elk blok tegen het bloktotaal, alle blokken samen tegen het gepubliceerde jaartotaal, en de kruiszinnen in de lopende tekst ('Naam = 1.234 in 2023') tegen de overgetypte waarden. Klopt er iets niet, dan een melding en geen cijfers per camera. Sinds 2023 splitst het verslag in twee figuren: autoluwe binnenstad + knips/stops, en vesten + wijk Caputsteen-Nekkerspoel. Onder '2024' staat ook 'parkeren': de maandgrafiek, de woonplaatstaart en de top 5 van het parkeerhoofdstuk, die in 2024 eveneens beeld zijn; de maanden moeten exact tot het parkeertotaal tellen, de woonplaats tot 100. Onder '2024' > 'afhandeling' staan initieel en sepot van de afhandelingstaarten (beeld); de parser vult ze aan met de verweertabel en aanvaardt ze alleen als initieel + gunstig + ongunstig + sepot + beroep exact het jaartotaal geeft.",
+ "2022": {
+  "paginas": [
+   94
+  ],
+  "blokken": [
+   {
+    "totaal": 60952,
+    "cameras": {
+     "Begijnenstraat": 1289,
+     "Caputsteenstraat": 3351,
+     "Désiré Boucherystraat": 19,
+     "Frederik de Merodestraat": 1995,
+     "Haverwerf": 805,
+     "Hendrik Speecqvest": 2323,
+     "IJzerenleen": 1408,
+     "Ivo Cornelisstraat": 2536,
+     "Lange Schipstraat": 885,
+     "Kleine Nieuwedijkstraat": 1327,
+     "Koningin Astridlaan": 4764,
+     "Mechelsbroekstraat": 1292,
+     "Nauwstraat": 174,
+     "Onze-Lieve-Vrouwestraat": 2944,
+     "Sint-Janstraat": 5844,
+     "Steenweg 20": 440,
+     "Steenweg 44": 2663,
+     "Tuinstraatje": 1047,
+     "Van Beethovenstraat": 979,
+     "Van Benedenlaan 1": 5779,
+     "Van Benedenlaan 47": 14344,
+     "Van Hoeystraat": 3415,
+     "Veemarkt": 1071,
+     "Vijfhoek": 0,
+     "Wollemarkt": 142,
+     "Zakstraat": 110,
+     "Zoutwerf": 6
+    }
+   }
+  ]
+ },
+ "2023": {
+  "paginas": [
+   105,
+   106
+  ],
+  "blokken": [
+   {
+    "totaal": 29092,
+    "cameras": {
+     "Begijnenstraat": 1270,
+     "Désiré Boucherystraat": 45,
+     "Frederik de Merodestraat": 5659,
+     "Haverwerf": 136,
+     "IJzerenleen": 1635,
+     "Ivo Cornelisstraat": 1648,
+     "Lange Schipstraat": 182,
+     "Mechelsbroekstraat": 994,
+     "Nauwstraat": 165,
+     "Onze-Lieve-Vrouwestraat": 540,
+     "Sint-Janstraat": 9195,
+     "Steenweg 20": 885,
+     "Steenweg 44": 2669,
+     "Tuinstraatje": 372,
+     "Van Beethovenstraat": 307,
+     "Van Hoeystraat": 0,
+     "Veemarkt": 2575,
+     "Vijfhoek": 529,
+     "Wollemarkt": 142,
+     "Zakstraat": 125,
+     "Zoutwerf": 19
+    }
+   },
+   {
+    "totaal": 92525,
+    "cameras": {
+     "Caputsteenstraat": 9326,
+     "Frans Halsvest": 4793,
+     "Hendrik Speecqvest": 5475,
+     "Hoogstratenplein": 11667,
+     "Kleine Nieuwedijkstraat": 4754,
+     "Koningin Astridlaan": 11542,
+     "Olivetenvest": 4379,
+     "Schuttersvest": 2501,
+     "Sint-Gommarusstraat": 2940,
+     "Van Benedenlaan 1": 11151,
+     "Van Benedenlaan 47": 23997
+    }
+   }
+  ]
+ },
+ "2024": {
+  "paginas": [
+   104,
+   105
+  ],
+  "woonplaats": {
+   "inwoners_procent": 17.0,
+   "niet_inwoners_procent": 83.0
+  },
+  "blokken": [
+   {
+    "totaal": 42290,
+    "cameras": {
+     "Begijnenstraat": 925,
+     "Désiré Boucherystraat": 233,
+     "Frederik de Merodestraat": 2231,
+     "Grote Markt": 1673,
+     "Haverwerf": 536,
+     "Hoogstraat/Milsenstraat": 24,
+     "IJzerenleen": 596,
+     "Ivo Cornelisstraat": 1497,
+     "Korenmarkt": 9655,
+     "Lange Schipstraat": 166,
+     "Mechelsbroekstraat": 1186,
+     "Mezenstraat": 3762,
+     "Nauwstraat": 38,
+     "Sint-Janstraat": 5018,
+     "Steenweg 20": 582,
+     "Steenweg 44": 2613,
+     "Tuinstraatje": 598,
+     "Van Beethovenstraat": 2502,
+     "Van Hoeystraat": 2872,
+     "Veemarkt": 2194,
+     "Vijfhoek": 2662,
+     "Wollemarkt": 51,
+     "Zakstraat": 367,
+     "Zoutwerf": 309
+    }
+   },
+   {
+    "totaal": 51132,
+    "cameras": {
+     "Caputsteenstraat": 8067,
+     "Frans Halsvest": 2736,
+     "Hendrik Speecqvest": 2745,
+     "Hoogstratenplein": 1710,
+     "Kleine Nieuwedijkstraat": 347,
+     "Koningin Astridlaan": 2244,
+     "Olivetenvest": 814,
+     "Schuttersvest": 13660,
+     "Sint-Gommarusstraat": 702,
+     "Van Benedenlaan 1": 7036,
+     "Van Benedenlaan 47": 10774,
+     "Zwartzustersvest": 297
+    }
+   }
+  ],
+  "maand_pagina": 103,
+  "per_maand": [
+   7946,
+   8106,
+   7278,
+   8070,
+   8842,
+   8441,
+   7963,
+   7007,
+   7756,
+   7898,
+   7124,
+   6991
+  ],
+  "parkeren": {
+   "paginas": [
+    116,
+    117
+   ],
+   "per_maand": [
+    687,
+    650,
+    932,
+    822,
+    552,
+    578,
+    413,
+    876,
+    1104,
+    847,
+    1038,
+    997
+   ],
+   "woonplaats": {
+    "inwoners_procent": 49.0,
+    "niet_inwoners_procent": 51.0
+   },
+   "top_inbreuken": [
+    {
+     "feitcode": "Art. 25 (E1)",
+     "omschrijving": "",
+     "aandeel_procent": 32.0
+    },
+    {
+     "feitcode": "Art. 51,1°",
+     "omschrijving": "",
+     "aandeel_procent": 22.0
+    },
+    {
+     "feitcode": "Art. 25 (Tijdelijke E1)",
+     "omschrijving": "",
+     "aandeel_procent": 11.0
+    },
+    {
+     "feitcode": "Art. 25 (E3)",
+     "omschrijving": "",
+     "aandeel_procent": 5.0
+    },
+    {
+     "feitcode": "Art. 10",
+     "omschrijving": "",
+     "aandeel_procent": 5.0
+    }
+   ]
+  },
+  "afhandeling": {
+   "autoluw": {
+    "initieel": 84565,
+    "sepot": 1844
+   },
+   "parkeren": {
+    "initieel": 8354,
+    "sepot": 134
+   }
+  }
+ }
+}

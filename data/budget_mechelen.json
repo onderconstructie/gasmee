@@ -1,0 +1,830 @@
+{
+ "bron": "Jaarrekeningen stad en OCMW Mechelen (documentatie bij de jaarrekening)",
+ "kolommen": {
+  "initiele_kredieten": "planning: het krediet zoals het bij de start van het jaar in het meerjarenplan stond",
+  "eindkredieten": "planning na de aanpassingen die de raad in de loop van het jaar goedkeurde",
+  "jaarrekening": "rekening: wat er werkelijk is ontvangen of uitgegeven"
+ },
+ "acties": {
+  "AC000039": {
+   "uitleg": "bestuurlijke handhaving (GASAM): de GAS-ontvangsten",
+   "titel": "Mechelen zorgt voor een sterke bestuurlijke handhaving (GASAM).",
+   "jaren": {
+    "2020": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 626441.0,
+       "eindkredieten": 724931.0,
+       "initiele_kredieten": 720154.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 2417345.0,
+       "eindkredieten": 3565019.0,
+       "initiele_kredieten": 3565019.0
+      }
+     }
+    },
+    "2021": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 1016464.6,
+       "eindkredieten": 1076230.44,
+       "initiele_kredieten": 1076230.44
+      },
+      "ontvangsten": {
+       "jaarrekening": 6929153.03,
+       "eindkredieten": 9210703.4,
+       "initiele_kredieten": 9210703.4
+      }
+     }
+    },
+    "2022": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 1242007.0,
+       "eindkredieten": 1560553.0,
+       "initiele_kredieten": 1624521.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 11754991.0,
+       "eindkredieten": 12653395.0,
+       "initiele_kredieten": 12932475.0
+      }
+     }
+    },
+    "2023": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 1469849.0,
+       "eindkredieten": 1601862.0,
+       "initiele_kredieten": 1644540.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 15583295.0,
+       "eindkredieten": 17152955.0,
+       "initiele_kredieten": 13849223.0
+      }
+     }
+    },
+    "2024": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 1707250.0,
+       "eindkredieten": 1864187.0,
+       "initiele_kredieten": 1750683.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 14086095.0,
+       "eindkredieten": 16451920.0,
+       "initiele_kredieten": 16451920.0
+      }
+     }
+    },
+    "2025": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 1657364.0,
+       "eindkredieten": 1800473.0,
+       "initiele_kredieten": 1800473.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 11378565.0,
+       "eindkredieten": 14628276.0,
+       "initiele_kredieten": 14628276.0
+      }
+     }
+    }
+   }
+  },
+  "AC000034": {
+   "uitleg": "deelsystemen, (buurt)parkings, infrastructuur en autoluw gebied",
+   "titel": "Mechelen zet in op deelsystemen, (buurt)parkings, betere",
+   "jaren": {
+    "2020": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 654477.0,
+       "eindkredieten": 838731.0,
+       "initiele_kredieten": 963415.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 21059.0,
+       "eindkredieten": 96865.0,
+       "initiele_kredieten": 96865.0
+      }
+     },
+     "investeringen": {
+      "uitgaven": {
+       "jaarrekening": 339703.0,
+       "eindkredieten": 339703.0,
+       "initiele_kredieten": 1151867.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 42003.0,
+       "eindkredieten": 42003.0,
+       "initiele_kredieten": 0.0
+      }
+     }
+    },
+    "2021": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 734794.43,
+       "eindkredieten": 1027451.0,
+       "initiele_kredieten": 1027451.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 77892.05,
+       "eindkredieten": 148365.0,
+       "initiele_kredieten": 148365.0
+      }
+     },
+     "investeringen": {
+      "uitgaven": {
+       "jaarrekening": 683141.38,
+       "eindkredieten": 2466928.13,
+       "initiele_kredieten": 1456400.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 35808.25,
+       "eindkredieten": 62002.77,
+       "initiele_kredieten": 62002.77
+      }
+     }
+    },
+    "2022": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 843972.0,
+       "eindkredieten": 986082.0,
+       "initiele_kredieten": 926496.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 75018.0,
+       "eindkredieten": 70265.0,
+       "initiele_kredieten": 148365.0
+      }
+     },
+     "investeringen": {
+      "uitgaven": {
+       "jaarrekening": 407992.0,
+       "eindkredieten": 1227620.0,
+       "initiele_kredieten": 1065197.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 68981.0,
+       "eindkredieten": 89318.0,
+       "initiele_kredieten": 10000.0
+      }
+     }
+    },
+    "2023": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 711556.0,
+       "eindkredieten": 836569.0,
+       "initiele_kredieten": 1078659.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 62766.0,
+       "eindkredieten": 70265.0,
+       "initiele_kredieten": 70265.0
+      }
+     },
+     "investeringen": {
+      "uitgaven": {
+       "jaarrekening": 347875.0,
+       "eindkredieten": 1259570.0,
+       "initiele_kredieten": 1770373.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 24948.0,
+       "eindkredieten": 45833.0,
+       "initiele_kredieten": 91383.0
+      }
+     }
+    },
+    "2024": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 745025.0,
+       "eindkredieten": 819971.0,
+       "initiele_kredieten": 907149.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 1800.0,
+       "eindkredieten": 220265.0,
+       "initiele_kredieten": 220265.0
+      }
+     },
+     "investeringen": {
+      "uitgaven": {
+       "jaarrekening": 1227068.0,
+       "eindkredieten": 2132364.0,
+       "initiele_kredieten": 1344462.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 20094.0,
+       "eindkredieten": 195009.0,
+       "initiele_kredieten": 137906.0
+      }
+     }
+    },
+    "2025": {
+     "exploitatie": {
+      "uitgaven": {
+       "jaarrekening": 649072.0,
+       "eindkredieten": 810817.0,
+       "initiele_kredieten": 789998.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 86788.0,
+       "eindkredieten": 220265.0,
+       "initiele_kredieten": 220265.0
+      }
+     },
+     "investeringen": {
+      "uitgaven": {
+       "jaarrekening": 558041.0,
+       "eindkredieten": 412000.0,
+       "initiele_kredieten": 412000.0
+      },
+      "ontvangsten": {
+       "jaarrekening": 13869.0,
+       "eindkredieten": 10000.0,
+       "initiele_kredieten": 10000.0
+      }
+     }
+    }
+   }
+  }
+ },
+ "rekeningen_per_jaar": {
+  "2023": {
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "gerealiseerd": 95171.0
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "gerealiseerd": 4788811.09
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "gerealiseerd": 7774669.32
+   },
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "gerealiseerd": 458384.64
+   },
+   "7020600": {
+    "omschrijving": "Parkeeropbrengsten",
+    "gerealiseerd": 1143070.82
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "gerealiseerd": 130000.0
+   }
+  },
+  "2024": {
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "gerealiseerd": 82008.61
+   },
+   "7390030": {
+    "omschrijving": "GAS: autoluw",
+    "gerealiseerd": 12.36
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "gerealiseerd": 4774565.81
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "gerealiseerd": 5803259.52
+   },
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "gerealiseerd": 1090728.0
+   },
+   "7020600": {
+    "omschrijving": "Parkeeropbrengsten",
+    "gerealiseerd": 1094021.51
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "gerealiseerd": 195000.0
+   }
+  },
+  "2025": {
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "gerealiseerd": 85271.85
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "gerealiseerd": 3674927.22
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "gerealiseerd": 4541202.51
+   },
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "gerealiseerd": 872268.0
+   },
+   "7020600": {
+    "omschrijving": "Parkeeropbrengsten",
+    "gerealiseerd": 1250169.39
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "gerealiseerd": 205000.0
+   }
+  }
+ },
+ "opbrengsten": {
+  "jaarrekening 2022": {
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {
+     "2020": 85000.0,
+     "2021": 265000.0,
+     "2022": -205000.0
+    },
+    "raming": {
+     "2023": 175000.0,
+     "2024": 175000.0,
+     "2025": 175000.0
+    }
+   }
+  },
+  "jaarrekening 2023": {
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "rekening": {
+     "2020": 0.0,
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0
+    },
+    "raming": {
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
+    }
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {
+     "2020": 85000.0,
+     "2021": 265000.0,
+     "2022": -205000.0,
+     "2023": 130000.0
+    },
+    "raming": {
+     "2024": 175000.0,
+     "2025": 175000.0,
+     "2026": 175000.0
+    }
+   }
+  },
+  "jaarrekening 2024": {
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "rekening": {
+     "2020": 0.0,
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 458384.64,
+     "2024": 1090728.0
+    },
+    "raming": {
+     "2025": 1168966.0,
+     "2026": 1127586.0
+    }
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {
+     "2020": 85000.0,
+     "2021": 265000.0,
+     "2022": -205000.0,
+     "2023": 130000.0,
+     "2024": 195000.0
+    },
+    "raming": {
+     "2025": 175000.0,
+     "2026": 175000.0
+    }
+   },
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "rekening": {
+     "2020": 89525.0,
+     "2021": 77959.0,
+     "2022": 85802.0,
+     "2023": 95171.0,
+     "2024": 82008.61
+    },
+    "raming": {
+     "2025": 176000.0,
+     "2026": 176000.0
+    }
+   },
+   "7390020": {
+    "omschrijving": "GAS: parkeren",
+    "rekening": {
+     "2020": 533627.0,
+     "2021": 284989.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0
+    },
+    "raming": {
+     "2025": 0.0
+    }
+   },
+   "7390030": {
+    "omschrijving": "GAS: autoluw",
+    "rekening": {
+     "2020": 1161454.0,
+     "2021": 1169163.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 12.36
+    },
+    "raming": {
+     "2025": 0.0,
+     "2026": 0.0
+    }
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "rekening": {
+     "2020": 0.0,
+     "2021": 3850683.17,
+     "2022": 7128340.0,
+     "2023": 4788811.09,
+     "2024": 4774565.81
+    },
+    "raming": {
+     "2025": 6400000.0,
+     "2026": 6200000.0
+    }
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "rekening": {
+     "2020": 0.0,
+     "2021": 806633.0,
+     "2022": 3381139.31,
+     "2023": 7774669.32,
+     "2024": 5803259.52
+    },
+    "raming": {
+     "2025": 4900000.0,
+     "2026": 4700000.0
+    }
+   }
+  },
+  "jaarrekening 2025": {
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "rekening": {
+     "2020": 0.0,
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 458385.0,
+     "2024": 1090728.0,
+     "2025": 872268.0
+    },
+    "raming": {
+     "2026": 1127586.0
+    }
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {
+     "2020": 85000.0,
+     "2021": 265000.0,
+     "2022": -205000.0,
+     "2023": 130000.0,
+     "2024": 195000.0,
+     "2025": 205000.0
+    },
+    "raming": {
+     "2026": 175000.0
+    }
+   },
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "rekening": {
+     "2020": 89525.0,
+     "2021": 77959.0,
+     "2022": 85802.0,
+     "2023": 95171.0,
+     "2024": 82009.0,
+     "2025": 85272.0
+    },
+    "raming": {
+     "2026": 176000.0
+    }
+   },
+   "7390020": {
+    "omschrijving": "GAS: parkeren",
+    "rekening": {
+     "2020": 533627.0,
+     "2021": 284989.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0
+    },
+    "raming": {}
+   },
+   "7390030": {
+    "omschrijving": "GAS: autoluw",
+    "rekening": {
+     "2020": 1161454.0,
+     "2021": 1169163.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 12.0,
+     "2025": 0.0
+    },
+    "raming": {
+     "2026": 0.0
+    }
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "rekening": {
+     "2020": 0.0,
+     "2021": 3850683.0,
+     "2022": 7128340.0,
+     "2023": 4788811.0,
+     "2024": 4774566.0,
+     "2025": 3674927.0
+    },
+    "raming": {
+     "2026": 6200000.0
+    }
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "rekening": {
+     "2020": 0.0,
+     "2021": 806633.0,
+     "2022": 3381139.0,
+     "2023": 7774669.0,
+     "2024": 5803260.0,
+     "2025": 4541203.0
+    },
+    "raming": {
+     "2026": 4700000.0
+    }
+   }
+  },
+  "aanpassing meerjarenplan nr. 3 (2020)": {
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2020": 100000.0
+    }
+   }
+  },
+  "meerjarenplan (2020)": {
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2020": 100000.0
+    }
+   }
+  },
+  "aanpassing meerjarenplan nr. 5 (2021)": {
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2021": 100000.0,
+     "2022": 100000.0,
+     "2023": 100000.0,
+     "2024": 100000.0,
+     "2025": 100000.0
+    }
+   },
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "rekening": {},
+    "raming": {
+     "2021": 276000.0,
+     "2022": 276000.0,
+     "2023": 276000.0,
+     "2024": 276000.0,
+     "2025": 276000.0
+    }
+   },
+   "7390020": {
+    "omschrijving": "GAS: parkeren",
+    "rekening": {},
+    "raming": {
+     "2021": 201291.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0
+    }
+   },
+   "7390030": {
+    "omschrijving": "GAS: autoluw",
+    "rekening": {},
+    "raming": {
+     "2021": 574411.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0
+    }
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "rekening": {},
+    "raming": {
+     "2021": 4300000.0,
+     "2022": 8040000.0,
+     "2023": 8691900.0,
+     "2024": 8691900.0,
+     "2025": 8691900.0
+    }
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "rekening": {},
+    "raming": {
+     "2021": 2755548.0,
+     "2022": 3531250.0,
+     "2023": 3531250.0,
+     "2024": 3531250.0,
+     "2025": 3531250.0
+    }
+   }
+  },
+  "aanpassing meerjarenplan nr. 6 (2022)": {
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2022": 175000.0,
+     "2023": 175000.0,
+     "2024": 175000.0,
+     "2025": 175000.0
+    }
+   },
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "rekening": {},
+    "raming": {
+     "2022": 176000.0,
+     "2023": 176000.0,
+     "2024": 176000.0,
+     "2025": 176000.0
+    }
+   },
+   "7390020": {
+    "omschrijving": "GAS: parkeren",
+    "rekening": {},
+    "raming": {
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0
+    }
+   },
+   "7390030": {
+    "omschrijving": "GAS: autoluw",
+    "rekening": {},
+    "raming": {
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0
+    }
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "rekening": {},
+    "raming": {
+     "2022": 8042000.0,
+     "2023": 8693900.0,
+     "2024": 8693900.0,
+     "2025": 8693900.0
+    }
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "rekening": {},
+    "raming": {
+     "2022": 3531250.0,
+     "2023": 3531250.0,
+     "2024": 3531250.0,
+     "2025": 3531250.0
+    }
+   }
+  },
+  "aanpassing meerjarenplan nr. 7 (2022)": {
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2022": 175000.0,
+     "2023": 175000.0,
+     "2024": 175000.0,
+     "2025": 175000.0
+    }
+   },
+   "7390010": {
+    "omschrijving": "GAS: overlast",
+    "rekening": {},
+    "raming": {
+     "2022": 176000.0,
+     "2023": 176000.0,
+     "2024": 176000.0,
+     "2025": 176000.0
+    }
+   },
+   "7390040": {
+    "omschrijving": "GAS: snelheid",
+    "rekening": {},
+    "raming": {
+     "2022": 8042000.0,
+     "2023": 8693900.0,
+     "2024": 8693900.0,
+     "2025": 8693900.0
+    }
+   },
+   "7390050": {
+    "omschrijving": "GAS 4: parkeren en autoluw",
+    "rekening": {},
+    "raming": {
+     "2022": 3531250.0,
+     "2023": 3531250.0,
+     "2024": 3581250.0,
+     "2025": 3581250.0
+    }
+   }
+  },
+  "aanpassing meerjarenplan nr. 8 (2023)": {
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2022": -205000.0,
+     "2023": 175000.0,
+     "2024": 175000.0,
+     "2025": 175000.0
+    }
+   }
+  },
+  "aanpassing meerjarenplan nr. 9 (2023)": {
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "rekening": {},
+    "raming": {
+     "2023": 718965.0,
+     "2024": 1360345.0,
+     "2025": 1168966.0
+    }
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2023": 175000.0,
+     "2024": 175000.0,
+     "2025": 175000.0
+    }
+   }
+  },
+  "aanpassing meerjarenplan nr. 10 (2024)": {
+   "7318100": {
+    "omschrijving": "Administratiekosten GAS",
+    "rekening": {},
+    "raming": {
+     "2024": 1360345.0,
+     "2025": 1168966.0
+    }
+   },
+   "7373000": {
+    "omschrijving": "Belasting op ontbreken van parkeerplaatsen",
+    "rekening": {},
+    "raming": {
+     "2024": 310000.0,
+     "2025": 175000.0
+    }
+   }
+  }
+ }
+}
