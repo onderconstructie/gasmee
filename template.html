@@ -677,6 +677,7 @@ tbody tr:hover{background:var(--pink-soft)}
 }
 .ver-band b{color:var(--ink)}
 .ver-band a{color:var(--pink-text)}
+.ver-grid.ver-enkel{grid-template-columns:1fr;max-width:74ch}
 .ver-band p{color:var(--ink-2)}
 .ver-band p{margin:0 0 8px}
 body[data-view="nieuws"] .ver-band{display:none}
@@ -921,16 +922,16 @@ body[data-view="nieuws"] .ver-band{display:none}
        weergave. De scheidslijn in deze data is machine tegenover mens, niet auto tegenover de rest. -->
   <section class="weergave" id="view-gas" role="tabpanel">
     <div class="titelrij">
-      <h1 class="heldkop-klein">Geen camera, <em>maar een vaststeller</em></h1>
+      <h1 class="heldkop-klein">Fout parkeren steeg met <em>bijna een derde</em></h1>
     </div>
-    <p class="duiding">Deze dossiers stelt een mens vast. Vaststellers schrijven op straat de boetes uit voor
-    stilstaan en parkeren, samen GAS 4, net als het autoluw gebied. De overlastdossiers eronder, GAS 1 tot 3,
-    krijgt de dienst door van de politie en van vaststellende ambtenaren. De snelheidsovertredingen meten
-    toestellen, en die staan apart onder <em>Snelheid</em>.</p>
+    <p class="duiding">Naast de camera's aan de autoluwe zones handelt de dienst ook de boetes voor stilstaan
+    en parkeren af, samen met het autoluw gebied GAS 4. In 2024 waren dat 9.496 vaststellingen, 32 procent
+    meer dan in 2023. Daaronder de overlastdossiers, GAS 1 tot 3, die politie en vaststellende ambtenaren
+    doorsturen. Snelheid staat apart.</p>
 
     <div class="kaartvlak">
       <div class="eyebrow">Parkeren en stilstaan &middot; <span id="gas-jaarlabel"></span></div>
-      <h2 style="font-size:19px;margin:2px 0 10px">Fout geparkeerd, vastgesteld op straat</h2>
+      <h2 style="font-size:19px;margin:2px 0 10px">Fout geparkeerd</h2>
       <div class="tegels" id="gas-tegels"></div>
       <div class="rooster twee">
         <div><h2>Per jaar</h2><div class="grafiek" id="gas-jaren"></div></div>
@@ -947,16 +948,7 @@ body[data-view="nieuws"] .ver-band{display:none}
       vaststellingen door voor verwerking, 11 procent meer dan in 2023. Het jaarverslag geeft daarvan een reeks
       per jaar; de bedragen komen uit de jaarrekeningen van de stad. Let op de schaal: dit gaat over duizenden
       dossiers en tienduizenden euro, waar de camerazones in de tienduizenden en de miljoenen lopen.</p>
-      <div class="duo-vakken">
-        <div>
-          <div class="eyebrow">Dossiers per jaar</div>
-          <div class="grafiek" id="gas-aantal-overlast"></div>
-        </div>
-        <div>
-          <div class="eyebrow">In euro per jaar</div>
-          <div class="grafiek" id="gas-ander-overlast"></div>
-        </div>
-      </div>
+      <div class="grafiek" id="gas-aantal-overlast"></div>
     </div>
   </section>
 
@@ -972,18 +964,12 @@ body[data-view="nieuws"] .ver-band{display:none}
     het verslag registreerde 56 procent in een trajectcontrole, de rest met bemande en onbemande toestellen. De
     aantallen komen uit het jaarverslag, de bedragen uit de jaarrekeningen van de stad.</p>
 
+    <!-- Onder elkaar, niet naast elkaar: zo staan de jaren van beide reeksen op dezelfde
+         plek en lees je de twee verhalen als één beweging. Elke staaf draagt haar cijfer,
+         want bij vier of vijf jaren is dat leesbaar in plaats van een cijferbrij. -->
     <div class="kaartvlak">
-      <div class="eyebrow">GAS 5 &middot; snelheid</div>
-      <div class="duo-vakken">
-        <div>
-          <div class="eyebrow">Dossiers per jaar</div>
-          <div class="grafiek" id="gas-aantal-snelheid"></div>
-        </div>
-        <div>
-          <div class="eyebrow">In euro per jaar</div>
-          <div class="grafiek" id="gas-ander-snelheid"></div>
-        </div>
-      </div>
+      <div class="eyebrow">GAS 5 &middot; dossiers per jaar</div>
+      <div class="grafiek" id="gas-aantal-snelheid"></div>
     </div>
   </section>
 
@@ -1008,6 +994,26 @@ body[data-view="nieuws"] .ver-band{display:none}
     <div class="kaartvlak" id="budget-actie"></div>
     <div class="kaartvlak" id="budget-soorten" style="margin-top:14px"></div>
     <div class="kaartvlak" id="budget-uitgaven" style="margin-top:14px"></div>
+
+    <!-- De bedragen per soort horen hier, bij het geld. Op de weergaven Parkeren en Snelheid
+         tellen we dossiers; euro's staan op één plek. Twee schalen, want overlast brengt
+         tienduizenden op en snelheid miljoenen. -->
+    <div class="kaartvlak" style="margin-top:14px">
+      <div class="eyebrow">Per soort</div>
+      <h2>Wat overlast en snelheid <em>opbrengen</em></h2>
+      <p class="duiding" style="margin:0 0 12px">Twee rekeningnummers uit de jaarrekening, elk op een
+      eigen schaal: overlast staat in tienduizenden euro, snelheid in miljoenen.</p>
+      <div class="duo-vakken">
+        <div>
+          <div class="eyebrow">GAS-overlast</div>
+          <div class="grafiek" id="gas-ander-overlast"></div>
+        </div>
+        <div>
+          <div class="eyebrow">GAS 5, snelheid</div>
+          <div class="grafiek" id="gas-ander-snelheid"></div>
+        </div>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -1019,37 +1025,23 @@ body[data-view="nieuws"] .ver-band{display:none}
     <div class="ver-kop" id="verantwoording">
       <span class="eyebrow">Verantwoording</span>
     </div>
-    <div class="ver-grid">
-      <article class="ver-kader">
-        <h3>Bronnen</h3>
-        <p>De cijfers komen uit de jaarverslagen van GASAM, sinds 2022 GAS Rivierenland. We kregen ze via
-        een openbaarheidsverzoek en lezen alleen het hoofdstuk over Mechelen. Verwerkt: 2012 en 2015 tot
-        en met 2024. De verslagen 2013 en 2014 bestaan niet; 2025 is nog niet beschikbaar.</p>
-        <ul>
-          <li>Het geld: de jaarrekeningen en meerjarenplannen van stad en OCMW Mechelen.</li>
-          <li>De kaart: OpenStreetMap (ODbL). Een camera staat op het punt dat vrijwilligers daar intekenden,
-          anders op de kruising of doorgang uit het autoluwreglement van de stad, anders op het midden van
-          de straat volgens het Vlaams Adressenregister. Klik een stip aan en ze zegt welke van de drie.</li>
-          <li>Het nieuws: de artikels in het dossier <a href="https://leesmee.asgaupaust.be/#/dossier/gas-autoluw"
-          target="_blank" rel="noopener">GAS &amp; de autoluwe zone</a> op Lees mee.</li>
-        </ul>
-      </article>
-      <!-- Dit kader draagt het accent: hoe we lezen en waarom de jaren niet zomaar
-           te vergelijken zijn, is wat een lezer het minst mag missen. -->
+    <!-- Eén kader in plaats van twee. De bronnenlijst stond hier dubbel: dezelfde uitleg staat
+         op de techniekpagina, en dubbele tekst loopt gegarandeerd uiteen. De ODbL-vermelding van
+         de kaart zit bij de kaart zelf, dus die verplichting blijft staan. Wat hier overblijft is
+         wat naast de cijfers thuishoort: hoe je de jaren mag vergelijken, en wat er in de bron
+         zelf wringt. De zusters denkmee en leesmee hebben helemaal geen band onderaan. -->
+    <div class="ver-grid ver-enkel">
       <article class="ver-kader ver-accent">
         <h3>Lezen met voorbehoud</h3>
-        <p>Veel cijfers staan in de verslagen alleen als grafiek. We lezen ze machinaal uit de pdf en
-        tellen ze na tegen het jaartotaal dat het verslag zelf noemt. Grafieken die als beeld in de pdf
-        zitten, hebben we overgetypt en op dezelfde manier nageteld.</p>
-        <p>Vergelijk de jaren met zorg. Wat we tellen bleef hetzelfde, de negatie van verkeersbord C3
-        door een ANPR-camera, maar het cameranet groeide. Eind 2022 kwamen de vesten en de wijk
-        Caputsteen-Nekkerspoel erbij, en één camera kan een derde van een jaar dragen: de knip op de
-        Kruisbaan leverde in 2019 alleen al 10.337 van de 29.464 vaststellingen.</p>
-        <p>Sinds 2024 stuurt GAS Rivierenland op zes locaties eerst een waarschuwing. Die
-        waarschuwingen tellen hier niet mee, want dit zijn de boetedossiers, en dat scheelt: het
-        verslag rekent 30.108 van de 123.530 overtredingen van 2024 onder de waarschuwingen. Daardoor
-        staat het cijfer hier 23 procent onder 2023, terwijl het verslag over alle overtredingen samen
-        van een stijgende trend spreekt.</p>
+        <p>De meeste cijfers staan in de verslagen als label bij een staaf. We lezen ze uit de pdf en
+        toetsen elke reeks aan het jaartotaal dat het verslag zelf noemt. Klopt de som niet, dan blijft
+        het veld leeg. <strong>We vullen een gat nooit met een schatting.</strong></p>
+        <p>Vergelijk de jaren met zorg. Het cameranet groeide fors, en één camera kan een groot deel
+        van een jaar dragen: de knip op de Kruisbaan leverde in 2019 al 10.337 van de 29.464
+        vaststellingen.</p>
+        <p>Sinds 2024 stuurt GAS Rivierenland op zes plaatsen eerst een waarschuwing. Die tellen hier
+        niet mee, want dit zijn de boetedossiers: 30.108 van de 123.530 overtredingen van 2024 vielen
+        erbuiten. Het cijfer daalt hier dus met 23 procent, terwijl het totaal steeg.</p>
         <p id="meldingen"></p>
       </article>
     </div>
@@ -1222,7 +1214,8 @@ function staafgrafiek(doel, waarden, labels, opties = {}) {
   /* Percentages krijgen een vaste schaal van 0 tot 100 (opties.top). Op hun eigen
      maximum geschaald werd 85% een volle staaf, terwijl 88,6% in een andere
      grafiek maar 88,6% van de breedte kreeg: dan lijkt het grotere getal kleiner. */
-  const top = opties.top || Math.max(...waarden, 1);
+  const echte = waarden.filter(w => w !== null && w !== undefined);
+  const top = opties.top || Math.max(...echte, 1);
   const vak = (breed - marge.links - marge.rechts) / waarden.length;
   const grond = hoog - marge.onder;
   const kleur = opties.kleur || "var(--pink)";
@@ -1231,7 +1224,7 @@ function staafgrafiek(doel, waarden, labels, opties = {}) {
      staaf. De rest verschijnt bij hover, anders wordt het een cijferbrij. */
   const tonen = opties.toonAlle
     ? new Set(waarden.map((_, i) => i))
-    : new Set([waarden.indexOf(Math.max(...waarden))]);
+    : new Set([waarden.indexOf(Math.max(...echte, 1))]);
   if (opties.markeer !== undefined) tonen.add(opties.markeer);
 
   let svg = `<svg width="${breed}" height="${hoog}" viewBox="0 0 ${breed} ${hoog}" role="img" aria-label="${opties.omschrijving || ""}">`;
@@ -1241,13 +1234,25 @@ function staafgrafiek(doel, waarden, labels, opties = {}) {
     if (opties.top) svg += `<text x="${marge.links + 2}" y="${(y - 4).toFixed(1)}">${eenheid(Math.round(top * deel))}</text>`;
   });
   waarden.forEach((w, i) => {
+    if (w === null || w === undefined) {
+      /* Geen cijfer is geen nul: geen staaf, maar een streepje en het jaartal, zodat de as
+         gelijk blijft lopen met een grafiek eronder of erboven. */
+      const mx = marge.links + i * vak + vak / 2;
+      svg += `<text class="waarde" x="${mx.toFixed(1)}" y="${(grond - 8).toFixed(1)}" text-anchor="middle"
+        opacity=".5">&#8212;</text>`;
+      svg += `<text x="${mx.toFixed(1)}" y="${hoog - 8}" text-anchor="middle">${labels[i]}</text>`;
+      return;
+    }
     const h = Math.max((grond - marge.boven) * (w / top), 1.5);
-    const x = marge.links + i * vak + vak * 0.19;
-    const b = vak * 0.62;
+    /* Staan er maar een handvol jaren op een brede kaart, dan werd een staaf een blok van
+       tweehonderd pixels. Boven de grens blijft de staaf even breed en gaat de extra ruimte
+       naar de tussenruimte, met de staaf gecentreerd in haar vak. */
+    const b = Math.min(vak * 0.62, opties.maxStaaf || 64);
+    const x = marge.links + i * vak + (vak - b) / 2;
     const y = grond - h;
     const uit = opties.markeer !== undefined && i === opties.markeer;
     svg += `<rect class="staafje staafgroei${uit ? " uit" : ""}" data-i="${i}" x="${x.toFixed(1)}" y="${y.toFixed(1)}"
-      width="${b.toFixed(1)}" height="${h.toFixed(1)}" rx="2.5" fill="${kleur}" opacity="${uit ? 1 : .5}"
+      width="${b.toFixed(1)}" height="${h.toFixed(1)}" rx="2.5" fill="${kleur}" opacity="${(opties.vol || uit) ? 1 : .5}"
       style="animation-delay:${(i * 28)}ms"/>`;
     if (tonen.has(i)) {
       svg += `<text class="waarde" x="${(x + b / 2).toFixed(1)}" y="${(y - 7).toFixed(1)}" text-anchor="middle"
@@ -1399,18 +1404,28 @@ function duostaven(doel, rijen, opties = {}) {
   [0.5, 1].forEach(deel => {
     const y = grond - (grond - marge.boven) * deel;
     svg += `<line class="raster" x1="${marge.links}" y1="${y.toFixed(1)}" x2="${breed - marge.rechts}" y2="${y.toFixed(1)}"/>`;
-    /* een maatstreepje links, zodat de hoogte van een staaf iets betekent */
-    svg += `<text x="${marge.links + 2}" y="${(y - 5).toFixed(1)}">${kort(Math.round(top * deel))}</text>`;
+    /* een maatstreepje links, zodat de hoogte van een staaf iets betekent. Staat het cijfer
+       al bij elke staaf, dan is dat dubbelop en laten we het weg. */
+    if (!opties.toonWaarden) {
+      svg += `<text x="${marge.links + 2}" y="${(y - 5).toFixed(1)}">${kort(Math.round(top * deel))}</text>`;
+    }
   });
   rijen.forEach((rij, i) => {
     const n = rij.reeksen.length;
-    const b = (vak * 0.7) / n;
+    const groep = Math.min(vak * 0.7, opties.maxStaaf || 64);
+    const b = groep / n;
     rij.reeksen.forEach((s, k) => {
       const h = Math.max((grond - marge.boven) * (Math.max(s.waarde, 0) / top), s.waarde ? 1.5 : 0);
-      const x = marge.links + i * vak + vak * 0.15 + k * b;
+      const x = marge.links + i * vak + (vak - groep) / 2 + k * b;
       svg += `<rect class="staafgroei" x="${x.toFixed(1)}" y="${(grond - h).toFixed(1)}" width="${(b - 2.5).toFixed(1)}"
         height="${h.toFixed(1)}" rx="2.5" ${s.kleur === "omlijnd" ? 'fill="var(--paper-2)" stroke="var(--ink)" stroke-width="1.5"' : `fill="${s.kleur}"`} style="animation-delay:${(i * 40 + k * 12)}ms">
         <title>${rij.label} ${s.naam}: ${vol(s.waarde)}</title></rect>`;
+      /* Bij een korte reeks is elk cijfer laten zien geen brij maar juist leesbaar: dan
+         hoef je niet te hoveren om de waarden te vergelijken. */
+      if (opties.toonWaarden && s.waarde) {
+        svg += `<text class="waarde" x="${(x + (b - 2.5) / 2).toFixed(1)}" y="${(grond - h - 7).toFixed(1)}"
+          text-anchor="middle">${kort(s.waarde)}</text>`;
+      }
     });
     svg += `<text x="${(marge.links + i * vak + vak / 2).toFixed(1)}" y="${hoog - 8}" text-anchor="middle">${rij.label}</text>`;
   });
@@ -2826,18 +2841,44 @@ function tekenSoorten() {
      parser neemt ze pas over als het jongste jaar ook in de lopende tekst van diezelfde
      bladzijde staat. Ontbreekt een reeks, dan zegt het vak dat, in plaats van leeg te blijven. */
   const soorten = (D.gasam || {}).soorten || {};
+
+  /* De twee snelheidsgrafieken staan onder elkaar, dus ze moeten dezelfde jaren op dezelfde
+     plek zetten. De lijst is de vereniging van beide bronnen, zonder de jaren waarin geen van
+     beide iets te zeggen heeft: 2020 valt weg (GAS 5 bestond niet, de rekening staat op nul),
+     2025 blijft staan (de jaarrekening is er, het jaarverslag niet). */
+  const snelheidsJaren = () => {
+    const uitVerslag = Object.keys((soorten.snelheid || {}).per_jaar || {});
+    const bron = D.budget.opbrengsten || {};
+    const jr = Object.keys(bron).filter(b => b.startsWith("jaarrekening")).sort().pop();
+    const euros = ((jr ? bron[jr] : {})["7390040"] || {}).rekening || {};
+    const metGeld = Object.keys(euros).filter(j => euros[j]);
+    return [...new Set([...uitVerslag, ...metGeld])].sort();
+  };
   [["overlast", "gas-aantal-overlast", "var(--steen)"],
    ["snelheid", "gas-aantal-snelheid", "var(--leisteen)"]].forEach(([sleutel, id, kleur]) => {
     const vak = document.getElementById(id);
     if (!vak) return;
     const blok = soorten[sleutel];
     if (!blok || !blok.per_jaar) { vak.innerHTML = "<p>Geen aantallen per jaar in het verslag.</p>"; return; }
-    const jrn = Object.keys(blok.per_jaar).sort();
+    let jrn = Object.keys(blok.per_jaar).sort();
+    let reeks = jrn.map(j => blok.per_jaar[j]);
+    if (sleutel === "snelheid") {
+      /* De bedragen lopen tot 2025, de dossiers tot 2024. Onder elkaar getekend moeten de
+         jaren op dezelfde plek staan, anders vergelijkt het oog 2022 met 2023. Dus dezelfde
+         reeks jaren, met een streepje waar het jaarverslag nog niet bestaat. */
+      jrn = snelheidsJaren();
+      reeks = jrn.map(j => (j in blok.per_jaar) ? blok.per_jaar[j] : null);
+    }
     /* Zonder markeer krijgt elke staaf opacity .5 en oogt de reeks bleker dan de
        bedragen ernaast. Het jongste jaar staat in focus, net als in de jaargrafiek. */
-    staafgrafiek(vak, jrn.map(j => blok.per_jaar[j]), jrn,
-      {hoog: 180, kleur: kleur, markeer: jrn.length - 1,
-       omschrijving: blok.naam + ", dossiers per jaar"});
+    const isSnel = sleutel === "snelheid";
+    staafgrafiek(vak, reeks, jrn, {
+      hoog: isSnel ? 210 : 180, kleur: kleur,
+      /* Bij snelheid draagt elke staaf haar cijfer, dus is een uitgelichte staaf alleen ruis;
+         bij overlast blijft het jongste jaar in focus, zoals in de andere jaargrafieken. */
+      toonAlle: isSnel, vol: isSnel,
+      markeer: isSnel ? undefined : jrn.length - 1,
+      omschrijving: blok.naam + ", dossiers per jaar"});
   });
 
   /* overlast en snelheid: geboekte bedragen uit de recentste jaarrekening */
@@ -2850,8 +2891,9 @@ function tekenSoorten() {
   if (geldJaren.length) {
     duostaven(document.getElementById("gas-ander-overlast"), geldJaren.map(j => ({label: j, reeksen: [
       {naam: "overlast", waarde: overlast[j] || 0, kleur: "var(--steen)"}]})), {hoog: 200});
-    duostaven(document.getElementById("gas-ander-snelheid"), geldJaren.map(j => ({label: j, reeksen: [
-      {naam: "snelheid", waarde: snelheid[j] || 0, kleur: "var(--leisteen)"}]})), {hoog: 200});
+    duostaven(document.getElementById("gas-ander-snelheid"), snelheidsJaren().map(j => ({label: j, reeksen: [
+      {naam: "snelheid", waarde: snelheid[j] || 0, kleur: "var(--leisteen)"}]})),
+      {hoog: 210, toonWaarden: true});
   }
 
   /* De teller in het menu hoort bij de weergave Snelheid, dus enkel het snelheidscijfer.

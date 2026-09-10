@@ -754,7 +754,7 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
     for veld in ("verweer", "gunstig", "ongunstig", "beroep"):
         a, b = uit_tabel(afh_tabel, veld, jaar), afh.get(veld)
         if a is not None and b is not None and a != b:
-            verschillen.append(f"{veld} {punt(a)} in de tabel, {punt(b)} in de figuur")
+            verschillen.append(veld)
     if verschillen:
         # Welke van de twee sets sluit met het jaartotaal? Dat beslecht de zaak, en het is veel
         # sterker bewijs dan "de figuur staat er twee keer". Voor 2018 autoluw telt de figuurset
@@ -769,13 +769,14 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
         somtab = sum(uit_beide(k) for k in velden)
         keuze = ""
         if totaal and somfig == totaal and somtab != totaal:
-            keuze = (f" We volgen de figuur: die sluit met het jaartotaal van {punt(totaal)}, "
-                     f"de tabel komt {punt(abs(totaal - somtab))} dossiers te kort.")
+            keuze = (f" We volgen de figuur, want die sluit met het jaartotaal; de tabel komt "
+                     f"{punt(abs(totaal - somtab))} dossiers te kort.")
         elif totaal and somtab == totaal and somfig != totaal:
             keuze = (f" De tabel sluit met het jaartotaal van {punt(totaal)}, de figuur niet; "
                      f"het dashboard toont de figuur, dus lees dit met voorbehoud.")
-        meld(f"{jaar} {soort}: de figuur en de tabel in het verslag verschillen ("
-             + "; ".join(verschillen) + ")." + keuze)
+        # Nederlandse opsomming: komma's, en "en" voor het laatste.
+        lijst = (", ".join(verschillen[:-1]) + " en " + verschillen[-1]) if len(verschillen) > 1 else verschillen[0]
+        meld(f"{jaar} {soort}: de tabel in het verslag wijkt af van de figuur bij {lijst}." + keuze)
     # FIX: de punten van de afhandelingstaart horen samen het jaartotaal te halen. Voor
     # parkeren 2016 doet de bron dat zelf niet: 91,06 plus 0,46 plus 8,30 procent is 99,82,
     # en er blijven zo'n zeventien dossiers onbenoemd. De grafiek herschaalde dat gat stil
@@ -783,8 +784,8 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
     somdelen = sum(afh.get(k, 0) for k in ("initieel", "gunstig", "ongunstig", "sepot", "beroep"))
     if somdelen and totaal and somdelen != totaal:
         punt = lambda n: f"{n:,}".replace(",", ".")
-        meld(f"{jaar} {soort}: de afhandeling telt {punt(somdelen)}, het jaartotaal is "
-             f"{punt(totaal)} ({punt(abs(totaal - somdelen))} dossiers benoemt het verslag niet)")
+        meld(f"{jaar} {soort}: van de {punt(totaal)} dossiers benoemt het verslag er "
+             f"{punt(abs(totaal - somdelen))} niet in de afhandeling.")
 
     onderdeel = {
         "totaal": totaal,
