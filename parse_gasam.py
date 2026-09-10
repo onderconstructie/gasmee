@@ -215,7 +215,7 @@ def afhandeling(tekst):
     """
     uit = {}
     for naam, waarde in re.findall(
-        r"(Initieel|Gunstig|Ongunstig|Sepot|Beroep|Verweer|Waarschuwing\w*)\s*[;:]\s*\n?\s*([\d.\s]{1,9}?)(?=\n|$)",
+        r"(Initieel|Gunstig|Ongunstig|Sepot|Beroep|Verweer|Overig|Waarschuwing\w*)\s*[;:]\s*\n?\s*([\d.\s]{1,9}?)(?=\n|$)",
         tekst,
         re.I,
     ):
@@ -227,6 +227,10 @@ def afhandeling(tekst):
     # zelfs "Overig", een woord dat in de inbreukentabellen iets heel anders betekent,
     # dus we lezen liever de zin. De tekst is al afgebakend tot deze sectie, dus het
     # cijfer van de autoluwe zones kan er niet tussen komen.
+    if "overig" in uit:
+        uit.setdefault("verweer", uit.pop("overig"))
+    else:
+        uit.pop("overig", None)
     if "verweer" not in uit:
         zin = re.search(r"(?i)werd\s+een\s+verweer\s+ingediend\s*\(\s*([\d.\s]+)\s*dossiers", tekst)
         if zin:
@@ -746,13 +750,32 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
     # de tabel en de taart van hetzelfde verslag kunnen elkaar tegenspreken (2018):
     # dat zeggen we, in plaats van stil een van beide te kiezen
     verschillen = []
-    for veld in ("verweer", "gunstig", "ongunstig"):
+    punt = lambda n: f"{n:,}".replace(",", ".")
+    for veld in ("verweer", "gunstig", "ongunstig", "beroep"):
         a, b = uit_tabel(afh_tabel, veld, jaar), afh.get(veld)
         if a is not None and b is not None and a != b:
-            punt = lambda n: f"{n:,}".replace(",", ".")
             verschillen.append(f"{veld} {punt(a)} in de tabel, {punt(b)} in de figuur")
     if verschillen:
-        meld(f"{jaar} {soort}: het verslag spreekt zichzelf tegen (" + "; ".join(verschillen) + ")")
+        # Welke van de twee sets sluit met het jaartotaal? Dat beslecht de zaak, en het is veel
+        # sterker bewijs dan "de figuur staat er twee keer". Voor 2018 autoluw telt de figuurset
+        # exact op tot de 25.616 die het verslag drie keer noemt, en komt de tabel 27 dossiers te
+        # kort; de tabel per camera in datzelfde verslag geeft bovendien precies de figuurwaarden.
+        # De tekencode geeft de figuur al voorrang, dus dan zeggen we dat er ook bij, met de reden.
+        velden = ("initieel", "gunstig", "ongunstig", "sepot", "beroep")
+        somfig = sum(afh.get(k, 0) for k in velden)
+        def uit_beide(k):
+            w = uit_tabel(afh_tabel, k, jaar)
+            return w if w is not None else afh.get(k, 0)
+        somtab = sum(uit_beide(k) for k in velden)
+        keuze = ""
+        if totaal and somfig == totaal and somtab != totaal:
+            keuze = (f" We volgen de figuur: die sluit met het jaartotaal van {punt(totaal)}, "
+                     f"de tabel komt {punt(abs(totaal - somtab))} dossiers te kort.")
+        elif totaal and somtab == totaal and somfig != totaal:
+            keuze = (f" De tabel sluit met het jaartotaal van {punt(totaal)}, de figuur niet; "
+                     f"het dashboard toont de figuur, dus lees dit met voorbehoud.")
+        meld(f"{jaar} {soort}: de figuur en de tabel in het verslag verschillen ("
+             + "; ".join(verschillen) + ")." + keuze)
     # FIX: de punten van de afhandelingstaart horen samen het jaartotaal te halen. Voor
     # parkeren 2016 doet de bron dat zelf niet: 91,06 plus 0,46 plus 8,30 procent is 99,82,
     # en er blijven zo'n zeventien dossiers onbenoemd. De grafiek herschaalde dat gat stil

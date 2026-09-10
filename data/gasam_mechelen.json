@@ -298,7 +298,8 @@
      "initieel": 17536,
      "gunstig": 1065,
      "ongunstig": 624,
-     "sepot": 264
+     "sepot": 264,
+     "verweer": 1689
     },
     "afhandeling_per_jaar": {},
     "woonplaats": {
@@ -578,7 +579,8 @@
      "initieel": 20127,
      "gunstig": 1547,
      "ongunstig": 949,
-     "sepot": 86
+     "sepot": 86,
+     "verweer": 2496
     },
     "afhandeling_per_jaar": {
      "verweer": {
@@ -916,7 +918,8 @@
      "gunstig": 1747,
      "ongunstig": 956,
      "sepot": 95,
-     "beroep": 2
+     "beroep": 2,
+     "verweer": 2705
     },
     "afhandeling_per_jaar": {
      "verweer": {
@@ -2533,6 +2536,6 @@
  },
  "meldingen": [
   "2016 parkeren: de afhandeling telt 9.887, het jaartotaal is 9.904 (17 dossiers benoemt het verslag niet)",
-  "2018 autoluw: het verslag spreekt zichzelf tegen (gunstig 1.726 in de tabel, 1.747 in de figuur; ongunstig 950 in de tabel, 956 in de figuur)"
+  "2018 autoluw: de figuur en de tabel in het verslag verschillen (verweer 2.676 in de tabel, 2.705 in de figuur; gunstig 1.726 in de tabel, 1.747 in de figuur; ongunstig 950 in de tabel, 956 in de figuur). We volgen de figuur: die sluit met het jaartotaal van 25.616, de tabel komt 27 dossiers te kort."
  ]
 }
