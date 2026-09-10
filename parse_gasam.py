@@ -222,6 +222,17 @@ def afhandeling(tekst):
         getal = re.sub(r"[.\s]", "", waarde)
         if getal.isdigit():
             uit[naam.lower()] = int(getal)
+    # 2015 en 2016 zetten het aantal verweren niet als taartlabel maar in een zin:
+    # "Voor 8.30% werd een verweer ingediend (822 dossiers)". In 2016 heet die taartpunt
+    # zelfs "Overig", een woord dat in de inbreukentabellen iets heel anders betekent,
+    # dus we lezen liever de zin. De tekst is al afgebakend tot deze sectie, dus het
+    # cijfer van de autoluwe zones kan er niet tussen komen.
+    if "verweer" not in uit:
+        zin = re.search(r"(?i)werd\s+een\s+verweer\s+ingediend\s*\(\s*([\d.\s]+)\s*dossiers", tekst)
+        if zin:
+            getal = re.sub(r"[.\s]", "", zin.group(1))
+            if getal.isdigit():
+                uit["verweer"] = int(getal)
     return uit
 
 
@@ -566,6 +577,18 @@ def top_inbreuken(tekst):
     ):
         uit.append({"feitcode": " ".join(code.split()), "omschrijving": " ".join(omschrijving.split()),
                     "aandeel_procent": float(procent.replace(",", "."))})
+    if not uit:
+        # het verslag van 2024 zet het percentage achter een isgelijkteken in plaats van
+        # tussen haakjes: 'Art. 25 (E1): Parkeren waar een verkeersbord E1 geldt = 32%'.
+        # Zonder dit patroon vielen alle vijf de omschrijvingen van dat jaar weg en bleef
+        # er op de pagina een kale feitcode staan.
+        for code, omschrijving, procent in re.findall(
+            r"(Art\.\s*\d+(?:,\d+°)?(?:\s*\([^)]*\))?):\s*(.+?)\s*=\s*(\d{1,2}(?:[.,]\d+)?)\s*%",
+            tekst, re.S
+        ):
+            uit.append({"feitcode": " ".join(code.split()),
+                        "omschrijving": " ".join(omschrijving.split()),
+                        "aandeel_procent": float(procent.replace(",", "."))})
     if uit:
         # 2022 geeft de percentages als aandeel BINNEN de top 5 (ze tellen tot 100) en
         # zegt erbij welk deel van alle dossiers de top 5 samen is: omrekenen, zodat
@@ -623,6 +646,69 @@ def jaartotaal(tekst):
     return None
 
 
+def reeks_uit_jaargrafiek(doc, nr, marge=5.0):
+    """Een staafgrafiek met jaartallen op de as: jaartal -> waarde, op x-positie gekoppeld.
+
+    Het verslag van 2024 zet de reeksen "dossiers per jaar" voor overlast (blz. 99) en
+    voor snelheid (blz. 120) als grafiek neer. De jaartallen staan onderaan op een rij,
+    elke waarde staat vlak boven haar eigen staaf. We koppelen op x-positie, net als bij
+    de maandgrafieken. De asschaal links valt vanzelf weg: die staat op een x waar geen
+    enkel jaartal onder hangt.
+    """
+    punten = [(x, y, t.strip()) for x, y, t in lees.spans(doc, nr) if t.strip()]
+    jaartallen = [(x, y, int(t)) for x, y, t in punten if re.fullmatch(r"20[0-3]\d", t)]
+    if len(jaartallen) < 3:
+        return {}
+    rijen = {}
+    for x, y, j in jaartallen:
+        rijen.setdefault(round(y), []).append((x, j))
+    asy, asrij = max(rijen.items(), key=lambda kv: len(kv[1]))
+    if len(asrij) < 3:
+        return {}
+    uit = {}
+    for ax, jaar in sorted(asrij):
+        boven = [(abs(x - ax), t) for x, y, t in punten
+                 if y < asy - 4 and abs(x - ax) <= marge and re.fullmatch(r"[\d.\s]+", t)]
+        if not boven:
+            continue
+        getal = re.sub(r"[.\s]", "", min(boven)[1])
+        if getal.isdigit():
+            uit[str(jaar)] = int(getal)
+    return uit
+
+
+def andere_soorten(doc, van, tot):
+    """De jaarreeksen voor overlast (GAS 1, 2, 3) en snelheid (GAS 5) uit het nieuwste verslag.
+
+    Die twee soorten krijgen in de verslagen geen eigen maand- en cameracijfers, maar het
+    nieuwste verslag herhaalt wel de hele geschiedenis in een staafgrafiek. Elke reeks wordt
+    pas aanvaard als het jongste jaar ook in de lopende tekst van diezelfde bladzijde staat:
+    zo kan een verkeerd gekoppeld label niet ongemerkt doorschuiven.
+    """
+    uit = {}
+    recepten = (
+        ("overlast", r"aantal dossiers GAS ?123", "GAS 1, 2 en 3: overlast"),
+        ("snelheid", r"GAS snelheid", "GAS 5: snelheid"),
+    )
+    for sleutel, kop, naam in recepten:
+        for nr in range(van, tot + 1):
+            tekst = lees.paginatekst(doc, nr)
+            if not re.search(kop, tekst, re.I):
+                continue
+            reeks = reeks_uit_jaargrafiek(doc, nr)
+            if len(reeks) < 3:
+                continue
+            jongste = max(reeks)
+            plat = re.sub(r"[.\s]", "", tekst)
+            if str(reeks[jongste]) not in plat:
+                meld(f"reeks {sleutel} op blz. {nr}: {reeks[jongste]} voor {jongste} staat "
+                     f"niet in de tekst van die bladzijde, dus niet overgenomen")
+                continue
+            uit[sleutel] = {"naam": naam, "per_jaar": reeks, "pagina": nr}
+            break
+    return uit
+
+
 def lees_onderdeel(doc, van, tot, jaar, soort, labels):
     tekst = tekst_van(doc, van, tot)
     totaal = jaartotaal(tekst)
@@ -667,6 +753,15 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
             verschillen.append(f"{veld} {punt(a)} in de tabel, {punt(b)} in de figuur")
     if verschillen:
         meld(f"{jaar} {soort}: het verslag spreekt zichzelf tegen (" + "; ".join(verschillen) + ")")
+    # FIX: de punten van de afhandelingstaart horen samen het jaartotaal te halen. Voor
+    # parkeren 2016 doet de bron dat zelf niet: 91,06 plus 0,46 plus 8,30 procent is 99,82,
+    # en er blijven zo'n zeventien dossiers onbenoemd. De grafiek herschaalde dat gat stil
+    # weg; nu staat het als melding op de pagina, zoals de tegenspraak van 2018.
+    somdelen = sum(afh.get(k, 0) for k in ("initieel", "gunstig", "ongunstig", "sepot", "beroep"))
+    if somdelen and totaal and somdelen != totaal:
+        punt = lambda n: f"{n:,}".replace(",", ".")
+        meld(f"{jaar} {soort}: de afhandeling telt {punt(somdelen)}, het jaartotaal is "
+             f"{punt(totaal)} ({punt(abs(totaal - somdelen))} dossiers benoemt het verslag niet)")
 
     onderdeel = {
         "totaal": totaal,
@@ -778,6 +873,17 @@ def main():
             print("   parkeren: niet in dit verslag")
 
         uit["jaren"][str(jaar)] = jaarblok
+
+    # De jaarreeksen voor overlast en snelheid staan enkel in het nieuwste verslag, dat de
+    # hele geschiedenis herhaalt. Daarvoor gaat dat verslag nog een keer open.
+    nieuwste = sorted(verslagen().items())[-1]
+    doc = lees.open_verslag(nieuwste[1])
+    van, tot = hoofdstuk_mechelen(doc)
+    if van:
+        uit["soorten"] = andere_soorten(doc, van, tot)
+        for sleutel, blok in uit["soorten"].items():
+            print(f"   reeks {sleutel}: {len(blok['per_jaar'])} jaren, blz. {blok['pagina']}")
+    doc.close()
 
     uit["meldingen"] = meldingen
     os.makedirs(os.path.dirname(UIT), exist_ok=True)

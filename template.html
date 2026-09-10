@@ -936,19 +936,25 @@ body[data-view="nieuws"] .ver-band{display:none}
     <div class="kaartvlak" style="margin-top:14px">
       <div class="eyebrow">Overlast en snelheid</div>
       <h2 style="font-size:19px;margin:2px 0 10px">Wat de andere GAS-soorten opbrengen</h2>
-      <p class="duiding" style="margin:0 0 12px">Uit de jaarrekeningen van de stad: wat er per jaar geboekt werd op
-      GAS-overlast en op GAS 5, de lichte snelheidsovertredingen die er in 2021 bij kwamen. Aantallen dossiers publiceert
-      GASAM hiervoor niet per jaar op stadsniveau; de bedragen wel.</p>
+      <p class="duiding" style="margin:0 0 12px">Twee soorten die de dienst naast het parkeren afhandelt: overlast,
+      en sinds 2021 de lichte snelheidsovertredingen. De aantallen komen uit het jaarverslag, dat voor Mechelen een
+      reeks per jaar geeft. De bedragen ernaast komen uit de jaarrekeningen van de stad.</p>
       <!-- Twee schalen: overlast brengt tienduizenden op, snelheid miljoenen;
            op één schaal verdween de overlastreeks. Elk zijn eigen kader, en het
            bedrag bovenaan zegt meteen hoe verschillend de schalen zijn. -->
       <div class="duo-vakken">
         <div>
-          <div class="eyebrow">GAS-overlast <span class="stil">in euro per jaar, eigen schaal</span></div>
+          <div class="eyebrow">GAS-overlast &middot; dossiers per jaar</div>
+          <div class="grafiek" id="gas-aantal-overlast"></div>
+          <div class="eyebrow" style="margin-top:12px">GAS-overlast &middot; in euro
+            <span class="stil">per jaar, eigen schaal</span></div>
           <div class="grafiek" id="gas-ander-overlast"></div>
         </div>
         <div>
-          <div class="eyebrow">GAS 5, snelheid <span class="stil">in euro per jaar, eigen schaal</span></div>
+          <div class="eyebrow">GAS 5, snelheid &middot; dossiers per jaar</div>
+          <div class="grafiek" id="gas-aantal-snelheid"></div>
+          <div class="eyebrow" style="margin-top:12px">GAS 5, snelheid &middot; in euro
+            <span class="stil">per jaar, eigen schaal</span></div>
           <div class="grafiek" id="gas-ander-snelheid"></div>
         </div>
       </div>
@@ -2316,7 +2322,7 @@ function tekenOnderdeel(soort, voorvoegsel) {
   for (const veld of ["verweer", "gunstig", "ongunstig", "beroep"]) {
     if (afh[veld] === undefined && (perJaar[veld] || {})[gekozen] !== undefined) afh[veld] = perJaar[veld][gekozen];
   }
-  const verweer = afh.verweer || ((afh.gunstig || 0) + (afh.ongunstig || 0));
+  const verweer = afh.verweer || ((afh.gunstig || 0) + (afh.ongunstig || 0) + (afh.beroep || 0));
 
   const deltaChip = verschil === null ? "" :
     `<span class="delta ${verschil > 0 ? "op" : verschil < 0 ? "neer" : "vlak"}">${verschil > 0 ? "↑" : verschil < 0 ? "↓" : "→"} ${Math.abs(verschil)}%</span> tegenover ${vorig}`;
@@ -2462,7 +2468,7 @@ function tekenGeld() {
     <h2>Waaruit dat bedrag <em>bestaat</em></h2>
     <p class="duiding" style="margin:0 0 12px">De boetes op parkeren en het autoluw gebied en die op snelheid staan
     elk op hun eigen rekening, dus die twee tekenen we apart. De overige ontvangsten van de actie staan verspreid over
-    negen andere rekeningen; die vatten we samen in het grijs en rekenen we hieronder voor. Elke staaf telt op tot het
+    zeven andere rekeningen; die vatten we samen in het grijs en rekenen we hieronder voor. Elke staaf telt op tot het
     bedrag van de actie.</p>
     <div class="grafiek" id="soorten-grafiek"></div>
     <div class="legende">
@@ -2720,7 +2726,7 @@ function tekenGas() {
       if (afh[veld] === undefined && (perJaar[veld] || {})[gekozen] !== undefined) afh[veld] = perJaar[veld][gekozen];
     }
     const woon = blok.woonplaats || {};
-    const verweer = afh.verweer || ((afh.gunstig || 0) + (afh.ongunstig || 0));
+    const verweer = afh.verweer || ((afh.gunstig || 0) + (afh.ongunstig || 0) + (afh.beroep || 0));
     const deltaChip = verschil === null ? "" :
       `<span class="delta ${verschil > 0 ? "op" : verschil < 0 ? "neer" : "vlak"}">${verschil > 0 ? "↑" : verschil < 0 ? "↓" : "→"} ${Math.abs(verschil)}%</span> tegenover ${vorig}`;
     [["Vaststellingen", getal(blok.totaal), deltaChip, {vonk: vonk(reeks), telSleutel: "gas-tot", telWaarde: blok.totaal}],
@@ -2729,7 +2735,9 @@ function tekenGas() {
      ["Boete geschrapt", getal(afh.gunstig), afh.gunstig && verweer ? procent(Math.round(100 * afh.gunstig / verweer)) + " van de verweren" : "",
        afh.gunstig ? {telSleutel: "gas-gunstig", telWaarde: afh.gunstig} : {}],
      ["Mechelaars", woon.inwoners_procent !== undefined ? procent(woon.inwoners_procent) : "",
-       "hier is de overtreder wél meestal van eigen bodem", {}]
+       woon.niet_inwoners_procent !== undefined
+         ? "de andere " + procent(woon.niet_inwoners_procent) + " komt van buiten de stad"
+         : "", {}]
     ].forEach(([k, v, n, extra], i) => {
       if (v === "" || v === null) return;
       tegels.appendChild(tegel(k, v, n, Object.assign({volgorde: i}, extra)));
@@ -2748,7 +2756,7 @@ function tekenGas() {
     if (delen.length) verdeling(afhvak, delen);
     else afhvak.innerHTML = "<p>Geen cijfers over de afhandeling in dit verslag.</p>";
 
-    const top = blok.top_inbreuken || [];
+    const top = (blok.top_inbreuken || []).slice().sort((a, b) => b.aandeel_procent - a.aandeel_procent);
     const inbreukvak = document.getElementById("gas-inbreuken");
     if (top.length) {
       const grootste = Math.max(...top.map(r => r.aandeel_procent), 1);
@@ -2776,6 +2784,24 @@ function tekenGas() {
     ["gas-jaren", "gas-maanden", "gas-afhandeling", "gas-inbreuken"].forEach(id => document.getElementById(id).innerHTML = "");
     document.getElementById("tab-gas").textContent = "";
   }
+
+  /* De aantallen dossiers per jaar. Alleen het nieuwste verslag geeft die reeksen, en de
+     parser neemt ze pas over als het jongste jaar ook in de lopende tekst van diezelfde
+     bladzijde staat. Ontbreekt een reeks, dan zegt het vak dat, in plaats van leeg te blijven. */
+  const soorten = (D.gasam || {}).soorten || {};
+  [["overlast", "gas-aantal-overlast", "var(--steen)"],
+   ["snelheid", "gas-aantal-snelheid", "var(--leisteen)"]].forEach(([sleutel, id, kleur]) => {
+    const vak = document.getElementById(id);
+    if (!vak) return;
+    const blok = soorten[sleutel];
+    if (!blok || !blok.per_jaar) { vak.innerHTML = "<p>Geen aantallen per jaar in het verslag.</p>"; return; }
+    const jrn = Object.keys(blok.per_jaar).sort();
+    /* Zonder markeer krijgt elke staaf opacity .5 en oogt de reeks bleker dan de
+       bedragen ernaast. Het jongste jaar staat in focus, net als in de jaargrafiek. */
+    staafgrafiek(vak, jrn.map(j => blok.per_jaar[j]), jrn,
+      {hoog: 180, kleur: kleur, markeer: jrn.length - 1,
+       omschrijving: blok.naam + ", dossiers per jaar"});
+  });
 
   /* overlast en snelheid: geboekte bedragen uit de recentste jaarrekening */
   const bronnen = D.budget.opbrengsten || {};

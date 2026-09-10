@@ -505,7 +505,8 @@
      "gunstig": 287,
      "ongunstig": 529,
      "sepot": 46,
-     "beroep": 6
+     "beroep": 6,
+     "verweer": 822
     },
     "afhandeling_per_jaar": {},
     "woonplaats": {
@@ -819,7 +820,8 @@
      "gunstig": 321,
      "ongunstig": 555,
      "sepot": 37,
-     "beroep": 6
+     "beroep": 6,
+     "verweer": 882
     },
     "afhandeling_per_jaar": {
      "verweer": {
@@ -1205,7 +1207,8 @@
      "gunstig": 308,
      "ongunstig": 482,
      "sepot": 21,
-     "beroep": 4
+     "beroep": 4,
+     "verweer": 794
     },
     "afhandeling_per_jaar": {
      "verweer": {
@@ -2473,34 +2476,63 @@
     "top_inbreuken": [
      {
       "feitcode": "Art. 25 (E1)",
-      "omschrijving": "",
+      "omschrijving": "Parkeren waar een verkeersbord E1 geldt",
       "aandeel_procent": 32.0
      },
      {
       "feitcode": "Art. 51,1°",
-      "omschrijving": "",
+      "omschrijving": "Parkeren of stilstaan op een trottoir/op een verhoogde berm",
       "aandeel_procent": 22.0
      },
      {
       "feitcode": "Art. 25 (Tijdelijke E1)",
-      "omschrijving": "",
+      "omschrijving": "Parkeren waar een tijdelijk verkeersbord E1 geldt",
       "aandeel_procent": 11.0
      },
      {
       "feitcode": "Art. 25 (E3)",
-      "omschrijving": "",
+      "omschrijving": "Parkeren of stilstaan waar een verkeersbord E3 geldt",
       "aandeel_procent": 5.0
      },
      {
       "feitcode": "Art. 10",
-      "omschrijving": "",
+      "omschrijving": "Parkeren in een woonerf buiten de daartoe voorziene plaatsen",
       "aandeel_procent": 5.0
      }
     ]
    }
   }
  },
+ "soorten": {
+  "overlast": {
+   "naam": "GAS 1, 2 en 3: overlast",
+   "per_jaar": {
+    "2015": 650,
+    "2016": 739,
+    "2017": 1226,
+    "2018": 1166,
+    "2019": 1130,
+    "2020": 1555,
+    "2021": 1315,
+    "2022": 1395,
+    "2023": 1486,
+    "2024": 1650
+   },
+   "pagina": 99
+  },
+  "snelheid": {
+   "naam": "GAS 5: snelheid",
+   "per_jaar": {
+    "2021": 72881,
+    "2022": 127765,
+    "2023": 87530,
+    "2024": 86174
+   },
+   "pagina": 120
+  }
+ },
  "meldingen": [
+  "2016 parkeren: de afhandeling telt 9.887, het jaartotaal is 9.904 (17 dossiers benoemt het verslag niet)",
   "2018 autoluw: het verslag spreekt zichzelf tegen (gunstig 1.726 in de tabel, 1.747 in de figuur; ongunstig 950 in de tabel, 956 in de figuur)"
  ]
 }
