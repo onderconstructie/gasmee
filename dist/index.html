@@ -172,7 +172,9 @@ body.menu-open{overflow:hidden}
 .onderbalk .portaalknop img{width:20px;height:20px}
 .onderbalk button svg,.onderbalk a svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
 .onderbalk button[aria-selected="true"],.onderbalk a[aria-current="page"]{color:var(--pink-text);background:var(--pink-soft)}
-@media(max-width:719px){ .onderbalk{display:flex} body{padding-bottom:86px} }
+/* Ruimte onder de pagina: de hoogte van de balk (68 px) plus de inzet van de thuisbalk,
+   die de balk in zijn eigen padding draagt. Zo eindigt het colofon net boven de balk. */
+@media(max-width:719px){ .onderbalk{display:flex} body{padding-bottom:calc(68px + env(safe-area-inset-bottom))} }
 
 /* ================================================================
    Weergaven
@@ -217,7 +219,8 @@ body.menu-open{overflow:hidden}
 .held-merk{position:relative;width:150px;aspect-ratio:1;display:none;place-items:center;justify-self:end;
   background:none;border:0;padding:0;cursor:pointer;border-radius:50%}
 .held-merk svg{transition:transform .18s ease}
-.held-merk:hover svg{transform:scale(1.05)}
+/* hover-liften enkel met een echte muis: op een aanraakscherm blijft :hover na een tik hangen */
+@media(hover:hover){ .held-merk:hover svg{transform:scale(1.05)} }
 @media(min-width:860px){ .held-merk{display:grid} }
 .held-merk svg{width:74%;height:74%;filter:drop-shadow(0 10px 26px rgba(210,162,19,.35)) drop-shadow(0 2px 6px rgba(72,56,38,.12))}
 .held-merk .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(210,162,19,.55);animation:agpRing 3.6s ease-out infinite}
@@ -251,7 +254,7 @@ h2{font-size:15px;margin:0 0 10px;letter-spacing:-.005em}
 }
 .tegel{animation:none}
 .tegel.intro{animation:opkomst .5s both}
-.tegel:hover{transform:translateY(-3px);box-shadow:var(--schaduw-til)}
+@media(hover:hover){ .tegel:hover{transform:translateY(-3px);box-shadow:var(--schaduw-til)} }
 /* zolang de tijdbalk speelt, groeien staven en tegels niet telkens opnieuw aan */
 body.speelt .staafgroei,body.speelt .tegel{animation:none}
 button.tegel{appearance:none;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
@@ -277,7 +280,9 @@ button.tegel[aria-expanded="true"]::after{transform:scaleX(1)}
    Kaart
    ================================================================ */
 .kaarthouder{position:relative;border-radius:var(--rond);overflow:hidden;border:1px solid var(--line);box-shadow:var(--schaduw-zacht);background:#e9e3d7}
-#kaart{position:relative;height:clamp(330px,52vh,540px);cursor:grab;touch-action:none;overflow:hidden}  /* de tegels moeten binnen het kaartvak blijven, anders lopen ze onder het paneel door */
+/* pan-y: een verticale veeg met één vinger scrolt de pagina, een horizontale veeg pant de
+   kaart (kaartBediening) */
+#kaart{position:relative;height:clamp(330px,52vh,540px);cursor:grab;touch-action:pan-y;overflow:hidden}  /* de tegels moeten binnen het kaartvak blijven, anders lopen ze onder het paneel door */
 #kaart.sleept{cursor:grabbing}
 #tegels{position:absolute;inset:0}
 /* De tegels worden naar het familiepapier getrokken: minder kleur, warmer, iets
@@ -304,7 +309,7 @@ button.tegel[aria-expanded="true"]::after{transform:scaleX(1)}
      het slepen van de kaart zonder vertraging */
   transition:width .55s cubic-bezier(.32,.72,0,1), height .55s cubic-bezier(.32,.72,0,1),
     transform .18s ease, box-shadow .18s ease, opacity .25s ease, background .3s ease, border-color .3s ease}
-.merkstip:hover{transform:translate(-50%,-50%) scale(1.08)}
+@media(hover:hover){ .merkstip:hover{transform:translate(-50%,-50%) scale(1.08)} }
 /* wijst de muis in de lijst een camera aan, dan komt haar stip naar voren */
 .merkstip.wijst{transform:translate(-50%,-50%) scale(1.22);box-shadow:0 0 0 3px var(--paper-2),0 4px 14px -2px rgba(122,92,16,.7);z-index:7}
 .merkstip.leeg{background:rgba(26,23,18,.05);border:1.5px dashed rgba(26,23,18,.42);box-shadow:none}
@@ -358,7 +363,7 @@ button.tegel[aria-expanded="true"]::after{transform:scaleX(1)}
   width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);
   font-size:17px;line-height:1;cursor:pointer;color:var(--ink);box-shadow:var(--schaduw-zacht);
   transition:transform .18s ease,border-color .18s ease,color .18s ease}
-.kaartknoppen button:hover{transform:translateY(-2px);border-color:var(--pink);color:var(--pink-text)}
+@media(hover:hover){ .kaartknoppen button:hover{transform:translateY(-2px);border-color:var(--pink);color:var(--pink-text)} }
 .attributie{position:absolute;right:0;bottom:0;z-index:8;background:rgba(245,241,232,.88);font-size:10.5px;padding:3px 8px;border-top-left-radius:8px;color:var(--ink-dim)}
 .attributie a{color:var(--ink-2)}
 .kaartlegende{position:absolute;left:12px;top:12px;z-index:8;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px)}
@@ -526,12 +531,12 @@ button.tegel[aria-expanded="true"]::after{transform:scaleX(1)}
   background:var(--pink-text);color:#fff;font-size:15px;line-height:1;
   box-shadow:var(--schaduw-roze);transition:transform .18s ease,background .18s ease
 }
-.speel:hover{transform:scale(1.06);background:var(--pink-deep)}
+@media(hover:hover){ .speel:hover{transform:scale(1.06);background:var(--pink-deep)} }
 .speel.loopt{background:var(--ink)}
 /* Herhalen: dezelfde pilstaal als de moduskiezer, aan = gevuld in de leestint */
 .herhaal{width:34px;height:34px;flex:0 0 34px;border-radius:50%;border:1px solid var(--line-2);background:var(--paper-2);
   color:var(--ink-2);font-size:17px;line-height:1;cursor:pointer;transition:background .18s ease,color .18s ease,transform .18s ease}
-.herhaal:hover{transform:scale(1.06);border-color:var(--pink)}
+@media(hover:hover){ .herhaal:hover{transform:scale(1.06);border-color:var(--pink)} }
 .herhaal[aria-pressed="true"]{background:var(--pink-text);border-color:var(--pink-text);color:#fff}
 .schuif{min-width:200px}
 .schuif input[type=range]{
@@ -697,7 +702,7 @@ body[data-view="nieuws"] .ver-band{display:none}
 .co-shell{max-width:1180px;margin-inline:auto;padding-inline:clamp(1.1rem,4vw,3rem);display:flex;align-items:flex-start;gap:var(--co-r)}
 .co-mark{flex:none;display:block;width:var(--co-teken);height:var(--co-teken);margin-top:var(--co-kap);border-radius:50%;transition:box-shadow .16s}
 .co-mark svg{display:block;width:100%;height:100%}
-.co-mark:hover{box-shadow:0 0 0 4px var(--pink-soft)}
+@media(hover:hover){ .co-mark:hover{box-shadow:0 0 0 4px var(--pink-soft)} }
 .co-mark:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
 .co-body{max-width:33rem}
 .co-zin{margin:0;font-size:.95rem;line-height:var(--co-r);color:var(--ink-2);text-wrap:pretty}
@@ -724,7 +729,7 @@ body[data-view="nieuws"] .ver-band{display:none}
   background:var(--paper);transition:color .18s,border-color .18s,background .18s}
 .ver-uitleg .ar{transition:transform .22s cubic-bezier(.16,1,.3,1)}
 .ver-uitleg:hover{color:var(--pink-deep);border-color:var(--pink);background:var(--pink-soft)}
-.ver-uitleg:hover .ar{transform:translateX(4px)}
+@media(hover:hover){ .ver-uitleg:hover .ar{transform:translateX(4px)} }
 .ver-uitleg:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
 
 /* De voorbehouden als app-rijen: een icoonchip in de app-kleur, zoals de kaarten op het
@@ -789,6 +794,20 @@ body[data-view="nieuws"] .ver-band{display:none}
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
   html{scroll-behavior:auto}
 }
+/* Tikken zoals in een app, het recept van Denk mee: geen grijze tikflits, geen wachten
+   op een dubbeltik bij links en knoppen, en een korte indruk onder de vinger, enkel op
+   een aanraakscherm. #kaart krijgt hier niets: die houdt touch-action:pan-y. De indruk
+   loopt via scale en niet via transform: de opkomst-animatie van de tegels houdt
+   transform vast en zou hem anders overschrijven. */
+html{-webkit-tap-highlight-color:transparent}
+a,button,input,label{touch-action:manipulation}
+@media(hover:none){
+  .onderbalk a:active,.onderbalk button:active,button.tegel:active,.jaarmerken button:active,
+  .moduskiezer button:active,.kaartknoppen button:active,.speel:active,.menu-lijst a:active{
+    scale:.97;transition:scale .08s ease-out
+  }
+}
+
 /* Mobiele overrides staan bewust ALS LAATSTE in de stylesheet: bij gelijke
    specificiteit wint de laatste regel, en dit blok stond ooit vóór de basisregels
    van .tegels, waardoor het dood was (ontdekt 04/09/2026). */
@@ -798,6 +817,16 @@ body[data-view="nieuws"] .ver-band{display:none}
   .jaarmerken{gap:0;padding:2px}
   .jaarmerken button{font-size:11px;padding:7px 2px}
   .stand b{font-size:14px}
+}
+/* Liggend met een notch wijkt de zijmarge voor de uitsparing, zoals bij de zusters: nav,
+   statusstrook, inhoud, menu en colofon, plus de terug-naar-boven-knop. Enkel op een laag
+   liggend venster (een telefoon); staand en op een groot scherm verandert er niets. */
+@media (orientation:landscape) and (max-height:500px) and (min-width:431px){
+  .balk-in,.status-strook .ss-in,.wrap,.menu-kop,.menu-lijst a,.co-shell{
+    padding-left:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-left));
+    padding-right:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-right));
+  }
+  .terug{right:max(1.1rem, env(safe-area-inset-right))}
 }
 </style>
 </head>
@@ -1879,18 +1908,22 @@ function pasKaartOpMerken() {
 
 function kaartBediening() {
   const doos = document.getElementById("kaart");
-  let sleept = false, bewogen = false, vorigeX = 0, vorigeY = 0;
+  /* Enkel de eerste pointer pant, een tweede vinger doet niets: zo rekent een beweging
+     nooit tegenover de positie van een andere vinger. */
+  let vinger = null, bewogen = false, vorigeX = 0, vorigeY = 0, beginLon = 0, beginLat = 0;
   doos.addEventListener("pointerdown", e => {
+    if (vinger !== null) return;
     /* Ook de stips uitsluiten: setPointerCapture op de doos zou de click naar
        de doos retargeten, waardoor een echte muisklik op een bol de stip-handler
        nooit bereikte (en de doos-click de selectie zelfs loste). Een marker is
        om te klikken; slepen begint op de kaart zelf. */
     if (e.target.closest(".merkstip") || e.target.closest(".merkkaart") || e.target.closest(".kaartknoppen")) return;
-    sleept = true; bewogen = false; vorigeX = e.clientX; vorigeY = e.clientY;
+    vinger = e.pointerId; bewogen = false; vorigeX = e.clientX; vorigeY = e.clientY;
+    beginLon = kaart.lon; beginLat = kaart.lat;
     doos.classList.add("sleept"); doos.setPointerCapture(e.pointerId);
   });
   doos.addEventListener("pointermove", e => {
-    if (!sleept) return;
+    if (e.pointerId !== vinger) return;
     if (Math.abs(e.clientX - vorigeX) + Math.abs(e.clientY - vorigeY) > 2) bewogen = true;
     const [cx, cy] = naarWereld(kaart.lon, kaart.lat, kaart.z);
     const [lon, lat] = naarGraden(cx - (e.clientX - vorigeX), cy - (e.clientY - vorigeY), kaart.z);
@@ -1898,9 +1931,23 @@ function kaartBediening() {
     vorigeX = e.clientX; vorigeY = e.clientY;
     tekenKaart();
   });
-  const stop = () => { sleept = false; doos.classList.remove("sleept"); };
+  /* Loslaten, of de doos raakt de capture kwijt zonder pointerup: in beide gevallen
+     stopt het slepen, anders wacht de kaart op een pointer die niet meer komt. */
+  const stop = e => {
+    if (e.pointerId !== vinger) return;
+    vinger = null; doos.classList.remove("sleept");
+  };
   doos.addEventListener("pointerup", stop);
-  doos.addEventListener("pointercancel", stop);
+  doos.addEventListener("lostpointercapture", e => { if (e.target === doos) stop(e); });
+  /* Afbreken: neemt de browser een verticale veeg over als paginascroll (pan-y), dan
+     komt er pointercancel. De kaart kan dan al een beweging mee geschoven zijn; die
+     gaat terug, want de veeg was voor de pagina bedoeld. */
+  doos.addEventListener("pointercancel", e => {
+    if (e.pointerId === vinger && (kaart.lon !== beginLon || kaart.lat !== beginLat)) {
+      kaart.lon = beginLon; kaart.lat = beginLat; tekenKaart();
+    }
+    stop(e);
+  });
   doos.addEventListener("click", e => {
     if (bewogen || e.target.closest(".merkstip") || e.target.closest(".merkkaart") || e.target.closest(".kaartknoppen")) return;
     if (kaart.actief) kies(null);
@@ -1916,6 +1963,9 @@ function zoom(stap) {
   kaart.z = Math.min(18, Math.max(11, kaart.z + stap));
   tekenKaart();
 }
+
+/* Telefoonbreedte: daar laat een keuze het venster staan (kies en tekenCameralijst). */
+function opTelefoon() { return window.matchMedia("(max-width:600px)").matches; }
 
 /* Eén plaats waar de gekozen camera verandert, zodat kaart en lijst nooit
    uit elkaar lopen. */
@@ -1937,8 +1987,10 @@ function kies(naam) {
   tekenOnderdeel("autoluw", "anpr");   /* een open tegelgrafiek volgt de keuze */
   /* Het detailblok staat onder de kaart: bij een nieuwe keuze hoort het in
      beeld te komen, anders lijkt de klik niets te doen. 'nearest' beweegt zo
-     min mogelijk, dus de kaart blijft zoveel mogelijk staan. */
-  if (naam && anders) {
+     min mogelijk, dus de kaart blijft zoveel mogelijk staan. Op een telefoon
+     (tot 600 px) niet: daar is het kaartje op de kaart de bevestiging, en
+     scrollen zou de kaart samen met dat kaartje uit beeld schuiven. */
+  if (naam && anders && !opTelefoon()) {
     const detail = document.getElementById("camera-detail");
     if (detail && !detail.hidden) {
       const r = detail.getBoundingClientRect();
@@ -2059,9 +2111,17 @@ function tekenCameralijst() {
 
   document.getElementById("cam-tel").textContent = actief + " actief";
   document.getElementById("kaartchip").textContent = actief + " camera's actief, " + stap.label;
-  /* wie op een bol klikt, ziet de bijhorende straat ook in de lijst staan */
+  /* wie op een bol klikt, ziet de bijhorende straat ook in de lijst staan. Op een
+     telefoon schuift enkel de lijst in haar eigen scrollvak: scrollIntoView verschuift
+     ook het venster, en dan glijdt de kaart met de gekozen stip onder de nav. */
   const actieveRij = lijst.querySelector("li.actief");
-  if (actieveRij) actieveRij.scrollIntoView({block: "nearest"});
+  if (actieveRij && opTelefoon()) {
+    const vak = lijst.getBoundingClientRect(), rij = actieveRij.getBoundingClientRect();
+    if (rij.top < vak.top) lijst.scrollTop += rij.top - vak.top;
+    else if (rij.bottom > vak.bottom) lijst.scrollTop += rij.bottom - vak.bottom;
+  } else if (actieveRij) {
+    actieveRij.scrollIntoView({block: "nearest"});
+  }
   const sorteerknop = document.getElementById("sorteerknop");
   if (sorteerknop) {
     sorteerknop.hidden = !uitgeklapt;
