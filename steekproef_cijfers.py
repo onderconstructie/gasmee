@@ -221,7 +221,9 @@ if laatste != "0":
 
 # de gerenderde pagina zelf (standaardweergave: ANPR, laatste jaar)
 if os.path.exists(CHROME):
+    # de tegelserver van OSM is enkel voor licht gebruik, en deze controle heeft geen kaartbeeld nodig
     dom = subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--window-size=1280,2400",
+                          "--host-resolver-rules=MAP tile.openstreetmap.org ~NOTFOUND, MAP *.tile.openstreetmap.org ~NOTFOUND",
                           "--virtual-time-budget=6000", "--dump-dom", "file:///" + DIST.replace("\\", "/")],
                          capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
     dom = html.unescape(dom)

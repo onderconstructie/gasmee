@@ -117,6 +117,8 @@ CAMERANAMEN = {
 }
 
 meldingen = []
+# In een melding heet een onderdeel zoals de tab op de pagina, niet zoals in de parser.
+TABNAAM = {"autoluw": "ANPR", "parkeren": "Parkeren"}
 # gevuld in main(): de overgetypte maandtabellen van 2015 en 2016, en de
 # overgetypte figuren per camera van 2022 t/m 2024
 MAANDTABELLEN = {}
@@ -749,8 +751,16 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
             meld(f"{jaar} {soort}: overgetypte afhandeling telt {som}, jaartotaal is {totaal}")
     # de tabel en de taart van hetzelfde verslag kunnen elkaar tegenspreken (2018):
     # dat zeggen we, in plaats van stil een van beide te kiezen
-    verschillen = []
+    naam = f"{jaar} {TABNAAM.get(soort, soort)}"
     punt = lambda n: f"{n:,}".replace(",", ".")
+
+    def afstand(som):
+        # hoe ver een som naast het jaartotaal ligt, in woorden
+        n = abs(totaal - som)
+        woord = "dossier" if n == 1 else "dossiers"
+        return f"komt {punt(n)} {woord} te kort" if som < totaal else f"telt {punt(n)} {woord} te veel"
+
+    verschillen = []
     for veld in ("verweer", "gunstig", "ongunstig", "beroep"):
         a, b = uit_tabel(afh_tabel, veld, jaar), afh.get(veld)
         if a is not None and b is not None and a != b:
@@ -767,25 +777,55 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
             w = uit_tabel(afh_tabel, k, jaar)
             return w if w is not None else afh.get(k, 0)
         somtab = sum(uit_beide(k) for k in velden)
-        keuze = ""
+        # De melding zegt waar het verschil zit, hoe groot het is en welke set de pagina toont.
+        # Zonder dat ziet de lezer twee cijfers onder elkaar en lijkt het alsof het hele jaar
+        # wankelt. De tegels en de verdeling lezen altijd de figuur. De grafiek van het verweer
+        # per jaar (enkel op de ANPR-weergave) leest de tabel van het GEKOZEN verslag: bij dit
+        # jaar dus deze tabel, bij een later jaar de tabel van dat latere verslag, en die kan de
+        # figuur overnemen (voor 2018 geven de verslagen van 2019 tot 2022 de figuurwaarden,
+        # 2019 blz. 74). Daarom zegt de zin enkel wat altijd klopt: wie dit jaar kiest, ziet in
+        # die grafiek de tabel. Die grafiek toont geen beroep, dus bij enkel een verschil in het
+        # beroep valt die zin weg.
+        if verschillen == ["beroep"]:
+            onderwerp = "het beroep"
+        elif "beroep" in verschillen:
+            onderwerp = "het verweer en het beroep"
+        else:
+            onderwerp = "het verweer"
+        zin = f"{naam}: bij {onderwerp} geeft de tabel in het verslag andere cijfers dan de figuur."
+        tegels = " De tegels volgen de figuur."
+        voorbehoud = " De tegels volgen de figuur, lees ze met voorbehoud."
+        grafiek = ""
+        if soort == "autoluw" and set(verschillen) & {"verweer", "gunstig", "ongunstig"}:
+            grafiek = f" Kies je {jaar}, dan toont de grafiek “Verweer en uitkomst per jaar” de cijfers van de tabel."
         if totaal and somfig == totaal and somtab != totaal:
-            keuze = (f" We volgen de figuur, want die sluit met het jaartotaal; de tabel komt "
-                     f"{punt(abs(totaal - somtab))} dossiers te kort.")
+            zin += f" De figuur klopt met het jaartotaal, de tabel {afstand(somtab)}." + tegels + grafiek
         elif totaal and somtab == totaal and somfig != totaal:
-            keuze = (f" De tabel sluit met het jaartotaal van {punt(totaal)}, de figuur niet; "
-                     f"het dashboard toont de figuur, dus lees dit met voorbehoud.")
-        # Nederlandse opsomming: komma's, en "en" voor het laatste.
-        lijst = (", ".join(verschillen[:-1]) + " en " + verschillen[-1]) if len(verschillen) > 1 else verschillen[0]
-        meld(f"{jaar} {soort}: de tabel in het verslag wijkt af van de figuur bij {lijst}." + keuze)
+            zin += f" De tabel klopt met het jaartotaal, de figuur {afstand(somfig)}." + voorbehoud + grafiek
+        elif totaal and somfig != totaal:
+            zin += (f" Geen van beide klopt met het jaartotaal: de figuur {afstand(somfig)},"
+                    f" de tabel {afstand(somtab)}." + voorbehoud + grafiek)
+        else:
+            zin += tegels + grafiek
+        meld(zin)
+        print(f"     details: {', '.join(verschillen)}; figuur {somfig}, tabel {somtab}, jaartotaal {totaal}")
     # FIX: de punten van de afhandelingstaart horen samen het jaartotaal te halen. Voor
     # parkeren 2016 doet de bron dat zelf niet: 91,06 plus 0,46 plus 8,30 procent is 99,82,
     # en er blijven zo'n zeventien dossiers onbenoemd. De grafiek herschaalde dat gat stil
-    # weg; nu staat het als melding op de pagina, zoals de tegenspraak van 2018.
+    # weg; nu staat het als melding op de pagina, zoals de tegenspraak van 2018. Het verslag
+    # blijft het onderwerp: het deelt die dossiers niet in, dat wil niet zeggen dat ze nooit
+    # behandeld zijn. Heeft de tak hierboven de figuur al tegen het jaartotaal gelegd, dan
+    # komt er geen tweede, overlappende melding bij.
     somdelen = sum(afh.get(k, 0) for k in ("initieel", "gunstig", "ongunstig", "sepot", "beroep"))
-    if somdelen and totaal and somdelen != totaal:
-        punt = lambda n: f"{n:,}".replace(",", ".")
-        meld(f"{jaar} {soort}: van de {punt(totaal)} dossiers benoemt het verslag er "
-             f"{punt(abs(totaal - somdelen))} niet in de afhandeling.")
+    if not verschillen and somdelen and totaal and somdelen != totaal:
+        n = abs(totaal - somdelen)
+        if somdelen < totaal:
+            meld(f"{naam}: bij de afhandeling benoemt het verslag {punt(n)} van de {punt(totaal)} "
+                 f"dossiers niet. De verdeling op de pagina rekent met de andere {punt(somdelen)}.")
+        else:
+            woord = "dossier" if n == 1 else "dossiers"
+            meld(f"{naam}: de afhandeling in het verslag telt {punt(n)} {woord} meer dan het "
+                 f"jaartotaal van {punt(totaal)}. De verdeling op de pagina rekent met die {punt(somdelen)}.")
 
     onderdeel = {
         "totaal": totaal,
