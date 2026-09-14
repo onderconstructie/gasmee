@@ -900,7 +900,7 @@ a,button,input,label{touch-action:manipulation}
           <span class="held-periode" id="held-periode"></span></p>
         <p class="duiding">Camera's aan de autoluwe zones lezen nummerplaten en stellen vast wie het verkeersbord C3 negeert.
         Dat loopt als GAS 4 naar de sanctionerend ambtenaar. Het cameranet groeide fors (van 22 naar
-        36 camera's sinds eind 2022), dus de sprong in de cijfers is ook een sprong in het aantal camera's. Elke camera is een viziertje op de kaart; de oppervlakte ervan volgt het aantal vaststellingen,
+        36 camera's sinds eind 2022), dus de sprong in de cijfers is ook een sprong in het aantal camera's. Elke camera is een viziertje op de kaart; de oppervlakte ervan volgt het aantal dossiers,
         en een gestippelde ring betekent nul, meestal omdat de camera toen afstond. Eén vaste schaal, dus jaren en maanden
         laten zich vergelijken.</p>
       </div>
@@ -1742,7 +1742,7 @@ function tekenMerken(links, boven) {
     stip.style.left = px + "px"; stip.style.top = py + "px";
     stip.style.width = stip.style.height = (straal * 2) + "px";
     stip.title = naam + " (" + stap.label + "): "
-      + (n === null ? "geen camera" : getal(n) + " vaststellingen");
+      + (n === null ? "geen camera" : getal(n) + " dossiers");
 
     if (kaart.z >= 16 && n) {
       const naampje = el("div", "stipnaam", naam);
@@ -1790,7 +1790,7 @@ function merkkaart(naam, rij, inBeeld) {
   const stap = huidigeStap();
   const nu = waardeVoor(naam, stap);
   inhoud.appendChild(el("div", "nu-waarde", nu === null ? "geen camera" : getal(nu)));
-  inhoud.appendChild(el("div", "nu-noot", stap.label + (nu === null ? "" : ", vaststellingen")));
+  inhoud.appendChild(el("div", "nu-noot", stap.label + (nu === null ? "" : ", dossiers")));
 
   const top = Math.max(...jaren.map(j => cameraTelling(naam, j) || 0), 1);
   const reeks = el("div", "reeks");
@@ -2075,7 +2075,7 @@ function tekenCameralijst() {
       } else {
         li.appendChild(el("span"));
       }
-      li.title = r.n && totaal ? procent(Math.round(1000 * r.n / totaal) / 10) + " van alle vaststellingen in " + huidigeStap().label : "";
+      li.title = r.n && totaal ? procent(Math.round(1000 * r.n / totaal) / 10) + " van alle dossiers in " + huidigeStap().label : "";
     } else {
       li.appendChild(el("span", "n", r.n === null ? "geen camera" : getal(r.n)));
       const staaf = el("span", "staaf");
@@ -2154,9 +2154,9 @@ function tekenTegeluitleg(blok, reeks, afh, verweer, woon) {
   const cameraMaanden = camera ? (maandMatrix(gekozen) || {})[camera] : null;
 
   const koppen = {
-    jaren: [camera ? "Vaststellingen per jaar: " + camera : "Vaststellingen per jaar",
+    jaren: [camera ? "Dossiers per jaar: " + camera : "Dossiers per jaar",
       camera ? "Enkel deze camera. Klik een staaf om naar dat jaar te springen; klik de camera los voor alle camera's samen."
-             : "Elk jaarverslag telt de vaststellingen van dat jaar. Klik een staaf om naar dat jaar te springen."],
+             : "Elk jaarverslag telt de dossiers van dat jaar. Klik een staaf om naar dat jaar te springen."],
     maanden: [cameraMaanden ? "Per maand in " + gekozen + ": " + camera : "Per maand in " + gekozen,
       cameraMaanden ? "Enkel deze camera." : "Alle camera's samen. De heatmap eronder zet alle jaren onder elkaar."],
     afhandeling: ["Wat er met de dossiers gebeurde",
@@ -2172,7 +2172,7 @@ function tekenTegeluitleg(blok, reeks, afh, verweer, woon) {
 
   if (openTegel === "jaren") {
     staafgrafiek(vak, cameraJaren || reeks, jaren,
-      {markeer: jaren.indexOf(gekozen), hoog: 210, omschrijving: "vaststellingen per jaar"});
+      {markeer: jaren.indexOf(gekozen), hoog: 210, omschrijving: "dossiers per jaar"});
     vak.querySelectorAll(".vak").forEach(v =>
       v.addEventListener("click", () => zetStap(stapVanJaar(jaren[+v.dataset.i]))));
     vak.style.cursor = "pointer";
@@ -2184,7 +2184,7 @@ function tekenTegeluitleg(blok, reeks, afh, verweer, woon) {
       staafgrafiek(vak, maandreeks, MAANDEN, {
         hoog: 210,
         markeer: huidigeStap().maand === null ? undefined : huidigeStap().maand,
-        omschrijving: "vaststellingen per maand"
+        omschrijving: "dossiers per maand"
       });
       vak.querySelectorAll(".vak").forEach(v =>
         v.addEventListener("click", () => springNaar(gekozen, +v.dataset.i)));
@@ -2431,7 +2431,7 @@ function tekenHeatmap() {
       } else {
         cel.style.background = heatKleur(w / (heatSchaal === "jaar" ? rijtop : top));
         cel.dataset.waarde = w;
-        cel.title = m + " " + r.jaar + ": " + getal(w) + " vaststellingen. Klik om de tijdbalk hierheen te zetten.";
+        cel.title = m + " " + r.jaar + ": " + getal(w) + " dossiers. Klik om de tijdbalk hierheen te zetten.";
         cel.appendChild(el("span", "cijfer", getal(w)));
         cel.addEventListener("click", () => springNaar(r.jaar, i));
       }
@@ -2505,10 +2505,10 @@ function tekenOnderdeel(soort, voorvoegsel) {
     `<span class="delta ${verschil > 0 ? "op" : verschil < 0 ? "neer" : "vlak"}">${verschil > 0 ? "↑" : verschil < 0 ? "↓" : "→"} ${Math.abs(verschil)}%</span> tegenover ${vorig}`;
 
   const lijst = [
-    ["Vaststellingen", getal(blok.totaal), deltaChip,
+    ["Dossiers", getal(blok.totaal), deltaChip,
       {vonk: vonk(reeks), telSleutel: voorvoegsel + "-totaal", telWaarde: blok.totaal, sleutel: "jaren"}],
     ["Drukste maand", blok.per_maand ? MAANDEN[blok.per_maand.indexOf(Math.max(...blok.per_maand))] : "",
-      blok.per_maand ? getal(Math.max(...blok.per_maand)) + " vaststellingen" : "",
+      blok.per_maand ? getal(Math.max(...blok.per_maand)) + " dossiers" : "",
       {tekstwaarde: true, sleutel: blok.per_maand ? "maanden" : null}],
     ["Verweer ingediend", getal(verweer), blok.totaal ? procent(Math.round(1000 * verweer / blok.totaal) / 10) + " van de dossiers" : "",
       {telSleutel: voorvoegsel + "-verweer", telWaarde: verweer, sleutel: "afhandeling"}],
