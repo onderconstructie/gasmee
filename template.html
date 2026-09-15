@@ -6,9 +6,9 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#d2a213">
 <title>GAS mee met Mechelen</title>
-<meta name="description" content="Wat de ANPR-camera's aan de autoluwe zones van Mechelen vaststellen, jaar na jaar en camera per camera, uit de jaarverslagen van GASAM en GAS Rivierenland. Een experiment van As Gau Paust.">
+<meta name="description" content="Hoeveel GAS-dossiers de ANPR-camera's aan de autoluwe zones van Mechelen opleveren, jaar na jaar en camera per camera, uit de jaarverslagen van GASAM en GAS Rivierenland. Een experiment van As Gau Paust.">
 <meta property="og:title" content="GAS mee met Mechelen">
-<meta property="og:description" content="Wat de ANPR-camera's aan de autoluwe zones van Mechelen vaststellen, jaar na jaar en camera per camera.">
+<meta property="og:description" content="Hoeveel GAS-dossiers de ANPR-camera's aan de autoluwe zones van Mechelen opleveren, jaar na jaar en camera per camera.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_BE">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='20' r='15.2' fill='none' stroke='%23d2a213' stroke-width='1.2' opacity='.85'/><circle cx='20' cy='20' r='11.4' fill='none' stroke='%23d2a213' stroke-width='.8' opacity='.22'/><path d='M20 2.4v3.4M20 34.2v3.4M2.4 20h3.4M34.2 20h3.4' stroke='%237a5c10' stroke-width='1.2' stroke-linecap='round'/><path d='M14.9 17.6l1.7-2.7a2 2 0 0 1 1.7-.95h3.4a2 2 0 0 1 1.7.95l1.7 2.7z' fill='%23d2a213'/><rect x='12' y='17.2' width='16' height='5.8' rx='2.6' fill='%23d2a213'/><path d='M16.7 16.8l1.05-1.7a1.3 1.3 0 0 1 1.1-.6h2.3a1.3 1.3 0 0 1 1.1.6l1.05 1.7z' fill='%237a5c10'/><circle cx='15.7' cy='23' r='1.9' fill='%237a5c10'/><circle cx='24.3' cy='23' r='1.9' fill='%237a5c10'/><circle cx='15.7' cy='23' r='.7' fill='%23fffdf7'/><circle cx='24.3' cy='23' r='.7' fill='%23fffdf7'/></svg>">
@@ -63,8 +63,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opa
 .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"tnum","zero"}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
 
-/* Statusstrook, weg te halen na de lancering. Dezelfde strook en hetzelfde badge-woord als op
-   het portaal, zodat de bezoeker overal hetzelfde signaal krijgt. Bewust geen pop-up: het is
+/* Statusstrook BETA: ze blijft staan, met een knop die meteen de mail opent. Dezelfde strook en
+   hetzelfde badge-woord als op het portaal, zodat de bezoeker overal hetzelfde signaal krijgt. Bewust geen pop-up: het is
    een mededeling, geen toestemming die we vragen. Het donker is --ink, precies het diepe vel
    van het portaal; het badge-woord draagt de app-kleur (gemeten 7,59:1 op inkt), niet het
    familie-roze, want dat blijft voorbehouden aan het merkwoord en de portaaltoets. */
@@ -207,6 +207,11 @@ body.menu-open{overflow:hidden}
 .held-cijfer b{color:var(--app-tekst);font-weight:600}
 .held-cijfer em{font-style:normal}
 .held-cijfer .held-periode{font-size:.72em;letter-spacing:0}
+/* De regel onder de periode: wat er naast de dossiers nog aan overtredingen bijkomt. Staat ze
+   verborgen, dan neemt ze geen plek in en sluit de lede aan op de periode. */
+.held-cijfer .held-extra{display:block;margin:.5em 0 0;font-size:clamp(13px,1.5vw,14px);font-weight:500;
+  line-height:1.45;letter-spacing:0;color:var(--ink-dim)}
+.held-cijfer .held-extra[hidden]{display:none}
 .leeslink{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;margin:10px 0 0}
 .leeslink a{color:var(--pink-text);text-decoration:none;border-bottom:1px solid rgba(150,113,22,.45)}
 .leeslink a:hover{border-bottom-color:var(--pink-text)}
@@ -876,15 +881,31 @@ a,button,input,label{touch-action:manipulation}
 
 
 
-<!-- Statusstrook, weg te halen na de lancering. De knop wijst naar het contactvenster van
-     het portaal: dit dashboard heeft er zelf geen, en zo staat het adres hier nergens in de
-     broncode. -->
+<!-- Statusstrook BETA. Ze blijft staan, met een knop die meteen de mail opent: het script
+     hieronder zet het adres uit CONTACT_TO en de pagina in het bericht. Zonder JavaScript wijst
+     de knop naar het contactvenster van het portaal, zodat het adres nergens voluit in de
+     broncode staat. -->
 <div class="status-strook"><div class="ss-in">
-  <b>Nog niet gelanceerd</b>
-  <span>Dit dashboard is nog in volle voorbereiding: we testen nog of alle cijfers kloppen.
-    Kom je hier toevallig terecht, dan is je feedback nu al welkom.
-    <a class="ss-cta" href="https://asgaupaust.be/#contact">Laat het ons weten</a></span>
+  <b>BETA</b>
+  <span>Deze site is nog in opbouw. Zie je een fout of iets dat beter kan?
+    <a class="ss-cta" href="https://asgaupaust.be/#contact">Mail het ons</a></span>
 </div></div>
+<script>
+/* De knop in de strook wordt een mailto met onderwerp en de pagina in het bericht. CONTACT_TO
+   staat verderop in de pagina, dus het script wacht tot alles gelezen is. Bij de klik zet het
+   de link opnieuw, want de hash volgt het gekozen onderdeel. */
+document.addEventListener("DOMContentLoaded", function () {
+  var knop = document.querySelector(".status-strook .ss-cta");
+  if (!knop || typeof CONTACT_TO === "undefined") return;
+  var zet = function () {
+    knop.href = "mailto:" + atob(CONTACT_TO)
+      + "?subject=" + encodeURIComponent("Reactie op GAS mee met Mechelen (BETA)")
+      + "&body=" + encodeURIComponent("Pagina: " + location.href + "\n\n");
+  };
+  zet();
+  knop.addEventListener("click", zet);
+});
+</script>
 
 <div class="wrap">
 
@@ -897,9 +918,10 @@ a,button,input,label{touch-action:manipulation}
              eronder live mee met de tijdbalk. -->
         <h1 class="heldkop"><span class="kader-in-kop">GAS</span> mee met Mechelen</h1>
         <p class="held-cijfer"><b id="held-getal"></b> <em>voorbij het verbod</em><br>
-          <span class="held-periode" id="held-periode"></span></p>
+          <span class="held-periode" id="held-periode"></span>
+          <span class="held-extra" id="held-extra" hidden></span></p>
         <p class="duiding">Camera's aan de autoluwe zones lezen nummerplaten en stellen vast wie het verkeersbord C3 negeert.
-        Dat loopt als GAS 4 naar de sanctionerend ambtenaar. Het cameranet groeide fors (van 22 naar
+        Dat loopt als GAS 4 naar de sanctionerend ambtenaar (sinds 2024 op zes plaatsen eerst een waarschuwing). Het cameranet groeide fors (van 22 naar
         36 camera's sinds eind 2022), dus de sprong in de cijfers is ook een sprong in het aantal camera's. Elke camera is een viziertje op de kaart; de oppervlakte ervan volgt het aantal dossiers,
         en een gestippelde ring betekent nul, meestal omdat de camera toen afstond. Eén vaste schaal, dus jaren en maanden
         laten zich vergelijken.</p>
@@ -1001,7 +1023,7 @@ a,button,input,label{touch-action:manipulation}
       <h1 class="heldkop-klein">Fout parkeren steeg met <em>bijna een derde</em></h1>
     </div>
     <p class="duiding">Naast de camera's aan de autoluwe zones handelt de dienst ook de boetes voor stilstaan
-    en parkeren af, samen met het autoluw gebied GAS 4. In 2024 waren dat 9.496 vaststellingen, 32 procent
+    en parkeren af, samen met het autoluw gebied GAS 4. In 2024 waren dat 9.496 dossiers, 32 procent
     meer dan in 2023. Daaronder de overlastdossiers, GAS 1 tot 3, die politie en vaststellende ambtenaren
     doorsturen. Snelheid staat apart.</p>
 
@@ -1167,7 +1189,7 @@ a,button,input,label{touch-action:manipulation}
     </a>
     <div class="co-body">
       <p class="co-zin"><strong class="co-naam">GAS mee <em>met Mechelen</em></strong>, een experiment van <strong>As Gau Paust</strong>.
-      Zo zie je wat de camera's aan de autoluwe zones vaststellen, en wat de stad aan GAS plant en int.</p>
+      Zo zie je hoeveel GAS-dossiers de camera's aan de autoluwe zones opleveren, en wat de stad aan GAS plant en int.</p>
       <p class="co-fam">Onderdeel van <a href="https://asgaupaust.be">asgaupaust.be</a> &middot; <a href="https://asgaupaust.be/privacy/">Privacy</a></p>
     </div>
   </div>
@@ -1189,6 +1211,8 @@ a,button,input,label{touch-action:manipulation}
 <button class="terug" id="terug" title="Terug naar boven" aria-label="Terug naar boven">&uarr;</button>
 
 <script>
+/* Het publieke contactadres staat enkel in base64 in de code; de knop in de statusstrook leest het. */
+var CONTACT_TO = 'YXNnYXVwYXVzdEBnbWFpbC5jb20=';
 /* DATA_HIER */
 
 /* Dit bestand is het sjabloon: de cijfers worden er pas bij het bouwen in
@@ -2906,7 +2930,7 @@ function tekenGas() {
     const verweer = afh.verweer || ((afh.gunstig || 0) + (afh.ongunstig || 0) + (afh.beroep || 0));
     const deltaChip = verschil === null ? "" :
       `<span class="delta ${verschil > 0 ? "op" : verschil < 0 ? "neer" : "vlak"}">${verschil > 0 ? "↑" : verschil < 0 ? "↓" : "→"} ${Math.abs(verschil)}%</span> tegenover ${vorig}`;
-    [["Vaststellingen", getal(blok.totaal), deltaChip, {vonk: vonk(reeks), telSleutel: "gas-tot", telWaarde: blok.totaal}],
+    [["Dossiers", getal(blok.totaal), deltaChip, {vonk: vonk(reeks), telSleutel: "gas-tot", telWaarde: blok.totaal}],
      ["Verweer ingediend", getal(verweer), blok.totaal ? procent(Math.round(1000 * verweer / blok.totaal) / 10) + " van de dossiers" : "",
        {telSleutel: "gas-verweer", telWaarde: verweer}],
      ["Boete geschrapt", getal(afh.gunstig), afh.gunstig && verweer ? procent(Math.round(100 * afh.gunstig / verweer)) + " van de verweren" : "",
@@ -2921,9 +2945,9 @@ function tekenGas() {
     });
 
     staafgrafiek(document.getElementById("gas-jaren"), reeks, jaren,
-      {markeer: jaren.indexOf(gekozen), hoog: 190, omschrijving: "parkeervaststellingen per jaar"});
+      {markeer: jaren.indexOf(gekozen), hoog: 190, omschrijving: "parkeerdossiers per jaar"});
     const maandvak = document.getElementById("gas-maanden");
-    if (blok.per_maand) staafgrafiek(maandvak, blok.per_maand, MAANDEN, {hoog: 190, omschrijving: "parkeervaststellingen per maand"});
+    if (blok.per_maand) staafgrafiek(maandvak, blok.per_maand, MAANDEN, {hoog: 190, omschrijving: "parkeerdossiers per maand"});
     else maandvak.innerHTML = "<p>Geen maandcijfers in dit verslag.</p>";
 
     const namen = {initieel: "geen verweer", gunstig: "verweer gegrond", ongunstig: "verweer verworpen", sepot: "geseponeerd", beroep: "beroep bij de rechter"};
@@ -3038,6 +3062,10 @@ function tekenSoorten() {
   }
 }
 
+/* Een klein aantal plaatsen in woorden, zoals in lopende tekst. */
+const TELWOORDEN = ["nul", "een", "twee", "drie", "vier", "vijf", "zes", "zeven", "acht", "negen", "tien", "elf", "twaalf"];
+const plaatsenWoord = n => n === 1 ? "één plaats" : (TELWOORDEN[n] || getal(n)) + " plaatsen";
+
 /* De kop telt live mee met de tijdbalk: het aantal in het inktkader, de
    periode eronder. Zo is de titel zelf de vangst. */
 function tekenHeld() {
@@ -3053,6 +3081,17 @@ function tekenHeld() {
   document.getElementById("held-periode").textContent =
     stap.maand === null ? "de autoluwe zones in, in " + stap.jaar
                         : "de autoluwe zones in, in " + stap.label;
+
+  /* Op de plaatsen waar eerst een waarschuwing volgt, wordt niet elke overtreding een dossier.
+     Telt het verslag van het gekozen jaar die overtredingen apart, dan staat dat getal onder de
+     periode. In de andere jaren en in de maandstand is de regel weg en neemt ze geen plek in. */
+  const extra = document.getElementById("held-extra");
+  const luik = stap.maand === null && blok && blok.waarschuwingen;
+  extra.hidden = !luik;
+  if (luik) {
+    extra.textContent = "plus " + getal(luik.overtredingen) + " overtredingen op "
+      + plaatsenWoord(luik.plaatsen) + " waar eerst een waarschuwing volgt";
+  }
 }
 
 function tekenAlles() {

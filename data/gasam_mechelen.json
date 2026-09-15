@@ -2410,7 +2410,15 @@
     },
     "per_camera_herkomst": "figuur per camera (overgetypt uit het beeld, nageteld)",
     "per_camera_pagina": 104,
-    "per_camera_som": 93422
+    "per_camera_som": 93422,
+    "waarschuwingen": {
+     "overtredingen": 30108,
+     "overtredingen_totaal": 123530,
+     "pagina": 110,
+     "waarschuwingen": 24813,
+     "sperperiode": 5295,
+     "plaatsen": 6
+    }
    },
    "parkeren": {
     "totaal": 9496,

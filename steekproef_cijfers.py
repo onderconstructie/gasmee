@@ -10,7 +10,7 @@ Leest een reeks concrete cijfers rechtstreeks uit de tekstlaag van de jaarversla
 vergelijkt ze met wat in de gebouwde pagina zit: de ingebakken data (const D) en,
 als Chrome beschikbaar is, de gerenderde tegels van de standaardweergave.
 
-Draaien na elke build:  python steekproef_cijfers.py   (79 controles)
+Draaien na elke build:  python steekproef_cijfers.py   (83 controles)
 Afwijking = het cijfer op de site verschilt van de bron; onbeslist = het patroon
 vond het cijfer niet in de tekstlaag (dan met de hand nakijken, niet negeren).
 Sluit af met code 1 zodra er een afwijking is."""
@@ -138,6 +138,19 @@ for cam, w in (("Korenmarkt", 9655), ("Schuttersvest", 13660), ("Caputsteenstraa
     m = re.search(cam + r".{0,80}?" + punt(w) + r" in 2024", t, re.S)
     check(f"2024 {cam} (kruiszin)", w if m else None, J["2024"]["autoluw"]["per_camera"].get(cam))
 
+# 2024: de overtredingen op de plaatsen waar eerst een waarschuwing volgt (deel 2 en het besluit)
+t = " ".join(tekst("Jaarverslag GAS Rivierenland 2024.pdf", 108, 110).split())
+a24 = J["2024"]["autoluw"]
+ww = a24.get("waarschuwingen") or {}
+m = re.search(r"en de (\d[\d.]*) overtredingen die werden behandeld onder het gedeelte van de waarschuwingen", t)
+check("2024 overtredingen met eerst waarschuwing (zin)", getal(m.group(1)) if m else None, ww.get("overtredingen"))
+m = re.search(r"De (\d[\d.]*) overtredingen zijn dus een optelsom", t)
+check("2024 dossiers plus die overtredingen (zin)", getal(m.group(1)) if m else None,
+      a24["totaal"] + ww["overtredingen"] if ww.get("overtredingen") is not None else None)
+m = re.search(r"waarschuwingen gestuurd voor (\w+) locaties", t)
+check("2024 plaatsen met eerst waarschuwing (zin)",
+      {"vijf": 5, "zes": 6, "zeven": 7, "acht": 8}.get(m.group(1).lower()) if m else None, ww.get("plaatsen"))
+
 # het geld: de GAS-ontvangsten uit de jaarrekeningen, gelezen op kolompositie
 #
 # De documentatiebundel zet de drie kolommen in de omgekeerde volgorde van wat je
@@ -231,7 +244,9 @@ if os.path.exists(CHROME):
     verwacht = {"jaartotaal 2024": punt(a24["totaal"]),
                 "verweer 2024": punt(a24["afhandeling_per_jaar"]["verweer"]["2024"]),
                 "Schuttersvest 2024": punt(a24["per_camera"]["Schuttersvest"]),
-                "hoogste maand 2024": punt(max(a24["per_maand"]))}
+                "hoogste maand 2024": punt(max(a24["per_maand"])),
+                "overtredingen met eerst waarschuwing 2024":
+                    punt((a24.get("waarschuwingen") or {}).get("overtredingen", -1))}
     for label, needle in verwacht.items():
         uit.append((f"pagina toont {label}", needle, "aanwezig" if needle in dom else "ONTBREEKT",
                     "OK" if needle in dom else "AFWIJKING"))

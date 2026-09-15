@@ -63,8 +63,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opa
 .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"tnum","zero"}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
 
-/* Statusstrook, weg te halen na de lancering. Dezelfde strook en hetzelfde badge-woord als op
-   het portaal, zodat de bezoeker overal hetzelfde signaal krijgt. Bewust geen pop-up: het is
+/* Statusstrook BETA: ze blijft staan, met een knop die meteen de mail opent. Dezelfde strook en
+   hetzelfde badge-woord als op het portaal, zodat de bezoeker overal hetzelfde signaal krijgt. Bewust geen pop-up: het is
    een mededeling, geen toestemming die we vragen. Het donker is --ink, precies het diepe vel
    van het portaal; het badge-woord draagt de app-kleur (gemeten 7,59:1 op inkt), niet het
    familie-roze, want dat blijft voorbehouden aan het merkwoord en de portaaltoets. */
@@ -207,6 +207,11 @@ body.menu-open{overflow:hidden}
 .held-cijfer b{color:var(--app-tekst);font-weight:600}
 .held-cijfer em{font-style:normal}
 .held-cijfer .held-periode{font-size:.72em;letter-spacing:0}
+/* De regel onder de periode: wat er naast de dossiers nog aan overtredingen bijkomt. Staat ze
+   verborgen, dan neemt ze geen plek in en sluit de lede aan op de periode. */
+.held-cijfer .held-extra{display:block;margin:.5em 0 0;font-size:clamp(13px,1.5vw,14px);font-weight:500;
+  line-height:1.45;letter-spacing:0;color:var(--ink-dim)}
+.held-cijfer .held-extra[hidden]{display:none}
 .leeslink{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;margin:10px 0 0}
 .leeslink a{color:var(--pink-text);text-decoration:none;border-bottom:1px solid rgba(150,113,22,.45)}
 .leeslink a:hover{border-bottom-color:var(--pink-text)}
@@ -875,15 +880,31 @@ a,button,input,label{touch-action:manipulation}
 
 
 
-<!-- Statusstrook, weg te halen na de lancering. De knop wijst naar het contactvenster van
-     het portaal: dit dashboard heeft er zelf geen, en zo staat het adres hier nergens in de
-     broncode. -->
+<!-- Statusstrook BETA. Ze blijft staan, met een knop die meteen de mail opent: het script
+     hieronder zet het adres uit CONTACT_TO en de pagina in het bericht. Zonder JavaScript wijst
+     de knop naar het contactvenster van het portaal, zodat het adres nergens voluit in de
+     broncode staat. -->
 <div class="status-strook"><div class="ss-in">
-  <b>Nog niet gelanceerd</b>
-  <span>Dit dashboard is nog in volle voorbereiding: we testen nog of alle cijfers kloppen.
-    Kom je hier toevallig terecht, dan is je feedback nu al welkom.
-    <a class="ss-cta" href="https://asgaupaust.be/#contact">Laat het ons weten</a></span>
+  <b>BETA</b>
+  <span>Deze site is nog in opbouw. Zie je een fout of iets dat beter kan?
+    <a class="ss-cta" href="https://asgaupaust.be/#contact">Mail het ons</a></span>
 </div></div>
+<script>
+/* De knop in de strook wordt een mailto met onderwerp en de pagina in het bericht. CONTACT_TO
+   staat verderop in de pagina, dus het script wacht tot alles gelezen is. Bij de klik zet het
+   de link opnieuw, want de hash volgt het gekozen onderdeel. */
+document.addEventListener("DOMContentLoaded", function () {
+  var knop = document.querySelector(".status-strook .ss-cta");
+  if (!knop || typeof CONTACT_TO === "undefined") return;
+  var zet = function () {
+    knop.href = "mailto:" + atob(CONTACT_TO)
+      + "?subject=" + encodeURIComponent("Reactie op GAS mee met Mechelen (BETA)")
+      + "&body=" + encodeURIComponent("Pagina: " + location.href + "\n\n");
+  };
+  zet();
+  knop.addEventListener("click", zet);
+});
+</script>
 
 <style>
 /* ==========================================================================
@@ -1025,7 +1046,7 @@ a,button,input,label{touch-action:manipulation}
     <div class="tech-prose">
       <p>
         Een leesfout in een grafiek is stil: er rolt gewoon een getal uit, en dat oogt even
-        netjes als het juiste. Daarom loopt <code>steekproef_cijfers.py</code> na elke build 79
+        netjes als het juiste. Daarom loopt <code>steekproef_cijfers.py</code> na elke build 83
         cijfers na tegen de pdf's, haalde een tweede lezer alle cijfers opnieuw uit de bron
         zonder onze code, en keken twee lezers de camera's na op straatfoto's.
       </p>
@@ -1181,7 +1202,7 @@ document.addEventListener('keydown', function (e) {
     </a>
     <div class="co-body">
       <p class="co-zin"><strong class="co-naam">GAS mee <em>met Mechelen</em></strong>, een experiment van <strong>As Gau Paust</strong>.
-      Zo zie je wat de camera's aan de autoluwe zones vaststellen, en wat de stad aan GAS plant en int.</p>
+      Zo zie je hoeveel GAS-dossiers de camera's aan de autoluwe zones opleveren, en wat de stad aan GAS plant en int.</p>
       <p class="co-fam">Onderdeel van <a href="https://asgaupaust.be">asgaupaust.be</a> &middot; <a href="https://asgaupaust.be/privacy/">Privacy</a></p>
     </div>
   </div>

@@ -892,6 +892,104 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
     return onderdeel
 
 
+TELWOORDEN = {"een": 1, "twee": 2, "drie": 3, "vier": 4, "vijf": 5, "zes": 6, "zeven": 7,
+              "acht": 8, "negen": 9, "tien": 10, "elf": 11, "twaalf": 12}
+
+
+def waarschuwingsluik(doc, van, tot, jaar, autoluw):
+    """De overtredingen op de plaatsen waar eerst een waarschuwing volgt, naast de ANPR-dossiers.
+
+    Op die plaatsen wordt niet elke overtreding een dossier. Het verslag telt ze in een eigen
+    deel ("2 Waarschuwingen") en legt ze in het besluit bij de dossiers, in een zin van de vorm
+    "De <totaal> overtredingen zijn dus een optelsom van de <dossiers> dossiers ... en de <n>
+    overtredingen die werden behandeld onder het gedeelte van de waarschuwingen". Een tabel geeft
+    per plaats de waarschuwingen, de overtredingen die in de sperperiode geschrapt werden, de
+    boetes en het totaal.
+
+    Het deel telt enkel als zijn kop op een eigen regel staat op de bladzijde meteen na het
+    ANPR-deel: elders in het hoofdstuk staat hetzelfde woord in tabellen over overlast.
+
+    Het veld komt er enkel als alles sluit: de zin noemt dezelfde dossiers als het jaartotaal,
+    dossiers plus deze overtredingen geven het totaal van de zin, en staat de tabel er, dan geven
+    waarschuwingen plus sperperiode samen dat getal, sluit elke rij, zijn de boetes de dossiers
+    van die camera en telt de tabel evenveel plaatsen als de tekst. Anders een melding en geen veld.
+    """
+    eind = (autoluw.get("paginas") or [None, None])[1]
+    if eind is None or eind >= tot:
+        return None
+    av, at = deelpaginas(doc, eind + 1, tot, r"2[ \t]+Waarschuwingen", ["Vrachtwagensluis", "Parkeren en stilstaan"])
+    if av != eind + 1:
+        return None
+    naam = f"{jaar} {TABNAAM['autoluw']}"
+    plat = lambda s: " ".join(s.split())
+    getal = lambda s: int(s.replace(".", ""))
+    punt = lambda n: f"{n:,}".replace(",", ".")
+    patroon = (r"De (\d[\d.]*) overtredingen zijn dus een optelsom van de (\d[\d.]*) dossiers"
+               r".{0,80}? en de (\d[\d.]*) overtredingen die werden behandeld onder het gedeelte van de waarschuwingen")
+    pagina, zin = None, None
+    for nr in range(av, at + 1):
+        zin = re.search(patroon, plat(lees.paginatekst(doc, nr)), re.I)
+        if zin:
+            pagina = nr
+            break
+    if not zin:
+        meld(f"{naam}: het verslag telt waarschuwingen, maar geeft geen optelsom met de dossiers. "
+             f"Die overtredingen staan daarom niet onder de kop.")
+        return None
+    totaal, zin_dossiers, overtredingen = (getal(g) for g in zin.groups())
+    tekst = tekst_van(doc, av, at)
+
+    plaatsen = None
+    for woord in re.findall(r"\b(\w+) locaties\b", plat(tekst), re.I):
+        if woord.lower() in TELWOORDEN or woord.isdigit():
+            plaatsen = TELWOORDEN.get(woord.lower()) or int(woord)
+            break
+
+    problemen = []
+    dossiers = autoluw.get("totaal")
+    if zin_dossiers != dossiers:
+        problemen.append(f"de zin noemt {punt(zin_dossiers)} dossiers, het jaartotaal is {punt(dossiers or 0)}")
+    if dossiers is not None and dossiers + overtredingen != totaal:
+        problemen.append(f"{punt(dossiers)} dossiers plus {punt(overtredingen)} overtredingen is "
+                         f"{punt(dossiers + overtredingen)}, het verslag telt {punt(totaal)} overtredingen")
+
+    # de tabel: vier kolomkoppen, daarna per plaats een naam en vier getallen
+    regels = [r.strip() for r in tekst.splitlines() if r.strip()]
+    kop = ["Waarschuwingen", "Sperperiode", "Boetes", "Totaal overtredingen"]
+    start = next((i + 4 for i in range(len(regels) - 3) if regels[i:i + 4] == kop), None)
+    rijen = []
+    while start is not None and start + 4 < len(regels):
+        cijfers = regels[start + 1:start + 5]
+        if re.fullmatch(r"\d[\d.]*", regels[start]) or not all(re.fullmatch(r"\d[\d.]*", c) for c in cijfers):
+            break
+        rijen.append((regels[start], *(getal(c) for c in cijfers)))
+        start += 5
+    luik = {"overtredingen": overtredingen, "overtredingen_totaal": totaal, "pagina": pagina}
+    if rijen:
+        per_camera = autoluw.get("per_camera") or {}
+        for cam, w, s, b, t in rijen:
+            if w + s + b != t:
+                problemen.append(f"in de tabel sluit de rij {cam} niet")
+            if per_camera and per_camera.get(cameranaam(cam)) != b:
+                problemen.append(f"in de tabel wijken de boetes van {cam} af van de dossiers van die camera")
+        som = sum(w + s for _, w, s, _, _ in rijen)
+        if som != overtredingen:
+            problemen.append(f"waarschuwingen plus sperperiode in de tabel geven {punt(som)}, de zin {punt(overtredingen)}")
+        if plaatsen is not None and plaatsen != len(rijen):
+            problemen.append(f"de tekst noemt {plaatsen} plaatsen, de tabel {len(rijen)}")
+        plaatsen = len(rijen)
+        luik["waarschuwingen"] = sum(w for _, w, _, _, _ in rijen)
+        luik["sperperiode"] = sum(s for _, _, s, _, _ in rijen)
+    if plaatsen is None:
+        problemen.append("het aantal plaatsen staat nergens")
+    if problemen:
+        meld(f"{naam}: de overtredingen op de plaatsen met eerst een waarschuwing sluiten niet ("
+             + "; ".join(problemen) + "). Ze staan daarom niet onder de kop.")
+        return None
+    luik["plaatsen"] = plaatsen
+    return luik
+
+
 def main():
     global MAANDTABELLEN, DOSSIERFIGUREN
     labels = json.load(open(os.path.join(HIER, "camera_labels.json"), encoding="utf-8"))
@@ -924,6 +1022,11 @@ def main():
         if av:
             jaarblok["autoluw"] = lees_onderdeel(doc, av, at, jaar, "autoluw", labels)
             print(f"   autoluw p{av}-{at}: totaal {jaarblok['autoluw']['totaal']}")
+            luik = waarschuwingsluik(doc, van, tot, jaar, jaarblok["autoluw"])
+            if luik:
+                jaarblok["autoluw"]["waarschuwingen"] = luik
+                print(f"   waarschuwingen blz. {luik['pagina']}: {luik['overtredingen']} overtredingen "
+                      f"op {luik['plaatsen']} plaatsen, samen met de dossiers {luik['overtredingen_totaal']}")
         else:
             print("   autoluw: niet in dit verslag")
 
