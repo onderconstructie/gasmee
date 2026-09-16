@@ -109,22 +109,36 @@ def bouw_techniek(sjabloon):
     colofon = sjabloon[sjabloon.index('<footer class="colofon">'):sjabloon.index("</footer>") + len("</footer>")]
     colofon = colofon.replace('href="#camera" aria-label="GAS mee met Mechelen, naar het begin" onclick="event.preventDefault();toonView(\'camera\')"',
                               'href="index.html" aria-label="GAS mee met Mechelen, naar het begin"')
-    onderbalk = sjabloon[sjabloon.index('<nav class="onderbalk"'):sjabloon.index("</nav>", sjabloon.index('<nav class="onderbalk"')) + len("</nav>")]
-    onderbalk = re.sub(r'<button role="tab" data-view="(\w+)" aria-selected="\w+">', r'<a href="index.html#\1">', onderbalk).replace("</button>", "</a>")
-    # Op de techniekpagina zijn dit geen tabbladen maar links naar het dashboard.
-    # Een tablist waarvan elke tab naar een andere pagina springt, klopt niet voor
-    # een schermlezer, dus de rollen gaan eruit.
-    onderbalk = onderbalk.replace('<nav class="onderbalk" role="tablist" aria-label="Onderdelen">',
-                                  '<nav class="onderbalk" aria-label="Onderdelen">')
-    script = """<button class="terug" id="terug" title="Terug naar boven" aria-label="Terug naar boven">&uarr;</button>
+    begin = sjabloon.index('<nav class="tabbar"')
+    onderbalk = sjabloon[begin:sjabloon.index("</nav>", begin) + len("</nav>")]
+    onderbalk, n = re.subn(r'<button type="button" role="tab" data-view="(\w+)" aria-selected="\w+">',
+                           r'<a href="index.html#\1">', onderbalk)
+    onderbalk = onderbalk.replace("</button>", "</a>")
+    # Op de techniekpagina zijn dit geen tabbladen maar links naar het dashboard, dus de rollen gaan eruit.
+    kaal = onderbalk.replace('<nav class="tabbar" role="tablist" aria-label="Onderdelen">',
+                             '<nav class="tabbar" aria-label="Onderdelen">')
+    if n != 4 or kaal == onderbalk:
+        raise SystemExit("       STOP: de app-balk van techniek.html kon niet omgezet worden")
+    onderbalk = kaal
+    script = """<button class="terug" id="terug" type="button" aria-label="Terug naar boven"><svg class="tt-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg><span class="tt-teken" aria-hidden="true">&#8593;</span></button>
 <script>
+let menuRonde = 0;
 function menu(open) {
   const vlak = document.getElementById("menuvlak"), knop = document.getElementById("menuknop");
   if (!vlak || !knop) return;
-  const nu = open === undefined ? vlak.hidden : open;
-  vlak.hidden = !nu;
+  const dicht = vlak.hidden || vlak.classList.contains("sluit");
+  const nu = open === undefined ? dicht : open;
   knop.setAttribute("aria-expanded", String(nu));
-  document.body.classList.toggle("menu-open", nu);
+  if (nu) { menuRonde++; vlak.classList.remove("sluit"); vlak.hidden = false; document.body.classList.add("menu-open"); return; }
+  if (dicht) return;
+  const ronde = ++menuRonde, kaart = vlak.querySelector(".menukaart");
+  const klaar = () => { if (ronde !== menuRonde) return;
+    vlak.classList.remove("sluit"); vlak.hidden = true; document.body.classList.remove("menu-open"); };
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { klaar(); return; }
+  vlak.classList.add("sluit");
+  const opEinde = e => { if (e.target !== kaart) return; kaart.removeEventListener("animationend", opEinde); klaar(); };
+  kaart.addEventListener("animationend", opEinde);
+  setTimeout(klaar, 340);
 }
 document.addEventListener("keydown", e => { if (e.key === "Escape") menu(false); });
 (function () {
@@ -132,7 +146,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") menu(false);
   if (!terug) return;
   const toon = () => terug.classList.toggle("zichtbaar", window.scrollY > 600);
   window.addEventListener("scroll", toon, {passive: true}); toon();
-  terug.addEventListener("click", () => window.scrollTo({top: 0, behavior: "smooth"}));
+  terug.addEventListener("click", () => window.scrollTo({top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}));
 })();
 </script>
 """
