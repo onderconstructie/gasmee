@@ -63,11 +63,14 @@
 @media (max-width:700px){ :root{ --nav-h:64px; } }
 /* De schil gebruikt de tokennamen van Denk mee en Lees mee; hier wijzen ze naar de namen van
    GAS mee. De actieve toets in de app-balk leest in het diepe oker: de gewone leestint haalt
-   door het glas van de balk te weinig contrast. */
+   door het glas van de balk te weinig contrast.
+   De zijmarge heeft een ondergrens van 1rem, gelijk op de vier sites: zo staat het merkwoord
+   met de mug op een telefoon overal op dezelfde plaats. Vanaf ongeveer 440 px wint 4vw weer,
+   dus breder blijft de marge wat ze was. */
 :root{ --line-strong:rgba(26,23,18,.22); --app-text:var(--app-tekst); --eiland-app:var(--app);
   --portaal-roze:var(--agp-pink); --portaal-roze-tekst:var(--agp-pink-tekst);
   --tab-actief-tekst:var(--app-deep); --tab-actief-streep:var(--app-deep);
-  --pad-x:clamp(1.1rem,4vw,3rem); }
+  --pad-x:clamp(1rem,4vw,3rem); }
 *{box-sizing:border-box}
 [hidden]{display:none !important}  /* anders wint display:flex van het hidden-attribuut */
 :focus-visible{outline:2px solid var(--pink-text);outline-offset:2px;border-radius:6px}
