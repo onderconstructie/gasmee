@@ -26,7 +26,7 @@ De uitkomst komt in cameras.json:
 Google Maps of Street View gebruiken we hier bewust niet: coordinaten daaruit
 overnemen verbiedt hun licentie.
 
-Draaien:  python verifieer_cameras_osm.py
+Draaien:  python scripts/verifieer_cameras_osm.py
 Uit:      cameras.json (bijgewerkt)
 """
 
@@ -38,8 +38,8 @@ import sys
 import urllib.parse
 import urllib.request
 
-HIER = os.path.dirname(os.path.abspath(__file__))
-CAMERAS = os.path.join(HIER, "cameras.json")
+HIER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # de repomap: dit script staat in scripts/
+CAMERAS = os.path.join(HIER, "data", "cameras.json")
 AFSTAND_STRAAT = 30        # meter: tot hier ligt een punt "in" de straat
 AFSTAND_REFERENTIE = 400   # meter: verder dan dit van het eigen referentiepunt telt niet mee
 BBOX = "(50.99,4.43,51.07,4.53)"

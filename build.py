@@ -24,7 +24,7 @@ CUSTOM_DOMAIN = "gasmee.asgaupaust.be"
 BESTANDEN = {
     "gasam": os.path.join(HIER, "data", "gasam_mechelen.json"),
     "budget": os.path.join(HIER, "data", "budget_mechelen.json"),
-    "cameras": os.path.join(HIER, "cameras.json"),
+    "cameras": os.path.join(HIER, "data", "cameras.json"),
 }
 # de gazet-voorpagina: artikels uit het Lees mee-dossier, opgehaald door
 # haal_leesmee.py; ontbreekt het bestand, dan bouwt de rest gewoon door
@@ -163,7 +163,7 @@ def main():
     gegevens = {}
     for sleutel, pad in BESTANDEN.items():
         if not os.path.exists(pad):
-            sys.exit(f"ontbreekt: {pad}\nDraai eerst parse_gasam.py, parse_budget.py en geocode_cameras.py.")
+            sys.exit(f"ontbreekt: {pad}\nDraai eerst scripts/parse_gasam.py, scripts/parse_budget.py en scripts/geocode_cameras.py.")
         gegevens[sleutel] = json.load(open(pad, encoding="utf-8"))
 
     problemen = controleer(gegevens["gasam"], gegevens["cameras"])
@@ -173,7 +173,7 @@ def main():
     gegevens["feitcodes"] = feitcodes(gegevens["gasam"])
     gegevens["leesmee"] = json.load(open(LEESMEE, encoding="utf-8")) if os.path.exists(LEESMEE) else None
     if not gegevens["leesmee"]:
-        print("   let op: geen data/leesmee_dossier.json; de gazet blijft leeg (draai haal_leesmee.py)")
+        print("   let op: geen data/leesmee_dossier.json; de gazet blijft leeg (draai scripts/haal_leesmee.py)")
 
     sjabloon = open(os.path.join(HIER, "template.html"), encoding="utf-8").read()
     blok = "const D = " + json.dumps(gegevens, ensure_ascii=False, separators=(",", ":")) + ";"

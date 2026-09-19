@@ -10,7 +10,7 @@ Leest een reeks concrete cijfers rechtstreeks uit de tekstlaag van de jaarversla
 vergelijkt ze met wat in de gebouwde pagina zit: de ingebakken data (const D) en,
 als Chrome beschikbaar is, de gerenderde tegels van de standaardweergave.
 
-Draaien na elke build:  python steekproef_cijfers.py   (83 controles)
+Draaien na elke build:  python scripts/steekproef_cijfers.py   (83 controles)
 Afwijking = het cijfer op de site verschilt van de bron; onbeslist = het patroon
 vond het cijfer niet in de tekstlaag (dan met de hand nakijken, niet negeren).
 Sluit af met code 1 zodra er een afwijking is."""
@@ -23,7 +23,7 @@ import sys
 
 import fitz
 
-HIER = os.path.dirname(os.path.abspath(__file__))
+HIER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # de repomap: dit script staat in scripts/
 BRON = os.path.join(HIER, "..", "GASAM")
 BUDGETMAP = os.path.join(HIER, "..", "DenkMeeMetMechelen", "data", "raw", "budgetten")
 DIST = os.path.join(HIER, "dist", "index.html")

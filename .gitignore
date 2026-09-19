@@ -37,3 +37,6 @@ data/osm_straten_ruw.json
 data/osm_surveillance_ruw.json
 data/osm_kandidaten_per_straat.json
 fotocheck_panoramax.json
+
+# Lokale knoppen (dubbelklik op dit toestel), niet nodig om te bouwen
+*.bat

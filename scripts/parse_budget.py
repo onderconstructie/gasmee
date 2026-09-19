@@ -27,7 +27,7 @@ niet; die jaren blijven dus leeg.
 Bron: de budgetdocumenten die de pijplijn van Denk mee met Mechelen al ophaalt
 (data/raw/budgetten). Dit script schrijft daar niets, het leest alleen.
 
-Draaien:  python parse_budget.py
+Draaien:  python scripts/parse_budget.py
 Uit:      data/budget_mechelen.json
 """
 
@@ -39,7 +39,7 @@ import sys
 
 import fitz
 
-HIER = os.path.dirname(os.path.abspath(__file__))
+HIER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # de repomap: dit script staat in scripts/
 BUDGETMAP = os.path.join(
     os.path.dirname(HIER), "DenkMeeMetMechelen", "data", "raw", "budgetten"
 )

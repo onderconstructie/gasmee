@@ -19,7 +19,7 @@ Twee harde controles, want een leesfout in een grafiek is stil:
   - de som van de camera's moet het jaartotaal halen
 Halen ze dat niet, dan meldt het script dat en laat het veld leeg.
 
-Draaien:  python parse_gasam.py
+Draaien:  python scripts/parse_gasam.py
 Uit:      data/gasam_mechelen.json
 """
 
@@ -30,7 +30,7 @@ import sys
 
 import gasam_lees as lees
 
-HIER = os.path.dirname(os.path.abspath(__file__))
+HIER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # de repomap: dit script staat in scripts/
 BRONMAP = os.path.join(os.path.dirname(HIER), "GASAM")
 UIT = os.path.join(HIER, "data", "gasam_mechelen.json")
 
@@ -992,9 +992,9 @@ def waarschuwingsluik(doc, van, tot, jaar, autoluw):
 
 def main():
     global MAANDTABELLEN, DOSSIERFIGUREN
-    labels = json.load(open(os.path.join(HIER, "camera_labels.json"), encoding="utf-8"))
-    MAANDTABELLEN = json.load(open(os.path.join(HIER, "camera_maanden.json"), encoding="utf-8"))
-    DOSSIERFIGUREN = json.load(open(os.path.join(HIER, "camera_dossiers.json"), encoding="utf-8"))
+    labels = json.load(open(os.path.join(HIER, "data", "camera_labels.json"), encoding="utf-8"))
+    MAANDTABELLEN = json.load(open(os.path.join(HIER, "data", "camera_maanden.json"), encoding="utf-8"))
+    DOSSIERFIGUREN = json.load(open(os.path.join(HIER, "data", "camera_dossiers.json"), encoding="utf-8"))
     uit = {"bron": "GASAM-jaarverslagen, verkregen via openbaarheidsverzoek", "jaren": {}}
 
     for jaar, pad in sorted(verslagen().items()):

@@ -11,7 +11,7 @@ giet ze mee in het dashboard. Geen verbinding of geen dossier: dan blijft het
 oude bestand staan en meldt het script dat, zodat een kapotte run nooit een
 werkende gazet leegmaakt.
 
-Draaien:  python haal_leesmee.py
+Draaien:  python scripts/haal_leesmee.py
 Uit:      data/leesmee_dossier.json
 """
 
@@ -21,7 +21,7 @@ import os
 import sys
 import urllib.request
 
-HIER = os.path.dirname(os.path.abspath(__file__))
+HIER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # de repomap: dit script staat in scripts/
 UIT = os.path.join(HIER, "data", "leesmee_dossier.json")
 BRON = "https://leesmee.asgaupaust.be/"
 DOSSIER = "gas-autoluw"

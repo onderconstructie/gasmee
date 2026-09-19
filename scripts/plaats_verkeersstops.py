@@ -39,7 +39,7 @@ is (een zone-ingang zonder plaatsaanduiding) blijft op het straatmidden.
 Bron: Reglement autoluwe binnenstad en verkeersstops, stad Mechelen (2025-04
 en 2026-08), www.mechelen.be. Google Maps is bewust geen bron.
 
-Draaien:  python plaats_verkeersstops.py   (na verifieer_cameras_osm.py)
+Draaien:  python scripts/plaats_verkeersstops.py   (na verifieer_cameras_osm.py)
 Uit:      cameras.json (bijgewerkt)
 """
 
@@ -51,8 +51,8 @@ import sys
 import urllib.parse
 import urllib.request
 
-HIER = os.path.dirname(os.path.abspath(__file__))
-CAMERAS = os.path.join(HIER, "cameras.json")
+HIER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # de repomap: dit script staat in scripts/
+CAMERAS = os.path.join(HIER, "data", "cameras.json")
 BBOX = "(50.99,4.43,51.07,4.53)"
 OVERPASS = [
     "https://lz4.overpass-api.de/api/interpreter",
@@ -228,7 +228,7 @@ def loop_langs(lijnen, start, afstand, richting=None):
 
 def adrespunt(straat, nummer):
     """Het adrespunt uit het Vlaams Adressenregister, via het bestaande geocode-script."""
-    sys.path.insert(0, HIER)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import geocode_cameras
     try:
         ids = geocode_cameras.adressen(straat, nummer, maximum=3)

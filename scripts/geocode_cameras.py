@@ -10,13 +10,13 @@ Twee camera's dragen een huisnummer in hun naam ("Steenweg 20", "Steenweg 44").
 Die worden op dat adres zelf gezet, wat een stuk preciezer is dan het
 straatmidden.
 
-Zelf een positie verbeteren doe je in cameras.json: zet de gevonden lengte- en
+Zelf een positie verbeteren doe je in data/cameras.json: zet de gevonden lengte- en
 breedtegraad in het veld "handmatig" en het script laat dat punt met rust.
 
     "Zoutwerf": {"handmatig": [4.4784, 51.0271], "opmerking": "paal aan nr. 12"}
 
-Draaien:  python geocode_cameras.py           (alleen wat nog geen positie heeft)
-          python geocode_cameras.py --alles   (alles opnieuw ophalen)
+Draaien:  python scripts/geocode_cameras.py           (alleen wat nog geen positie heeft)
+          python scripts/geocode_cameras.py --alles   (alles opnieuw ophalen)
 Uit:      cameras.json
 """
 
@@ -29,9 +29,9 @@ import urllib.parse
 import urllib.error
 import urllib.request
 
-HIER = os.path.dirname(os.path.abspath(__file__))
+HIER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # de repomap: dit script staat in scripts/
 DENKMEE = os.path.join(os.path.dirname(HIER), "DenkMeeMetMechelen")
-CAMERAS = os.path.join(HIER, "cameras.json")
+CAMERAS = os.path.join(HIER, "data", "cameras.json")
 GASAM = os.path.join(HIER, "data", "gasam_mechelen.json")
 
 API = "https://api.basisregisters.vlaanderen.be/v2"
