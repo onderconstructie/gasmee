@@ -49,7 +49,7 @@ STRAATNAAM = {
     "Hoogstraat/Milsenstraat": "Hoogstraat",
 }
 
-sys.path.insert(0, DENKMEE)
+sys.path.insert(0, os.path.join(DENKMEE, "pijplijn"))   # straten_mechelen.py staat in pijplijn/ van Denk mee
 from straten_mechelen import lambert72_to_wgs84  # noqa: E402  (pad eerst zetten)
 
 _GML = re.compile(r"<gml:pos>([\d.]+)\s+([\d.]+)</gml:pos>")
