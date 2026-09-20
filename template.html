@@ -161,6 +161,16 @@ a.brand:hover .brand-mug{filter:brightness(1.05)}
 .menu-lijst a:hover{background:var(--paper-2)}
 .menu-lijst a:hover .menu-ic{color:var(--pink-text)}
 .menu-lijst a:last-child{border-bottom:none}
+/* Een onderdeel dat nog in opbouw is, staat in het menu als een dode rij: geen link, geen
+   teller, wel het label. Zo weet de lezer dat er meer komt, zonder cijfers te tonen die nog
+   nagekeken moeten worden (gevraagd 20/09/2026). */
+.menu-lijst a.uit{color:var(--ink-dim);cursor:default}
+.menu-lijst a.uit:hover{background:none}
+.menu-lijst a.uit:hover .menu-ic{color:var(--ink-dim)}
+.menu-lijst a.uit .menu-tel{display:none}
+.menu-opbouw{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.62rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-dim);border:1px solid var(--line-2);
+  border-radius:var(--rond-klein);padding:.28rem .5rem;white-space:nowrap}
 .menu-ic{color:var(--ink-dim);transition:color .15s}
 .menu-ic svg{width:22px;height:22px;display:block;stroke:currentColor;fill:none;stroke-width:1.7}
 .menu-naam{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:1.05rem;font-weight:500;letter-spacing:-.005em}
@@ -812,7 +822,7 @@ html{-webkit-tap-highlight-color:transparent}
 a,button,summary,input,select,label{touch-action:manipulation}
 @media(hover:none){
   button.tegel:active,.jaarmerken button:active,.moduskiezer button:active,.kaartknoppen button:active,
-  .speel:active,.menu-lijst a:active{scale:.97;transition:scale var(--dur-druk) ease-out}
+  .speel:active,.menu-lijst a:not(.uit):active{scale:.97;transition:scale var(--dur-druk) ease-out}
   .tabbar a:active,.tabbar button:active{scale:.93;transition:scale var(--dur-druk) ease-out}
 }
 
@@ -875,7 +885,7 @@ a,button,summary,input,select,label{touch-action:manipulation}
    streep en het label in het diepe oker; het label van de portaaltoets blijft portaalroze. */
 .tabbar{ display:none; }
 @media (max-width:700px){
-  .tabbar{ display:grid; grid-template-columns:repeat(5,1fr); position:fixed; left:0; right:0; bottom:0;
+  .tabbar{ display:grid; grid-template-columns:repeat(2,1fr); position:fixed; left:0; right:0; bottom:0;
     z-index:var(--z-balk); background:rgba(245,241,232,.93);
     -webkit-backdrop-filter:blur(14px) saturate(1.4); backdrop-filter:blur(14px) saturate(1.4);
     border-top:1px solid var(--line);
@@ -967,15 +977,15 @@ a,button,summary,input,select,label{touch-action:manipulation}
       <a href="#camera" onclick="event.preventDefault();toonView('camera')">
         <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="1.7"/><path d="M12 1.9v3.3M12 18.8v3.3M1.9 12h3.3M18.8 12h3.3" stroke-linecap="round"/></svg></span>
         <span class="menu-naam">ANPR</span><span class="menu-tel" id="tab-camera"></span></a>
-      <a href="#gas" onclick="event.preventDefault();toonView('gas')">
+      <a class="uit" aria-disabled="true">
         <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg></span>
-        <span class="menu-naam">Parkeren</span><span class="menu-tel" id="tab-gas"></span></a>
-      <a href="#snelheid" onclick="event.preventDefault();toonView('snelheid')">
+        <span class="menu-naam">Parkeren</span><span class="menu-opbouw">In opbouw</span><span class="menu-tel" id="tab-gas"></span></a>
+      <a class="uit" aria-disabled="true">
         <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 17.5a8 8 0 1 1 16 0" stroke-linecap="round"/><path d="M12 17.5l4.6-4.6" stroke-linecap="round"/><circle cx="12" cy="17.5" r="1.4"/></svg></span>
-        <span class="menu-naam">Snelheid</span><span class="menu-tel" id="tab-snelheid"></span></a>
-      <a href="#geld" onclick="event.preventDefault();toonView('geld')">
+        <span class="menu-naam">Snelheid</span><span class="menu-opbouw">In opbouw</span><span class="menu-tel" id="tab-snelheid"></span></a>
+      <a class="uit" aria-disabled="true">
         <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M15.4 8.9a4 4 0 1 0 0 6.2" stroke-linecap="round"/><path d="M7.9 10.9h6.3M7.9 13.1h6.3" stroke-linecap="round"/></svg></span>
-        <span class="menu-naam">Planning en rekening</span><span class="menu-tel" id="tab-geld"></span></a>
+        <span class="menu-naam">Planning en rekening</span><span class="menu-opbouw">In opbouw</span><span class="menu-tel" id="tab-geld"></span></a>
       <a href="#nieuws" onclick="event.preventDefault();toonView('nieuws')">
         <span class="menu-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h6M7 12h10M7 16h10M16 8h1"/></svg></span>
         <span class="menu-naam">In het nieuws <span class="menu-periode" id="menu-periode"></span></span><span class="menu-tel" id="tab-gazet"></span></a>
@@ -1030,10 +1040,9 @@ document.addEventListener("DOMContentLoaded", function () {
         <p class="held-cijfer"><b id="held-getal"></b> <em>voorbij het verbod</em><br>
           <span class="held-periode" id="held-periode"></span>
           <span class="held-extra" id="held-extra" hidden></span></p>
-        <p class="duiding">Camera's aan de autoluwe zones lezen nummerplaten en stellen vast wie het verkeersbord C3 negeert.
-        Dat loopt als GAS 4 naar de sanctionerend ambtenaar (sinds 2024 op zes plaatsen eerst een waarschuwing). Het cameranet werd de voorbije jaren uitgebreid, dus de sprong in de cijfers is ook een sprong in het aantal camera's. Elke camera is een viziertje op de kaart; de oppervlakte ervan volgt het aantal dossiers,
-        en een gestippelde ring betekent nul, meestal omdat de camera toen afstond. Eén vaste schaal, dus jaren en maanden
-        laten zich vergelijken.</p>
+        <p class="duiding">Camera's aan de autoluwe zones lezen nummerplaten en zien wie het verkeersbord C3
+        negeert. Die vaststellingen lopen als GAS 4 naar de sanctionerend ambtenaar. Op de kaart is elke
+        camera een viziertje: hoe groter, hoe meer dossiers.</p>
       </div>
       <button class="held-merk" type="button" aria-label="Open het menu" aria-controls="menuvlak" onclick="menu(true)">
         <span class="ring"></span><span class="ring r2"></span>
@@ -1306,9 +1315,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <nav class="tabbar" role="tablist" aria-label="Onderdelen">
   <button type="button" role="tab" data-view="camera" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.6"/><circle cx="12" cy="12" r="1.7"/><path d="M12 1.9v3.3M12 18.8v3.3M1.9 12h3.3M18.8 12h3.3" stroke-linecap="round"/></svg><span>ANPR</span></button>
-  <button type="button" role="tab" data-view="gas" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/></svg><span>Parkeren</span></button>
-  <button type="button" role="tab" data-view="snelheid" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17.5a8 8 0 1 1 16 0" stroke-linecap="round"/><path d="M12 17.5l4.6-4.6" stroke-linecap="round"/><circle cx="12" cy="17.5" r="1.4"/></svg><span>Snelheid</span></button>
-  <button type="button" role="tab" data-view="geld" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M15.4 8.9a4 4 0 1 0 0 6.2" stroke-linecap="round"/><path d="M7.9 10.9h6.3M7.9 13.1h6.3" stroke-linecap="round"/></svg><span>Geld</span></button>
   <a class="tab-portaal" href="https://asgaupaust.be/" aria-label="Naar het portaal As Gau Paust"><img class="tab-mug" src="beelden/mug.png" alt="" width="512" height="512"><span>Portaal</span></a>
 </nav>
 
@@ -2656,6 +2662,9 @@ function tekenOnderdeel(soort, voorvoegsel) {
 }
 
 function tekenGeld() {
+  /* Staat dit onderdeel in opbouw, dan knipt build.py de weergave uit de pagina en laat
+     hij de data weg. Dan valt er niets te tekenen. */
+  if (!D.budget || !document.getElementById("budget-actie")) return;
   const actie = D.budget.acties["AC000039"];
   const budgetjaren = Object.keys(actie.jaren).sort();
   const laatste = budgetjaren[budgetjaren.length - 1];
@@ -3021,6 +3030,7 @@ function tekenGazet() {
 /* Het GAS-luik naast de camera's: de parkeerboetes uit dezelfde jaarverslagen,
    en voor overlast en snelheid de bedragen uit de jaarrekeningen. */
 function tekenGas() {
+  if (!document.getElementById("gas-tegels")) return;   // onderdeel in opbouw
   const blok = D.gasam.jaren[gekozen] && D.gasam.jaren[gekozen].parkeren;
   document.getElementById("gas-jaarlabel").textContent = gekozen;
   document.getElementById("gas-maandjaar").textContent = gekozen;
@@ -3107,6 +3117,7 @@ function tekenGas() {
    weergaven (overlast onder Parkeren, snelheid apart), maar ze komen uit dezelfde twee
    bronnen, dus één functie tekent ze samen. */
 function tekenSoorten() {
+  if (!document.getElementById("gas-aantal-overlast")) return;   // onderdeel in opbouw
   /* De aantallen dossiers per jaar. Alleen het nieuwste verslag geeft die reeksen, en de
      parser neemt ze pas over als het jongste jaar ook in de lopende tekst van diezelfde
      bladzijde staat. Ontbreekt een reeks, dan zegt het vak dat, in plaats van leeg te blijven. */
@@ -3377,7 +3388,7 @@ function start() {
     knop.addEventListener("click", () => toonView(knop.dataset.view)));
   const uitHash = (location.hash || "").replace("#", "");
   tekenGazet();
-  toonView(["camera", "gas", "snelheid", "nieuws", "geld"].includes(uitHash) ? uitHash : "camera");
+  toonView(["camera", "nieuws"].includes(uitHash) ? uitHash : "camera");
 
   /* Elke melding op haar eigen regel: het label staat in de opmaak, dus hier enkel
      de tekst. Per regel textContent, zodat een melding nooit als html telt. */

@@ -30,6 +30,12 @@ BESTANDEN = {
 # haal_leesmee.py; ontbreekt het bestand, dan bouwt de rest gewoon door
 LEESMEE = os.path.join(HIER, "data", "leesmee_dossier.json")
 
+# Onderdelen die nog in opbouw staan (gevraagd 20/09/2026). Ze zijn niet alleen onbereikbaar in
+# de app: hun weergave gaat uit de gepubliceerde html en hun cijfers uit het ingebedde datablok.
+# Anders staat alles nog te lezen in de broncode van de pagina. Deze tuple leegmaken zet ze terug
+# aan; de weergaven en de tekencode blijven gewoon in template.html staan.
+IN_OPBOUW = ("gas", "snelheid", "geld")
+
 
 def feitcodes(gasam):
     """Feitcode -> omschrijving, uit de jaren die de omschrijving wél voluit geven."""
@@ -111,13 +117,16 @@ def bouw_techniek(sjabloon):
                               'href="index.html" aria-label="GAS mee met Mechelen, naar het begin"')
     begin = sjabloon.index('<nav class="tabbar"')
     onderbalk = sjabloon[begin:sjabloon.index("</nav>", begin) + len("</nav>")]
+    # Het aantal tabs wisselt: een onderdeel dat in opbouw staat, verdwijnt uit de balk.
+    # De klep blijft even streng maar rekent mee: elke aanwezige tab moet omgezet zijn.
+    verwacht = onderbalk.count('role="tab" data-view=')
     onderbalk, n = re.subn(r'<button type="button" role="tab" data-view="(\w+)" aria-selected="\w+">',
                            r'<a href="index.html#\1">', onderbalk)
     onderbalk = onderbalk.replace("</button>", "</a>")
     # Op de techniekpagina zijn dit geen tabbladen maar links naar het dashboard, dus de rollen gaan eruit.
     kaal = onderbalk.replace('<nav class="tabbar" role="tablist" aria-label="Onderdelen">',
                              '<nav class="tabbar" aria-label="Onderdelen">')
-    if n != 4 or kaal == onderbalk:
+    if n == 0 or n != verwacht or kaal == onderbalk:
         raise SystemExit("       STOP: de app-balk van techniek.html kon niet omgezet worden")
     onderbalk = kaal
     script = """<button class="terug" id="terug" type="button" aria-label="Terug naar boven"><svg class="tt-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg><span class="tt-teken" aria-hidden="true">&#8593;</span></button>
@@ -159,6 +168,36 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") menu(false);
     print(f"       techniekpagina gebouwd: dist/techniek.html ({len(pagina) // 1000} kB)")
 
 
+def knip_opbouw(pagina):
+    """Haalt de weergaven van de onderdelen in opbouw uit de pagina."""
+    for naam in IN_OPBOUW:
+        patroon = re.compile(r'\s*<section class="weergave" id="view-' + naam + r'"[^>]*>.*?</section>', re.S)
+        pagina, aantal = patroon.subn("", pagina, count=1)
+        if aantal != 1:
+            raise SystemExit(f"       STOP: weergave view-{naam} niet gevonden om te knippen")
+    return pagina
+
+
+def zonder_opbouw(gegevens):
+    """Geeft de data terug zonder de reeksen van de onderdelen in opbouw.
+
+    De controles en de feitcodes draaien hiervoor al over de volledige data, dus die
+    blijven meten wat de parser oplevert; enkel de pagina krijgt minder mee."""
+    uit = dict(gegevens)
+    if "geld" in IN_OPBOUW or "snelheid" in IN_OPBOUW:
+        uit["budget"] = None
+    if "gas" in IN_OPBOUW or "snelheid" in IN_OPBOUW:
+        gasam = json.loads(json.dumps(uit["gasam"]))
+        for jaar in gasam.get("jaren", {}).values():
+            jaar.pop("parkeren", None)
+        gasam.pop("soorten", None)
+        # Een melding over een onderdeel in opbouw wijst naar cijfers die niemand kan zien.
+        gasam["meldingen"] = [regel for regel in gasam.get("meldingen", [])
+                              if "ANPR" in regel or "autoluw" in regel.lower()]
+        uit["gasam"] = gasam
+    return uit
+
+
 def main():
     gegevens = {}
     for sleutel, pad in BESTANDEN.items():
@@ -176,8 +215,8 @@ def main():
         print("   let op: geen data/leesmee_dossier.json; de gazet blijft leeg (draai scripts/haal_leesmee.py)")
 
     sjabloon = open(os.path.join(HIER, "template.html"), encoding="utf-8").read()
-    blok = "const D = " + json.dumps(gegevens, ensure_ascii=False, separators=(",", ":")) + ";"
-    pagina = sjabloon.replace("/* DATA_HIER */", blok)
+    blok = "const D = " + json.dumps(zonder_opbouw(gegevens), ensure_ascii=False, separators=(",", ":")) + ";"
+    pagina = knip_opbouw(sjabloon.replace("/* DATA_HIER */", blok))
     pagina = pagina.replace("beelden/mug.png", mug_data_uri())
 
     os.makedirs(os.path.join(DIST, "fonts"), exist_ok=True)

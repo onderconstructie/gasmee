@@ -7,8 +7,8 @@ de documentatiebundel zet de jaarrekening links en de initiele kredieten rechts.
 
 Leest een reeks concrete cijfers rechtstreeks uit de tekstlaag van de jaarverslagen
 (met eigen, eenvoudige patronen die niets van parse_gasam.py hergebruiken) en
-vergelijkt ze met wat in de gebouwde pagina zit: de ingebakken data (const D) en,
-als Chrome beschikbaar is, de gerenderde tegels van de standaardweergave.
+vergelijkt ze met de data die de parser oplevert (data/*.json) en, als Chrome
+beschikbaar is, met de gerenderde tegels van de standaardweergave.
 
 Draaien na elke build:  python scripts/steekproef_cijfers.py   (83 controles)
 Afwijking = het cijfer op de site verschilt van de bron; onbeslist = het patroon
@@ -82,7 +82,12 @@ def laatste_kolom(t, veld, volgend):
 
 
 dist = open(DIST, encoding="utf-8").read()
-D = json.loads(re.search(r"const D = (\{.*?\});\n", dist, re.S).group(1))
+# De gepubliceerde pagina laat de onderdelen in opbouw weg (IN_OPBOUW in build.py). De
+# controles bron-tegen-data lezen daarom de databestanden van de parser: zo blijven ze
+# even streng, wat er ook gepubliceerd wordt. Voor de controles die met "pagina toont"
+# beginnen, blijft de gerenderde pagina de maatstaf.
+D = {"gasam": json.load(open(os.path.join(HIER, "data", "gasam_mechelen.json"), encoding="utf-8")),
+     "budget": json.load(open(os.path.join(HIER, "data", "budget_mechelen.json"), encoding="utf-8"))}
 J = D["gasam"]["jaren"]
 
 # 2017 en 2018: maandtabel per camera (tekstlaag) tegenover per_camera en de maandreeks
