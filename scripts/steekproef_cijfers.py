@@ -10,10 +10,13 @@ Leest een reeks concrete cijfers rechtstreeks uit de tekstlaag van de jaarversla
 vergelijkt ze met de data die de parser oplevert (data/*.json) en, als Chrome
 beschikbaar is, met de gerenderde tegels van de standaardweergave.
 
-Draaien na elke build:  python scripts/steekproef_cijfers.py   (83 controles)
+build.py draait dit script zelf na elke build, zodra de jaarverslagen naast de repo staan
+(../GASAM). Los draaien kan ook:  python scripts/steekproef_cijfers.py
 Afwijking = het cijfer op de site verschilt van de bron; onbeslist = het patroon
 vond het cijfer niet in de tekstlaag (dan met de hand nakijken, niet negeren).
-Sluit af met code 1 zodra er een afwijking is."""
+Sluit af met code 1 bij een afwijking en met code 2 bij een onbesliste controle, zodat ook
+die de build tegenhoudt. De uitvoer telt apart hoeveel controles over onderdelen gaan die
+nog in opbouw zijn (IN_OPBOUW in build.py) en dus niet op de site staan."""
 import html
 import json
 import os
@@ -219,27 +222,31 @@ def actie_uit_jaarrekening(pad, code):
 
 
 B = D.get("budget") or {}
+GELD_BRON = {}                     # jaar -> wat de jaarrekening zelf zegt, voor de kopcontrole
 for jaar, staart in JAARREKENINGEN.items():
     pad = os.path.join(BUDGETMAP, *staart.split("/"))
     if not os.path.exists(pad):
         uit.append((f"{jaar} jaarrekening", "pdf niet gevonden", staart, "ONBESLIST"))
         continue
     gelezen = actie_uit_jaarrekening(pad, "AC000039")
+    GELD_BRON[jaar] = gelezen
     onze = ((B.get("acties", {}).get("AC000039", {}).get("jaren", {}).get(jaar) or {}).get("exploitatie") or {})
     for kant in ("ontvangsten", "uitgaven"):
         for kolom in ("initiele_kredieten", "eindkredieten", "jaarrekening"):
             bron = ((gelezen or {}).get(kant) or {}).get(kolom)
             check(f"{jaar} GAS {kant} {kolom}", bron, (onze.get(kant) or {}).get(kolom))
 
-# het bedrag dat als kop op de geldpagina staat, tegen de data
+# het bedrag dat als kop op de geldpagina staat (in miljoen, afgerond), tegen de jaarrekening zelf
 laatste = max(B.get("acties", {}).get("AC000039", {}).get("jaren", {}) or {"0": None})
 if laatste != "0":
     ontv = B["acties"]["AC000039"]["jaren"][laatste]["exploitatie"]["ontvangsten"]["jaarrekening"]
-    check(f"{laatste} GAS-ontvangsten in miljoen (kop)", round(ontv / 1e6, 2), round(ontv / 1e6, 2))
+    bron_kop = (((GELD_BRON.get(laatste) or {}).get("ontvangsten") or {}).get("jaarrekening"))
+    check(f"{laatste} GAS-ontvangsten in miljoen (kop)",
+          round(bron_kop / 1e6, 2) if bron_kop is not None else None, round(ontv / 1e6, 2))
 
 # de gerenderde pagina zelf (standaardweergave: ANPR, laatste jaar)
 if os.path.exists(CHROME):
-    # de tegelserver van OSM is enkel voor licht gebruik, en deze controle heeft geen kaartbeeld nodig
+    # deze controle heeft geen kaartbeeld nodig; de regel houdt ook een oude tegelbron buiten beeld
     dom = subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--window-size=1280,2400",
                           "--host-resolver-rules=MAP tile.openstreetmap.org ~NOTFOUND, MAP *.tile.openstreetmap.org ~NOTFOUND",
                           "--virtual-time-budget=6000", "--dump-dom", "file:///" + DIST.replace("\\", "/")],
@@ -263,8 +270,25 @@ if os.path.exists(CHROME):
 else:
     uit.append(("gerenderde pagina", "Chrome niet gevonden", "-", "ONBESLIST"))
 
+def in_opbouw():
+    """De onderdelen die build.py uit de pagina knipt (IN_OPBOUW), gelezen uit build.py zelf."""
+    m = re.search(r"^IN_OPBOUW\s*=\s*\(([^)]*)\)", open(os.path.join(HIER, "build.py"), encoding="utf-8").read(), re.M)
+    return set(re.findall(r'"(\w+)"', m.group(1))) if m else set()
+
+
+OPBOUW = in_opbouw()
+
+
+def gaat_over_opbouw(label):
+    geld = "GAS ontvangsten" in label or "GAS uitgaven" in label or "GAS-ontvangsten" in label or "jaarrekening" in label
+    return (geld and "geld" in OPBOUW) or ("parkeren" in label and "gas" in OPBOUW)
+
+
 for r in uit:
-    print(f"{r[3]:10s} {r[0]:46s} bron={r[1]}  site={r[2]}")
+    print(f"{r[3]:10s} {r[0]:46s} bron={r[1]}  site={r[2]}{'  (in opbouw)' if gaat_over_opbouw(r[0]) else ''}")
 n_af = sum(1 for r in uit if r[3] == "AFWIJKING")
-print(f"afwijkingen: {n_af} | onbeslist: {sum(1 for r in uit if r[3] == 'ONBESLIST')} | van {len(uit)}")
-sys.exit(1 if n_af else 0)
+n_on = sum(1 for r in uit if r[3] == "ONBESLIST")
+n_opb = sum(1 for r in uit if gaat_over_opbouw(r[0]))
+print(f"afwijkingen: {n_af} | onbeslist: {n_on} | van {len(uit)} "
+      f"(waarvan {n_opb} over onderdelen in opbouw, die nu niet op de site staan)")
+sys.exit(1 if n_af else (2 if n_on else 0))

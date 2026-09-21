@@ -16,6 +16,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 
 HIER = os.path.dirname(os.path.abspath(__file__))
@@ -244,6 +245,23 @@ def main():
         bestand.write(pagina)
     bouw_techniek(sjabloon)
     print(f"{doel} geschreven ({len(pagina) // 1024} kB)")
+
+    # De natelling tegen de bron-pdf's draait na elke build, zoals de techniekpagina zegt. Op een
+    # verse kloon zonder de jaarverslagen (../GASAM) slaat ze over, en dat meldt de build.
+    if not os.path.isdir(os.path.join(os.path.dirname(HIER), "GASAM")):
+        print("   natelling overgeslagen: de jaarverslagen (../GASAM) staan niet naast de repo")
+        return 0
+    r = subprocess.run([sys.executable, os.path.join(HIER, "scripts", "steekproef_cijfers.py")],
+                       capture_output=True, text=True, encoding="utf-8", errors="replace",
+                       env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+    regels = r.stdout.strip().splitlines()
+    print("   natelling: " + (regels[-1] if regels else "geen uitvoer"))
+    if r.returncode:
+        for regel in regels:
+            if regel.startswith(("AFWIJKING", "ONBESLIST")):
+                print("   ! " + regel)
+        print("   STOP: de natelling vond een afwijking of een onbesliste controle. Niet publiceren voor dit nagekeken is.")
+        return 1
     return 0
 
 
