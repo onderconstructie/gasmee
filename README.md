@@ -21,6 +21,7 @@ De hulpscripts in `scripts/` leggen in hun docstring uit wat ze doen.
 Code onder de MIT-licentie. Kaartgegevens © [OpenStreetMap-bijdragers](https://www.openstreetmap.org/copyright), ODbL.
 Een deel van de cameraposities komt uit het Vlaams Adressenregister (bron: Digitaal Vlaanderen,
 [modellicentie gratis hergebruik](https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0)). De cameraposities zijn nagekeken op straatfoto's van Panoramax,
-CC BY-SA 4.0. Lettertypes onder de Open Font License.
+CC BY-SA 4.0. Lettertypes onder de Open Font License. Kaartstijl van Protomaps (BSD-3), met lettertypes van
+Noto (Open Font License) en symbolen van Tangrams (MIT).
 
 Onderdeel van [As Gau Paust](https://asgaupaust.be) · [Privacy](https://asgaupaust.be/privacy/)
