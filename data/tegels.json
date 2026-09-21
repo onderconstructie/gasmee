@@ -1,0 +1,51 @@
+{
+ "_leesmij": "Eigen kaarttegels, getekend door scripts/maak_tegels.py uit de Protomaps-basiskaart (een ODbL-afgeleide van OpenStreetMap). Per zoomniveau het bereik [x0, x1, y0, y1].",
+ "bron": "Protomaps-basiskaart, build 20260921, OpenStreetMap-bijdragers (ODbL)",
+ "gemaakt": "2026-09-21",
+ "min": 11,
+ "max": 17,
+ "zooms": {
+  "11": [
+   1044,
+   1054,
+   680,
+   690
+  ],
+  "12": [
+   2093,
+   2104,
+   1365,
+   1376
+  ],
+  "13": [
+   4192,
+   4203,
+   2735,
+   2747
+  ],
+  "14": [
+   8390,
+   8401,
+   5476,
+   5489
+  ],
+  "15": [
+   16785,
+   16798,
+   10957,
+   10974
+  ],
+  "16": [
+   33577,
+   33591,
+   21921,
+   21943
+  ],
+  "17": [
+   67159,
+   67177,
+   43847,
+   43881
+  ]
+ }
+}

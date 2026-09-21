@@ -25,6 +25,7 @@ BESTANDEN = {
     "gasam": os.path.join(HIER, "data", "gasam_mechelen.json"),
     "budget": os.path.join(HIER, "data", "budget_mechelen.json"),
     "cameras": os.path.join(HIER, "data", "cameras.json"),
+    "tegels": os.path.join(HIER, "data", "tegels.json"),   # scripts/maak_tegels.py
 }
 # de gazet-voorpagina: artikels uit het Lees mee-dossier, opgehaald door
 # haal_leesmee.py; ontbreekt het bestand, dan bouwt de rest gewoon door
@@ -225,6 +226,11 @@ def main():
     for naam in os.listdir(os.path.join(HIER, "fonts")):
         if naam.endswith(".woff2") or naam.endswith(".txt"):
             shutil.copy(os.path.join(HIER, "fonts", naam), os.path.join(DIST, "fonts", naam))
+
+    # De eigen kaarttegels (scripts/maak_tegels.py) staan naast de pagina. Eerst leeg,
+    # zodat een tegel die niet meer getekend wordt ook niet blijft hangen.
+    shutil.rmtree(os.path.join(DIST, "tegels"), ignore_errors=True)
+    shutil.copytree(os.path.join(HIER, "tegels"), os.path.join(DIST, "tegels"))
 
     # CNAME voor het eigen subdomein op GitHub Pages. Door dit bij elke build mee te
     # schrijven, kan een volgende publicatie het domein niet per ongeluk laten vallen:

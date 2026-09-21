@@ -307,7 +307,7 @@ button.tegel[aria-expanded="true"]::after{transform:scaleX(1)}
 #tegels{position:absolute;inset:0}
 /* De tegels worden naar het familiepapier getrokken: minder kleur, warmer, iets
    lichter. Zo blijft roze de enige kleur die de aandacht opeist. */
-#tegels img{position:absolute;width:256px;height:256px;user-select:none;-webkit-user-drag:none;filter:grayscale(.86) sepia(.34) saturate(.9) brightness(1.06) contrast(.9)}
+#tegels img{position:absolute;width:256px;height:256px;user-select:none;-webkit-user-drag:none;filter:sepia(.3) saturate(.7) brightness(1.02)}
 /* een dun waas papier over de tegels: de kaart zakt in de huid van de site,
    waardoor roze de enige kleur is die nog roept */
 #kaart::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;background:rgba(245,241,232,.16)}
@@ -1795,27 +1795,21 @@ function tekenKaart() {
     for (let ty = Math.floor(boven / 256); ty <= Math.floor((boven + kaart.hoog) / 256); ty++) {
       if (ty < 0 || ty >= max) continue;
       const wx = ((tx % max) + max) % max;
+      /* Buiten het getekende gebied bestaat er geen tegel: daar blijft het papier staan,
+         en de pagina vraagt niets op. */
+      const bereik = D.tegels.zooms[kaart.z];
+      if (!bereik || wx < bereik[0] || wx > bereik[1] || ty < bereik[2] || ty > bereik[3]) continue;
       const sleutel = `${kaart.z}/${wx}/${ty}`;
       nodig.add(sleutel);
       let img = kaart.tegelmap.get(sleutel);
       if (!img) {
         img = new Image();
         img.alt = "";
-        /* Beleefd tegenover de tegelserver van OpenStreetMap: enkel wat in beeld
-           komt, niets vooruit inladen, en de browser mag cachen. Zie de
-           tegelgebruiksregels; voor publicatie hoort hier een eigen of betaalde
-           tegelbron. */
+        /* Eigen tegels, naast de site op GitHub Pages: getekend door scripts/maak_tegels.py
+           uit de Protomaps-basiskaart, een ODbL-afgeleide van OpenStreetMap. Een bezoeker
+           vraagt dus niets aan een derde partij. */
         img.decoding = "async";
-        img.referrerPolicy = "strict-origin-when-cross-origin";
-        const bron = `https://tile.openstreetmap.org/${kaart.z}/${wx}/${ty}.png`;
-        /* de tegelserver laat er af en toe eentje vallen; één rustige herkansing
-           voorkomt een wit gat in de kaart */
-        img.addEventListener("error", () => {
-          if (img.dataset.herkans) return;
-          img.dataset.herkans = "1";
-          setTimeout(() => { img.src = bron + "?h=1"; }, 700);
-        });
-        img.src = bron;
+        img.src = `tegels/${kaart.z}/${wx}/${ty}.png`;
         laag.appendChild(img);
         kaart.tegelmap.set(sleutel, img);
       }
@@ -2031,7 +2025,7 @@ function pasKaartOpMerken() {
   kaart.lat = (latMin + latMax) / 2;
   kaart.z = 12;
   const ruimte = doos.clientWidth > 1000 ? 320 : 120;   /* het zwevende paneel dekt rechts een stuk af */
-  for (let z = 17; z >= 10; z--) {
+  for (let z = D.tegels.max; z >= D.tegels.min; z--) {
     const hoeken = [[lonMin, latMin], [lonMax, latMax]].map(p => naarWereld(p[0], p[1], z));
     if (Math.abs(hoeken[1][0] - hoeken[0][0]) < doos.clientWidth - ruimte &&
         Math.abs(hoeken[1][1] - hoeken[0][1]) < doos.clientHeight - 110) { kaart.z = z; break; }
@@ -2094,7 +2088,7 @@ function kaartBediening() {
   window.addEventListener("resize", tekenKaart);
 }
 function zoom(stap) {
-  kaart.z = Math.min(18, Math.max(11, kaart.z + stap));
+  kaart.z = Math.min(D.tegels.max, Math.max(D.tegels.min, kaart.z + stap));
   tekenKaart();
 }
 
