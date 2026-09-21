@@ -191,6 +191,8 @@ def zonder_opbouw(gegevens):
         for jaar in gasam.get("jaren", {}).values():
             jaar.pop("parkeren", None)
         gasam.pop("soorten", None)
+        # De omschrijvingen van de feitcodes horen enkel bij het onderdeel parkeren.
+        uit["feitcodes"] = {}
         # Een melding over een onderdeel in opbouw wijst naar cijfers die niemand kan zien.
         gasam["meldingen"] = [regel for regel in gasam.get("meldingen", [])
                               if "ANPR" in regel or "autoluw" in regel.lower()]

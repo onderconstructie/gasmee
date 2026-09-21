@@ -226,9 +226,9 @@ def afhandeling(tekst):
             uit[naam.lower()] = int(getal)
     # 2015 en 2016 zetten het aantal verweren niet als taartlabel maar in een zin:
     # "Voor 8.30% werd een verweer ingediend (822 dossiers)". In 2016 heet die taartpunt
-    # zelfs "Overig", een woord dat in de inbreukentabellen iets heel anders betekent,
-    # dus we lezen liever de zin. De tekst is al afgebakend tot deze sectie, dus het
-    # cijfer van de autoluwe zones kan er niet tussen komen.
+    # "Overig" (in de inbreukentabellen betekent dat woord iets heel anders, maar hier is
+    # de tekst al afgebakend tot deze sectie). Staat er zo'n taartpunt, dan is dat het
+    # verweer; zo niet, dan lezen we het getal uit de zin.
     if "overig" in uit:
         uit.setdefault("verweer", uit.pop("overig"))
     else:
@@ -859,13 +859,15 @@ def lees_onderdeel(doc, van, tot, jaar, soort, labels):
         if cameras:
             som = sum(cameras.values())
             if totaal and som != totaal:
-                meld(f"{jaar}: camera's tellen {som}, jaartotaal is {totaal} ({herkomst})")
-            onderdeel["per_camera"] = cameras
-            onderdeel["per_camera_herkomst"] = herkomst
-            onderdeel["per_camera_pagina"] = pagina
-            onderdeel["per_camera_som"] = som
-            if per_maand:
-                onderdeel["per_camera_maand"] = per_maand
+                # Zoals de techniekpagina belooft: klopt de som niet, dan blijft het veld leeg.
+                meld(f"{jaar}: camera's tellen {som}, jaartotaal is {totaal} ({herkomst}); per camera blijft leeg")
+            else:
+                onderdeel["per_camera"] = cameras
+                onderdeel["per_camera_herkomst"] = herkomst
+                onderdeel["per_camera_pagina"] = pagina
+                onderdeel["per_camera_som"] = som
+                if per_maand:
+                    onderdeel["per_camera_maand"] = per_maand
         else:
             meld(f"{jaar}: geen cijfers per camera gevonden")
         # de woonplaatstaart van 2024 is beeld: overgetypt, met de som-op-100-toets
