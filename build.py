@@ -36,7 +36,7 @@ LEESMEE = os.path.join(HIER, "data", "leesmee_dossier.json")
 # de app: hun weergave gaat uit de gepubliceerde html en hun cijfers uit het ingebedde datablok.
 # Anders staat alles nog te lezen in de broncode van de pagina. Deze tuple leegmaken zet ze terug
 # aan; de weergaven en de tekencode blijven gewoon in template.html staan.
-IN_OPBOUW = ("snelheid",)
+IN_OPBOUW = ()
 
 
 def feitcodes(gasam):

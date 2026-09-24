@@ -201,6 +201,31 @@ check("2024 overlast doorgestuurd (zin)", getal(m.group(1)) if m else None, ovl.
 m = re.search(r"2023 \((\d[\d.]*) dossiers\)", t)
 check("2023 overlast (zin in het verslag 2024)", getal(m.group(1)) if m else None, ovl.get("2023"))
 
+# snelheid (GAS 5): vaste controles uit het verslag 2024 (24/09/2026). Het jaartotaal staat in de
+# lopende tekst, de reeks per jaar als labels bij de figuur, het aandeel trajectcontrole weer in de
+# tekst. De inleiding van de weergave noemt twee cijfers met de hand; die lezen we uit template.html,
+# want daar staat de tekst ook als het onderdeel even in opbouw staat.
+snel = ((D["gasam"].get("soorten") or {}).get("snelheid") or {}).get("per_jaar") or {}
+t = " ".join(tekst("Jaarverslag GAS Rivierenland 2024.pdf", 120, 121).split())
+m = re.search(r"In 2024 werden er in Mechelen (\d[\d.]*) dossiers opgestart[^.]{0,80}snelheid", t)
+snel24 = getal(m.group(1)) if m else None
+check("2024 snelheid jaartotaal (zin)", snel24, snel.get("2024"))
+m = re.search(r"aantal dossiers per jaar ((?:\d[\d.]* ){2,8})0 ", t)
+reeks = [getal(x) for x in m.group(1).split()] if m else []
+jaren = re.search(r"((?:20\d\d ){2,8})Dossiers per jaar", t)
+jaren = jaren.group(1).split() if jaren else []
+for j, w in zip(jaren, reeks):
+    check(f"{j} snelheid dossiers (figuur)", w, snel.get(j))
+if len(jaren) != len(reeks) or not reeks:
+    check("snelheid reeks per jaar (figuur)", None, len(snel))
+m = re.search(r"overtredingen \((\d{1,2})%\) werden geregistreerd in een trajectcontrole", t)
+sjab = " ".join(open(os.path.join(HIER, "template.html"), encoding="utf-8").read().split())
+z = re.search(r"registreerde (\d{1,2}) procent in een trajectcontrole", sjab)
+check("2024 snelheid aandeel trajectcontrole (inleiding)", int(m.group(1)) if m else None, int(z.group(1)) if z else None)
+z = re.search(r"In 2024 waren dat (\d[\d.]*) dossiers, tegenover (\d[\d.]*) aan de camera", sjab)
+check("2024 snelheid jaartotaal (inleiding)", snel24, getal(z.group(1)) if z else None)
+check("2024 ANPR-dossiers ter vergelijking (inleiding snelheid)", J["2024"]["autoluw"]["totaal"], getal(z.group(2)) if z else None)
+
 # het geld: de GAS-ontvangsten uit de jaarrekeningen, gelezen op kolompositie
 #
 # De documentatiebundel zet de drie kolommen in de omgekeerde volgorde van wat je
@@ -323,7 +348,7 @@ OPBOUW = in_opbouw()
 
 def gaat_over_opbouw(label):
     geld = "GAS ontvangsten" in label or "GAS uitgaven" in label or "GAS-ontvangsten" in label or "jaarrekening" in label
-    return (geld and "geld" in OPBOUW) or (("parkeren" in label or "overlast" in label) and "gas" in OPBOUW)
+    return (geld and "geld" in OPBOUW) or (("parkeren" in label or "overlast" in label) and "gas" in OPBOUW) or ("snelheid" in label and "snelheid" in OPBOUW)
 
 
 for r in uit:
