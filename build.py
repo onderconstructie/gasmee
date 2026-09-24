@@ -36,7 +36,7 @@ LEESMEE = os.path.join(HIER, "data", "leesmee_dossier.json")
 # de app: hun weergave gaat uit de gepubliceerde html en hun cijfers uit het ingebedde datablok.
 # Anders staat alles nog te lezen in de broncode van de pagina. Deze tuple leegmaken zet ze terug
 # aan; de weergaven en de tekencode blijven gewoon in template.html staan.
-IN_OPBOUW = ("gas", "snelheid", "geld")
+IN_OPBOUW = ("snelheid",)
 
 
 def feitcodes(gasam):
@@ -180,25 +180,59 @@ def knip_opbouw(pagina):
     return pagina
 
 
+MENU_TELLER = {"gas": "tab-gas", "snelheid": "tab-snelheid", "geld": "tab-geld"}
+
+
+def opbouw_nav(sjabloon):
+    """Zet de navigatie gelijk met IN_OPBOUW, zodat die tuple echt de enige schakelaar is.
+
+    Een onderdeel in opbouw verdwijnt uit de onderbalk, staat in het menu als dode rij met
+    het label "In opbouw" (zonder link en zonder teller), en de hash kan er niet meer heen.
+    Dit loopt op het sjabloon zelf, dus de techniekpagina krijgt dezelfde navigatie."""
+    for naam in IN_OPBOUW:
+        knop = re.compile(r'\n\s*<button type="button" role="tab" data-view="' + naam + r'"[^>]*>.*?</button>', re.S)
+        sjabloon, aantal = knop.subn("", sjabloon, count=1)
+        rij = '<a href="#%s" onclick="event.preventDefault();toonView(\'%s\')">' % (naam, naam)
+        teller = '<span class="menu-tel" id="%s">' % MENU_TELLER[naam]
+        router = re.search(r"\[([^\]]*)\]\.includes\(uitHash\)", sjabloon)
+        if aantal != 1 or sjabloon.count(rij) != 1 or sjabloon.count(teller) != 1 or not router \
+                or '"%s"' % naam not in router.group(1):
+            raise SystemExit(f"       STOP: de navigatie van {naam} kon niet in opbouw gezet worden")
+        sjabloon = sjabloon.replace(rij, '<a class="uit" aria-disabled="true">', 1)
+        sjabloon = sjabloon.replace(teller, '<span class="menu-opbouw">In opbouw</span>' + teller, 1)
+        # opnieuw zoeken: de twee vervangingen hierboven verschuiven alles wat erna komt
+        router = re.search(r"\[([^\]]*)\]\.includes\(uitHash\)", sjabloon)
+        rest = ", ".join(x for x in (y.strip() for y in router.group(1).split(",")) if x != '"%s"' % naam)
+        sjabloon = sjabloon[:router.start()] + "[" + rest + "].includes(uitHash)" + sjabloon[router.end():]
+    return sjabloon
+
+
 def zonder_opbouw(gegevens):
-    """Geeft de data terug zonder de reeksen van de onderdelen in opbouw.
+    """Geeft de data terug zonder de reeksen van de onderdelen in opbouw, per onderdeel.
 
     De controles en de feitcodes draaien hiervoor al over de volledige data, dus die
-    blijven meten wat de parser oplevert; enkel de pagina krijgt minder mee."""
+    blijven meten wat de parser oplevert; enkel de pagina krijgt minder mee. Geld leest de
+    bedragen van snelheid uit het budget, dus die blijven staan zolang Geld aan is."""
     uit = dict(gegevens)
-    if "geld" in IN_OPBOUW or "snelheid" in IN_OPBOUW:
+    if "geld" in IN_OPBOUW:
         uit["budget"] = None
-    if "gas" in IN_OPBOUW or "snelheid" in IN_OPBOUW:
-        gasam = json.loads(json.dumps(uit["gasam"]))
+    gasam = json.loads(json.dumps(uit["gasam"]))
+    soorten = gasam.get("soorten") or {}
+    if "gas" in IN_OPBOUW:
         for jaar in gasam.get("jaren", {}).values():
             jaar.pop("parkeren", None)
-        gasam.pop("soorten", None)
+        soorten.pop("overlast", None)
         # De omschrijvingen van de feitcodes horen enkel bij het onderdeel parkeren.
         uit["feitcodes"] = {}
-        # Een melding over een onderdeel in opbouw wijst naar cijfers die niemand kan zien.
-        gasam["meldingen"] = [regel for regel in gasam.get("meldingen", [])
-                              if "ANPR" in regel or "autoluw" in regel.lower()]
-        uit["gasam"] = gasam
+    if "snelheid" in IN_OPBOUW:
+        soorten.pop("snelheid", None)
+    if not soorten:
+        gasam.pop("soorten", None)
+    # Een melding over een onderdeel in opbouw wijst naar cijfers die niemand kan zien.
+    woorden = {"gas": ("parkeren", "overlast"), "snelheid": ("snelheid",), "geld": ()}
+    weg = [w for naam in IN_OPBOUW for w in woorden.get(naam, ())]
+    gasam["meldingen"] = [r for r in gasam.get("meldingen", []) if not any(w in r.lower() for w in weg)]
+    uit["gasam"] = gasam
     return uit
 
 
@@ -219,6 +253,7 @@ def main():
         print("   let op: geen data/leesmee_dossier.json; de gazet blijft leeg (draai scripts/haal_leesmee.py)")
 
     sjabloon = open(os.path.join(HIER, "template.html"), encoding="utf-8").read()
+    sjabloon = opbouw_nav(sjabloon)
     blok = "const D = " + json.dumps(zonder_opbouw(gegevens), ensure_ascii=False, separators=(",", ":")) + ";"
     pagina = knip_opbouw(sjabloon.replace("/* DATA_HIER */", blok))
     pagina = pagina.replace("beelden/mug.png", mug_data_uri())

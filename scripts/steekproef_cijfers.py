@@ -159,6 +159,48 @@ m = re.search(r"waarschuwingen gestuurd voor (\w+) locaties", t)
 check("2024 plaatsen met eerst waarschuwing (zin)",
       {"vijf": 5, "zes": 6, "zeven": 7, "acht": 8}.get(m.group(1).lower()) if m else None, ww.get("plaatsen"))
 
+# parkeren en overlast: vaste controles uit de lopende tekst van de verslagen (24/09/2026).
+# De cijfers komen uit eigen, eenvoudige patronen; van de parser nemen we enkel over WAAR het
+# parkeerdeel staat (bestand en bladzijden), niet wat er staat.
+PARKZIN = re.compile(r"werden er (?:in totaal )?(\d[\d.]*) (?:vaststellingen|dossiers) verwerkt met betrekking"
+                     r"(?=[^.]{0,80}(?:parkeren|stilstaan))")
+for jaar in sorted(J):
+    pk = J[jaar].get("parkeren") or {}
+    if not pk.get("totaal"):
+        continue
+    t = " ".join(tekst(os.path.basename(J[jaar]["bestand"]), *pk["paginas"]).split())
+    m = PARKZIN.search(t)
+    check(f"{jaar} parkeren jaartotaal (zin)", getal(m.group(1)) if m else None, pk["totaal"])
+
+pk = J["2024"]["parkeren"]
+afh = pk.get("afhandeling") or {}
+t = " ".join(tekst("Jaarverslag GAS Rivierenland 2024.pdf", *pk["paginas"]).split())
+m = re.search(r"\(initieel: (\d[\d.]*)\)", t)
+check("2024 parkeren zonder verweer (zin)", getal(m.group(1)) if m else None, afh.get("initieel"))
+m = re.search(r"\((\d[\d.]*) dossiers\) geseponeerd", t)
+check("2024 parkeren geseponeerd (zin)", getal(m.group(1)) if m else None, afh.get("sepot"))
+m = re.search(r"verweer ingediend \((\d[\d.]*) dossiers\)", t)
+verweer = getal(m.group(1)) if m else None
+check("2024 parkeren verweer (zin)", verweer, afh.get("verweer"))
+m = re.search(r"werd (\d+,\d+)% gunstig beslist", t)
+check("2024 parkeren verweer gegrond (percentage in de zin)",
+      round(verweer * float(m.group(1).replace(",", ".")) / 100) if m and verweer else None, afh.get("gunstig"))
+for code, pct in re.findall(r"(Art\. [^:=]{1,30}?):[^=]{3,140}?=\s*(\d{1,2})%", t):
+    data = next((x["aandeel_procent"] for x in pk.get("top_inbreuken") or [] if x["feitcode"] == code.strip()), None)
+    check(f"2024 parkeren {code.strip()} aandeel (zin)", float(pct), data)
+m = re.search(r"tussen (\d[\d.]*) en (\d[\d.]*)", t)
+maanden = pk.get("per_maand") or []
+check("2024 parkeren laagste maand (zin)", getal(m.group(1)) if m else None, min(maanden) if maanden else None)
+check("2024 parkeren hoogste maand (zin)", getal(m.group(2)) if m else None, max(maanden) if maanden else None)
+check("2024 parkeren maanden samen = jaartotaal", pk["totaal"], sum(maanden))
+
+ovl = ((D["gasam"].get("soorten") or {}).get("overlast") or {}).get("per_jaar") or {}
+t = " ".join(tekst("Jaarverslag GAS Rivierenland 2024.pdf", 98, 98).split())
+m = re.search(r"ambtenaren (\d[\d.]*) vaststellingen", t)
+check("2024 overlast doorgestuurd (zin)", getal(m.group(1)) if m else None, ovl.get("2024"))
+m = re.search(r"2023 \((\d[\d.]*) dossiers\)", t)
+check("2023 overlast (zin in het verslag 2024)", getal(m.group(1)) if m else None, ovl.get("2023"))
+
 # het geld: de GAS-ontvangsten uit de jaarrekeningen, gelezen op kolompositie
 #
 # De documentatiebundel zet de drie kolommen in de omgekeerde volgorde van wat je
@@ -281,7 +323,7 @@ OPBOUW = in_opbouw()
 
 def gaat_over_opbouw(label):
     geld = "GAS ontvangsten" in label or "GAS uitgaven" in label or "GAS-ontvangsten" in label or "jaarrekening" in label
-    return (geld and "geld" in OPBOUW) or ("parkeren" in label and "gas" in OPBOUW)
+    return (geld and "geld" in OPBOUW) or (("parkeren" in label or "overlast" in label) and "gas" in OPBOUW)
 
 
 for r in uit:
