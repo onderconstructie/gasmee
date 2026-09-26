@@ -36,7 +36,7 @@ LEESMEE = os.path.join(HIER, "data", "leesmee_dossier.json")
 # de app: hun weergave gaat uit de gepubliceerde html en hun cijfers uit het ingebedde datablok.
 # Anders staat alles nog te lezen in de broncode van de pagina. Deze tuple leegmaken zet ze terug
 # aan; de weergaven en de tekencode blijven gewoon in template.html staan.
-IN_OPBOUW = ()
+IN_OPBOUW = ("gas", "snelheid", "geld")
 
 
 def feitcodes(gasam):
@@ -102,7 +102,7 @@ def bouw_techniek(sjabloon):
     if not os.path.exists(pad):
         print("       (geen template-techniek.html: techniekpagina overgeslagen)")
         return
-    fragment = open(pad, encoding="utf-8").read()
+    fragment = opbouw_tekst(open(pad, encoding="utf-8").read())
     kop = sjabloon[:sjabloon.index("</head>")]
     kop = re.sub(r"<title>.*?</title>", "<title>Technische pagina &middot; GAS mee met Mechelen</title>", kop, count=1, flags=re.S)
     uitleg = ("Hoe GAS mee met Mechelen de cijfers uit de jaarverslagen haalt, de camera&#39;s op de kaart zet "
@@ -171,13 +171,26 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") menu(false);
 
 
 def knip_opbouw(pagina):
-    """Haalt de weergaven van de onderdelen in opbouw uit de pagina."""
+    """Haalt de weergaven van de onderdelen in opbouw uit de pagina, samen met het commentaar
+    er vlak boven: daar staan soms cijfers van dat onderdeel in, en die zijn in de bron te lezen."""
     for naam in IN_OPBOUW:
-        patroon = re.compile(r'\s*<section class="weergave" id="view-' + naam + r'"[^>]*>.*?</section>', re.S)
+        patroon = re.compile(r'(?:\s*<!--(?:(?!-->).)*-->)*\s*<section class="weergave" id="view-' + naam
+                             + r'"[^>]*>.*?</section>', re.S)
         pagina, aantal = patroon.subn("", pagina, count=1)
         if aantal != 1:
             raise SystemExit(f"       STOP: weergave view-{naam} niet gevonden om te knippen")
     return pagina
+
+
+def opbouw_tekst(html):
+    """Een zin in de lopende tekst die over één onderdeel gaat, staat tussen <!--met:naam--> en
+    <!--/met:naam-->. Staat dat onderdeel in opbouw, dan valt de zin weg; anders verdwijnen enkel
+    de merktekens. Zo blijft IN_OPBOUW de enige schakelaar, ook voor de uitleg."""
+    html = re.sub(r"<!--met:(\w+)-->(.*?)<!--/met:\1-->",
+                  lambda m: "" if m.group(1) in IN_OPBOUW else m.group(2), html, flags=re.S)
+    if "<!--met:" in html or "<!--/met:" in html:
+        raise SystemExit("       STOP: een merkteken <!--met:...--> staat niet netjes in paren")
+    return html
 
 
 MENU_TELLER = {"gas": "tab-gas", "snelheid": "tab-snelheid", "geld": "tab-geld"}
